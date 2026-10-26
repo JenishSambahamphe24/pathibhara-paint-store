@@ -24,7 +24,11 @@ interface FormSelectProps {
   required?: boolean;
   disabled?: boolean;
   hint?: string;
+  // Adds a first option that stores `null`, for "none / top level" choices.
+  nullOption?: string;
 }
+
+const NULL_VALUE = "__null__";
 
 function getError(errors: Array<unknown>): string | undefined {
   const e = errors[0];
@@ -40,31 +44,40 @@ export function FormSelect({
   required = false,
   disabled = false,
   hint,
+  nullOption,
 }: FormSelectProps) {
   const field = useFieldContext<string | null>();
   const error = getError(field.state.meta.errors);
-  const value = field.state.value ?? "";
+  const value = field.state.value ?? (nullOption ? NULL_VALUE : "");
   const [isOpen, setIsOpen] = useState(false);
+
+  const allOptions = useMemo(
+    () =>
+      nullOption
+        ? [{ label: nullOption, value: NULL_VALUE }, ...options]
+        : options,
+    [nullOption, options],
+  );
 
   const collection = useMemo(
     () =>
       createListCollection({
-        items: options,
+        items: allOptions,
         itemToString: (item: IFormSelectOption) => item.label,
         itemToValue: (item: IFormSelectOption) => item.value,
       }),
-    [options],
+    [allOptions],
   );
 
   const groups = useMemo(() => {
     const result: Array<IFormSelectGroup> = [];
-    for (const option of options) {
+    for (const option of allOptions) {
       const last = result.at(-1);
       if (last && last.label === option.group) last.items.push(option);
       else result.push({ label: option.group, items: [option] });
     }
     return result;
-  }, [options]);
+  }, [allOptions]);
 
   function renderItem(item: IFormSelectOption) {
     return (
@@ -101,7 +114,8 @@ export function FormSelect({
         collection={collection}
         value={value ? [value] : []}
         onValueChange={(details) => {
-          field.handleChange(details.value[0] ?? null);
+          const next = details.value[0] ?? null;
+          field.handleChange(next === NULL_VALUE ? null : next);
           if (field.state.meta.errorMap.onServer) {
             field.setMeta((meta) => ({
               ...meta,

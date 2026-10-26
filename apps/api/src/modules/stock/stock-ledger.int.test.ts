@@ -59,7 +59,7 @@ describe.skipIf(!IntegrationContext.isConfigured())("stock ledger (Postgres)", (
       ),
     ).rejects.toMatchObject({
       statusCode: 409,
-      errors: { "items[0].quantity": expect.stringContaining("Only 3") },
+      errors: { "items[0].quantity": expect.stringContaining("3 left, this change takes 4") },
     });
 
     expect(await ctx.stockOf(f.litre)).toBe(3);

@@ -196,6 +196,19 @@ Dates go through `DateHelper`, which renders instants in the store's timezone
 (`Asia/Kathmandu`). Calendar dates (`YYYY-MM-DD`, e.g. a daily sales date) use
 `DateHelper.formatCalendarDate`, never a timezone conversion.
 
+## Forms
+
+- Every `<form>` has `noValidate` and exactly one `type="submit"` button. `Button`
+  and `ActionButton` default to `type="button"`; never rely on a default submit.
+- Rows of an array field are `withForm` components that read their line with
+  `form.Subscribe` (see `DailySaleLineRow`). Don't read nested values from the
+  array field's own `state.value`; it doesn't update when a nested field does.
+- Money fields use `FormMoneyInput` (rupees typed, paisa stored); volumes use
+  `FormVolumeInput` (litres typed, ml stored).
+- List pages keep page, filters and sort in the URL: the route's
+  `validateSearch` uses the shared list-query schema through
+  `SearchParamsHelper.parse`, and the page gets `search` / `onSearchChange`.
+
 ## Validation Schemas
 
 Request schemas come from `@repo/shared` and are the same ones the API

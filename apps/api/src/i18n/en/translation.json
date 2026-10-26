@@ -61,7 +61,7 @@
   },
   "stock": {
     "insufficient": "Not enough stock for this change.",
-    "lineShortage": "Only {{available}} in stock; this needs {{requested}} more.",
+    "lineShortage": "Not enough stock: {{available}} left, this change takes {{requested}}.",
     "voidShortageLine": "{{label}}: {{available}} in stock, batch added {{requested}}",
     "voidWouldGoNegative": "Can't void Batch-{{batchNumber}}: some of its stock has already been sold ({{detail}}). Use a stock adjustment to correct the difference.",
     "variantInactive": "This size is inactive. Activate it on the product before recording stock.",

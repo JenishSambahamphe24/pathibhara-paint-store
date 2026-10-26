@@ -57,7 +57,10 @@ export function ActionButton({
       positioning={{ placement: "top" }}
     >
       <Tooltip.Trigger asChild>
+        {/* Without an explicit type a button inside a form is a submit button:
+            clicking it would save the form, and Enter would "click" it. */}
         <button
+          type="button"
           onClick={onClick}
           disabled={disabled}
           className={clsx(

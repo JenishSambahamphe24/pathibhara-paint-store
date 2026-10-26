@@ -14,6 +14,7 @@ interface PaginationProps {
   onPreviousPage: () => void;
   currentPage?: number;
   totalPages?: number;
+  total?: number;
   perPage: number;
   onPerPageChange: (perPage: number) => void;
   perPageOptions?: number[];
@@ -32,6 +33,7 @@ export function Pagination({
   onPreviousPage,
   currentPage,
   totalPages,
+  total,
   perPage,
   onPerPageChange,
   perPageOptions = DEFAULT_PER_PAGE_OPTIONS,
@@ -108,6 +110,11 @@ export function Pagination({
       )}
 
       <div className="flex items-center gap-3">
+        {total != null && (
+          <span className="hidden text-sm text-foreground-subtle sm:inline">
+            {m.pagination_total({ count: total })}
+          </span>
+        )}
         {currentPage != null && (
           <span className="text-sm text-foreground-muted">
             {totalPages != null

@@ -1,6 +1,14 @@
 import type { ISidebarGroup } from "../types";
 
-import { LayoutDashboard } from "lucide-react";
+import {
+  ArrowDownToLine,
+  FolderTree,
+  LayoutDashboard,
+  Package,
+  ReceiptText,
+  ScrollText,
+  SlidersHorizontal,
+} from "lucide-react";
 import { useState } from "react";
 
 import { m } from "#/paraglide/messages";
@@ -21,6 +29,46 @@ export function useSidebarItems() {
           title: m.sidebar_dashboard(),
           icon: <LayoutDashboard size={20} />,
           url: "/dashboard",
+        },
+      ],
+    },
+    {
+      title: m.sidebar_catalogue(),
+      items: [
+        {
+          title: m.sidebar_categories(),
+          icon: <FolderTree size={20} />,
+          url: "/categories",
+        },
+        {
+          title: m.sidebar_products(),
+          icon: <Package size={20} />,
+          url: "/products",
+        },
+      ],
+    },
+    {
+      title: m.sidebar_stock(),
+      items: [
+        {
+          title: m.sidebar_daily_sales(),
+          icon: <ReceiptText size={20} />,
+          url: "/stock/sales",
+        },
+        {
+          title: m.sidebar_batches(),
+          icon: <ArrowDownToLine size={20} />,
+          url: "/stock/batches",
+        },
+        {
+          title: m.sidebar_adjustments(),
+          icon: <SlidersHorizontal size={20} />,
+          url: "/stock/adjustments",
+        },
+        {
+          title: m.sidebar_movements(),
+          icon: <ScrollText size={20} />,
+          url: "/stock/movements",
         },
       ],
     },

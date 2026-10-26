@@ -86,7 +86,7 @@ export class ApiClient {
 
     if (!response.ok) {
       const body = (await response.json()) as IApiError;
-      throw new ApiError(body);
+      throw new ApiError(body, response.status);
     }
 
     // 204 No Content / 205 Reset Content carry no body. Parsing JSON on an

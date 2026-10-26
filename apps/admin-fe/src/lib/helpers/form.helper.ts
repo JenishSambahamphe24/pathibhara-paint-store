@@ -1,12 +1,22 @@
-import type { AnyFormApi } from "@tanstack/react-form";
+import type { AnyFormApi, StandardSchemaV1 } from "@tanstack/react-form";
 import type { RefObject } from "react";
 import type { z } from "zod";
 
 import { ApiError } from "#/lib/apiError";
 import { toaster } from "#/lib/toaster";
 
+import { ApiErrorHelper } from "./apiError.helper";
+
 export class FormHelper {
-  static gatedSchema<T extends z.ZodType>(
+  // Form state may hold null for a number nobody has typed yet; the shared API
+  // schema rejecting that null is exactly how "Enter a quantity" gets shown.
+  // So the schema validates the form's values even though its input type is
+  // stricter than the form's.
+  static validator<TValues>(schema: z.ZodType): StandardSchemaV1<TValues> {
+    return schema as unknown as StandardSchemaV1<TValues>;
+  }
+
+  static gatedSchema<T extends StandardSchemaV1>(
     schema: T,
     gateRef: RefObject<boolean>,
   ): T {
@@ -20,6 +30,18 @@ export class FormHelper {
         },
       },
     } as unknown as T;
+  }
+
+  // A server error sticks until the field changes; call on every edit.
+  static clearServerError(field: {
+    state: { meta: { errorMap: Record<string, unknown> } };
+    setMeta: (updater: (meta: any) => any) => void;
+  }): void {
+    if (!field.state.meta.errorMap.onServer) return;
+    field.setMeta((meta) => ({
+      ...meta,
+      errorMap: { ...meta.errorMap, onServer: undefined },
+    }));
   }
 
   static getFieldError(errors: Array<unknown>): string | undefined {
@@ -71,12 +93,7 @@ export class FormHelper {
       // only channel the admin actually sees in that case.
       toaster.error({ description: fieldErrors[0][1] });
     } else {
-      toaster.error({
-        description:
-          error instanceof ApiError
-            ? error.body.message
-            : "An unexpected error occurred",
-      });
+      toaster.error({ description: ApiErrorHelper.describe(error) });
     }
   }
 }

@@ -12,7 +12,7 @@ export function LoginForm() {
   return (
     <form.AppForm>
       <div className="rounded-2xl bg-surface p-5 shadow-sm ring-1 ring-border">
-        <form action={handleSubmit} className="space-y-5">
+        <form action={handleSubmit} noValidate className="space-y-5">
           <form.AppField name="email">
             {(field) => (
               <field.FormInput

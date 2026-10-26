@@ -34,12 +34,14 @@ export function Button({
   startIcon,
   endIcon,
   fullWidth = false,
+  type = "button",
   children,
   className,
   ...props
 }: ButtonProps) {
   return (
     <button
+      type={type}
       className={clsx(
         "inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg font-semibold transition-colors",
         "disabled:cursor-not-allowed disabled:opacity-50",

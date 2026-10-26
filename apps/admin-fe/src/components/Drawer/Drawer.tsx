@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { Dialog, Portal } from "@ark-ui/react";
+import clsx from "clsx";
 import { X } from "lucide-react";
 
 interface DrawerProps {
@@ -9,6 +10,7 @@ interface DrawerProps {
   title: string;
   description?: string;
   children: ReactNode;
+  size?: "md" | "xl";
 }
 
 export function Drawer({
@@ -17,6 +19,7 @@ export function Drawer({
   title,
   description,
   children,
+  size = "md",
 }: DrawerProps) {
   return (
     <Dialog.Root
@@ -27,7 +30,13 @@ export function Drawer({
       <Portal>
         <Dialog.Backdrop className="fixed inset-0 z-40 bg-overlay/40 data-[state=closed]:animate-overlay-out data-[state=open]:animate-overlay-in" />
         <Dialog.Positioner className="fixed inset-y-0 right-0 z-50 flex">
-          <Dialog.Content className="flex h-full w-screen max-w-md flex-col bg-surface shadow-xl data-[state=closed]:animate-drawer-out data-[state=open]:animate-drawer-in">
+          <Dialog.Content
+            className={clsx(
+              "flex h-full w-screen flex-col",
+              size === "xl" ? "max-w-3xl" : "max-w-md",
+              "bg-surface shadow-xl data-[state=closed]:animate-drawer-out data-[state=open]:animate-drawer-in",
+            )}
+          >
             <div className="flex items-start justify-between border-b border-border px-5 py-4">
               <div className="min-w-0">
                 <Dialog.Title className="truncate text-base font-semibold text-foreground">

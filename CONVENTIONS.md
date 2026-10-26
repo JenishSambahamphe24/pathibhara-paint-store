@@ -410,6 +410,48 @@ Nepali. It keeps SSR. Planned, and partly shaped in the Phase 2 schema:
   falls back to English. A third language is a new `LOCALES` value plus a
   migration for the `locale` enum, with no table changes. See `docs/schema.md`.
 
+## 14. Phase 3 decisions and fixes over bitsky
+
+**API**
+- Validation error keys use bracketed indexes (`variants[0].sku`), the same
+  names TanStack Form uses, so server errors land on the exact input.
+- Query parameters are validated strictly (a bad `sortBy` is a 422). zod-to-openapi
+  can't describe `.catch()`, so the admin drops invalid URL params itself
+  (`SearchParamsHelper`) instead of the schema forgiving them.
+- Foreign-key violations map to 409 "still in use", next to bitsky's 409 for
+  unique violations, so a missed check can't surface as a 500.
+- Uploaded images are checked by their bytes, not the browser-declared type
+  (bitsky trusts the declared type unless it's generic). Images upload on their
+  own (`POST /admin/files/images`); products then reference file ids in order.
+- The category tree is one depth-first list (`depth`, `path`), not paged: a
+  shop has tens of categories and paging would split branches. It's the one
+  list without pagination; search and status filtering still apply.
+- `StockLedgerService.apply` is the only code that changes stock. It refuses
+  to run outside a transaction, locks variants in id order, and reports every
+  short size at once.
+
+**admin-fe**
+- `Button` and `ActionButton` default to `type="button"`. bitsky's render an
+  untyped `<button>`, which inside a form is a submit button: clicking a row's
+  trash icon saved the form, and pressing Enter "clicked" the first one (on the
+  sales page that deleted line 1, then saved). Submit buttons say
+  `type="submit"` explicitly.
+- Forms set `noValidate`: the shared schemas and the API are the only source of
+  validation messages, not the browser's tooltips.
+- Rows of an array field (`items[i]`, `variants[i]`) are `withForm` components
+  that read their own line through `form.Subscribe`. The array field doesn't
+  re-render when a field nested inside an item changes, so reading the line
+  from it shows stale values.
+- Number fields that start empty hold `null`; `FormHelper.validator<T>()` lets a
+  shared schema (which requires a number) validate them, which is what shows
+  "Enter a quantity".
+- Prices are typed in rupees and stored as paisa (`FormMoneyInput`); sizes are
+  typed in litres and stored as millilitres (`FormVolumeInput`).
+- List state (page, filters, sort) lives in the URL via `validateSearch`; route
+  files pass `search` and `onSearchChange` to the page component.
+- Ports are 4002 (API), 4005 (admin), 4006 (customer), 42075 (devtools), apart
+  from bitsky's 3000-range, which runs on the same machine.
+
 ---
 
 ## Repo layout

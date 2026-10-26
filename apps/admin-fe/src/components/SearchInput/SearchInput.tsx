@@ -12,6 +12,8 @@ interface SearchInputProps {
   /** Rewrites each keystroke before it reaches the box — used to keep a
    *  numeric-only search from accepting letters at all. */
   sanitize?: (raw: string) => string;
+  // Prefills the box, e.g. from a search already in the URL.
+  initialValue?: string;
 }
 
 export function SearchInput({
@@ -21,8 +23,9 @@ export function SearchInput({
   className,
   inputMode,
   sanitize,
+  initialValue = "",
 }: SearchInputProps) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(initialValue);
   const [debouncedValue] = useDebouncedValue(value, { wait });
 
   useEffect(() => {

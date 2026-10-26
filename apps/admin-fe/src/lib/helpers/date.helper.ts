@@ -39,6 +39,12 @@ export class DateHelper {
     return d.isValid() ? d.format("ll") : "—";
   }
 
+  // Plain calendar arithmetic on YYYY-MM-DD, done in UTC so no zone or DST
+  // shift can land on the wrong day.
+  static shiftCalendarDate(date: string, days: number): string {
+    return dayjs.utc(date).add(days, "day").format("YYYY-MM-DD");
+  }
+
   static todayInStore(): string {
     return dayjs().tz(STORE_TZ).format("YYYY-MM-DD");
   }
