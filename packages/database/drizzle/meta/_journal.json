@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1792994227931,
+      "tag": "0000_uuid_v7_function",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793001901711,
+      "tag": "0001_admin_auth",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793002682207,
+      "tag": "0002_catalog_stock_content",
+      "breakpoints": true
+    }
+  ]
+}

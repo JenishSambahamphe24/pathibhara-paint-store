@@ -1,0 +1,234 @@
+@import "tailwindcss";
+
+/*
+ * https://github.com/tailwindlabs/tailwindcss-forms
+ */
+@plugin "@tailwindcss/forms";
+
+/*
+ * https://github.com/tailwindlabs/tailwindcss-typography
+ */
+@plugin "@tailwindcss/typography";
+
+/*
+ * Custom configuration
+ */
+@theme {
+  /* Brand */
+  --color-primary: #1e1b2f;
+  --color-primary-foreground: var(--color-white);
+  --color-primary-foreground-muted: var(--color-gray-200);
+  --color-primary-foreground-subtle: var(--color-gray-400);
+
+  /* Surfaces (light) */
+  --color-surface: var(--color-white);
+  --color-surface-muted: var(--color-gray-50);
+  --color-surface-subtle: var(--color-gray-100);
+  --color-surface-strong: var(--color-gray-200);
+
+  /* Surfaces (inverse / dark overlays, e.g. dark tooltips, dark pills) */
+  --color-surface-inverse: var(--color-gray-900);
+  --color-surface-inverse-muted: var(--color-gray-800);
+  --color-surface-inverse-subtle: var(--color-gray-700);
+
+  /* Scrim for modal/dialog backdrops */
+  --color-overlay: var(--color-black);
+
+  /* Borders */
+  --color-border: var(--color-gray-200);
+  --color-border-muted: var(--color-gray-100);
+  --color-border-strong: var(--color-gray-300);
+
+  /* Foreground (text) */
+  --color-foreground: var(--color-gray-900);
+  --color-foreground-muted: var(--color-gray-700);
+  --color-foreground-subtle: var(--color-gray-500);
+  --color-foreground-faint: var(--color-gray-400);
+
+  /* Semantic — success */
+  --color-success: var(--color-green-600);
+  --color-success-subtle: var(--color-green-50);
+  --color-success-strong: var(--color-green-700);
+  --color-success-border: var(--color-green-200);
+
+  /* Semantic — danger */
+  --color-danger: var(--color-red-600);
+  --color-danger-subtle: var(--color-red-50);
+  --color-danger-strong: var(--color-red-700);
+  --color-danger-border: var(--color-red-200);
+
+  /* Semantic — info */
+  --color-info: var(--color-blue-600);
+  --color-info-subtle: var(--color-blue-50);
+  --color-info-strong: var(--color-blue-700);
+  --color-info-border: var(--color-blue-200);
+
+  /* Semantic — warning */
+  --color-warning: var(--color-amber-500);
+  --color-warning-subtle: var(--color-amber-50);
+  --color-warning-strong: var(--color-amber-800);
+  --color-warning-border: var(--color-amber-200);
+
+  /* Indicators (categorical dots) */
+  --color-indicator-amber: var(--color-amber-400);
+  --color-indicator-purple: var(--color-purple-400);
+  --color-indicator-green: var(--color-green-400);
+  --color-indicator-blue: var(--color-blue-400);
+  --color-indicator-emerald: var(--color-emerald-400);
+
+  --font-size-2xs: 0.625rem;
+
+  --container-8xl: 88rem;
+  --container-9xl: 96rem;
+
+  --animate-tooltip-in: tooltip-in 0.2s ease forwards;
+  --animate-tooltip-out: tooltip-out 0.3s ease forwards;
+
+  --animate-drawer-in: drawer-in 0.25s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  --animate-drawer-out: drawer-out 0.2s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  --animate-sidebar-in: sidebar-in 0.25s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  --animate-sidebar-out: sidebar-out 0.2s cubic-bezier(0.32, 0.72, 0, 1)
+    forwards;
+  --animate-overlay-in: overlay-in 0.2s ease forwards;
+  --animate-overlay-out: overlay-out 0.2s ease forwards;
+
+  @keyframes tooltip-in {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(6px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0px);
+    }
+  }
+
+  @keyframes tooltip-out {
+    0% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(6px);
+    }
+  }
+
+  @keyframes drawer-in {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes drawer-out {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes sidebar-in {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes sidebar-out {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes overlay-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes overlay-out {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+/*
+ * Popovers triggered from inside a dialog (date pickers, selects) need to
+ * sit above the dialog itself. Dialogs use z-50; popovers use z-popover.
+ */
+@utility z-popover {
+  z-index: 60;
+}
+
+/*
+ * Staggers a shared animation across siblings. Tailwind's own `delay-*` sets
+ * `transition-delay`, which does nothing for a keyframe animation, hence the
+ * separate name.
+ */
+@utility animation-delay-150 {
+  animation-delay: 150ms;
+}
+
+@utility animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+/*
+ * Transform-based animations (`animate-ping`, `animate-pulse`, `scale-*`) on an
+ * SVG child resolve against the root SVG's coordinate origin, not the element's
+ * own box — so a pulse meant to expand around a plotted point instead flies
+ * away from it, toward the bottom-right. Re-anchoring to the element's fill box
+ * makes the transform behave the way it does on HTML.
+ */
+@utility transform-self {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/*
+ * Slim, self-tinting scrollbar for the app's scroll containers. The thumb is
+ * mixed from `currentColor`, so the same utility reads correctly on the dark
+ * sidebar (light text → light thumb) and on light content surfaces (dark text →
+ * dark thumb) without a second variant. Firefox takes the standard properties;
+ * the webkit pseudo-elements are what give the thumb its rounded cap.
+ */
+@utility scrollbar-slim {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, currentColor 22%, transparent)
+    transparent;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, currentColor 22%, transparent);
+    border-radius: 9999px;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, currentColor 38%, transparent);
+  }
+}

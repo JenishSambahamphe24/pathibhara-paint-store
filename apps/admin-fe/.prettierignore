@@ -1,0 +1,22 @@
+# Dependency lockfiles
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Build & generated output
+dist/
+build/
+.output/
+.turbo/
+coverage/
+
+# Generated sources
+src/paraglide/
+routeTree.gen.ts
+project.inlang/
+
+# Tooling
+.claude/
+
+# Release changelog (generated — not hand-formatted)
+CHANGELOG.md

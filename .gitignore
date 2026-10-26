@@ -1,0 +1,37 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+.output
+.vinxi
+.wrangler
+.nitro
+
+# Caches
+.turbo
+.tanstack
+.vite
+__unconfig*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+*.local
+
+# Local storage provider: dev uploads are never committed
+apps/*/uploads/
+
+# OS / editor
+.DS_Store
+
+# Personal, local-only Claude skills — not shared with other contributors
+.claude/skills/
+
+# Personal, local-only Claude working files (design ledgers, scratch notes)
+.claude/local/
+
+**/.claude/worktrees/

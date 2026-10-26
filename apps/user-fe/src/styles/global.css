@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: var(--color-white);
+  --color-foreground: var(--color-slate-900);
+  --color-foreground-subtle: var(--color-slate-500);
+}
+
+body {
+  @apply bg-surface text-foreground;
+}

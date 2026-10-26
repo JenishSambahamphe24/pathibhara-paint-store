@@ -1,0 +1,47 @@
+{
+  "name": "user-fe",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev --port 4006 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint",
+    "format": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "format:write": "prettier --write .",
+    "check": "prettier --write . && eslint --fix"
+  },
+  "dependencies": {
+    "@repo/shared": "workspace:*",
+    "@tailwindcss/vite": "catalog:fe",
+    "@tanstack/react-router": "catalog:fe",
+    "@tanstack/react-start": "catalog:fe",
+    "@tanstack/router-plugin": "catalog:fe",
+    "nitro": "catalog:fe",
+    "react": "catalog:fe",
+    "react-dom": "catalog:fe",
+    "tailwindcss": "catalog:fe",
+    "zod": "catalog:generic"
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "catalog:generic",
+    "@repo/config": "workspace:*",
+    "@tanstack/eslint-config": "catalog:fe",
+    "@types/node": "catalog:generic",
+    "@types/react": "catalog:fe",
+    "@types/react-dom": "catalog:fe",
+    "@vitejs/plugin-react": "catalog:fe",
+    "babel-plugin-react-compiler": "catalog:fe",
+    "eslint": "catalog:generic",
+    "prettier": "catalog:generic",
+    "prettier-plugin-tailwindcss": "catalog:fe",
+    "typescript": "catalog:generic",
+    "vite": "catalog:fe",
+    "vite-tsconfig-paths": "catalog:fe"
+  },
+  "imports": {
+    "#/*": "./src/*"
+  }
+}

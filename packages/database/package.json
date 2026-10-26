@@ -1,0 +1,39 @@
+{
+  "name": "@repo/database",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "@repo/http-kit": "workspace:*",
+    "@repo/shared": "workspace:*",
+    "drizzle-orm": "catalog:be",
+    "pg": "catalog:be",
+    "reflect-metadata": "catalog:be",
+    "tsyringe": "catalog:be"
+  },
+  "devDependencies": {
+    "@repo/config": "workspace:*",
+    "@repo/http-kit": "workspace:*",
+    "@repo/shared": "workspace:*",
+    "@swc-node/register": "catalog:be",
+    "@swc/core": "catalog:be",
+    "@types/node": "catalog:generic",
+    "@types/pg": "catalog:be",
+    "drizzle-kit": "catalog:be",
+    "drizzle-orm": "catalog:be",
+    "eslint": "catalog:generic",
+    "pg": "catalog:be",
+    "reflect-metadata": "catalog:be",
+    "tsyringe": "catalog:be",
+    "typescript": "catalog:generic",
+    "typescript-eslint": "catalog:generic"
+  }
+}

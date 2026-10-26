@@ -1,0 +1,30 @@
+{
+  "response": {
+    "success": "Success",
+    "created": "Created",
+    "deleted": "Deleted"
+  },
+  "error": {
+    "badRequest": "Bad request",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Forbidden",
+    "notFound": "Not found",
+    "conflict": "Conflict",
+    "validationFailed": "Validation failed",
+    "internalServer": "Internal server error",
+    "tooManyRequests": "Too many attempts. Try again in a few minutes."
+  },
+  "auth": {
+    "loginSuccess": "Logged in",
+    "refreshSuccess": "Tokens refreshed",
+    "logoutSuccess": "Logged out",
+    "missingToken": "Authentication required",
+    "invalidToken": "Invalid authentication token",
+    "invalidRefreshToken": "Invalid refresh token",
+    "invalidCredentials": "Invalid email or password",
+    "accountNotActive": "Account is not active",
+    "sessionRevoked": "Session has been revoked",
+    "sessionExpired": "Session has expired",
+    "adminNotFound": "Admin not found"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@repo/http-kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "@asteasolutions/zod-to-openapi": "catalog:be",
+    "@scalar/express-api-reference": "catalog:be",
+    "express": "catalog:be",
+    "i18next": "catalog:be",
+    "openapi3-ts": "catalog:be",
+    "pino": "catalog:be",
+    "pino-http": "catalog:be",
+    "reflect-metadata": "catalog:be",
+    "tsyringe": "catalog:be",
+    "zod": "catalog:generic"
+  },
+  "devDependencies": {
+    "@asteasolutions/zod-to-openapi": "catalog:be",
+    "@repo/config": "workspace:*",
+    "@scalar/express-api-reference": "catalog:be",
+    "@types/express": "catalog:be",
+    "@types/node": "catalog:generic",
+    "@types/pino-http": "catalog:be",
+    "eslint": "catalog:generic",
+    "express": "catalog:be",
+    "i18next": "catalog:be",
+    "openapi3-ts": "catalog:be",
+    "pino": "catalog:be",
+    "pino-http": "catalog:be",
+    "pino-pretty": "catalog:be",
+    "reflect-metadata": "catalog:be",
+    "tsyringe": "catalog:be",
+    "typescript": "catalog:generic",
+    "typescript-eslint": "catalog:generic",
+    "zod": "catalog:generic"
+  }
+}

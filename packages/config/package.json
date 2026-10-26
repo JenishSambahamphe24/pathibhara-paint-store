@@ -1,0 +1,39 @@
+{
+  "name": "@repo/config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./eslint/base": "./eslint/base.js",
+    "./eslint/node": "./eslint/node.js",
+    "./eslint/api": "./eslint/api.js",
+    "./eslint/react": "./eslint/react.js",
+    "./prettier/base": "./prettier/base.js",
+    "./prettier/node": "./prettier/node.js",
+    "./prettier/api": "./prettier/api.js",
+    "./prettier/react": "./prettier/react.js",
+    "./tsconfig/base.json": "./tsconfig/base.json",
+    "./tsconfig/node.json": "./tsconfig/node.json",
+    "./tsconfig/react.json": "./tsconfig/react.json"
+  },
+  "peerDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "catalog:generic",
+    "@tanstack/eslint-config": "catalog:fe",
+    "eslint": "catalog:generic",
+    "prettier": "catalog:generic",
+    "prettier-plugin-tailwindcss": "catalog:fe",
+    "typescript": "catalog:generic",
+    "typescript-eslint": "catalog:generic"
+  },
+  "peerDependenciesMeta": {
+    "@tanstack/eslint-config": {
+      "optional": true
+    },
+    "prettier-plugin-tailwindcss": {
+      "optional": true
+    },
+    "typescript-eslint": {
+      "optional": true
+    }
+  }
+}

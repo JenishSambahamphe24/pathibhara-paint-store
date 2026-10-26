@@ -1,0 +1,13 @@
+@import "./tailwind.css";
+@import "./override.css";
+
+/* Global customization */
+html,
+body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  background: var(--color-gray-50);
+}
