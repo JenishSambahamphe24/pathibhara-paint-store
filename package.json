@@ -33,7 +33,8 @@
     "onlyBuiltDependencies": [
       "@swc/core",
       "bcrypt",
-      "esbuild"
+      "esbuild",
+      "sharp"
     ]
   },
   "packageManager": "pnpm@10.31.0",

@@ -33,6 +33,18 @@ export const envSchema = z.object({
   // caller's own X-Forwarded-For header.
   TRUST_PROXY: z.coerce.number().int().min(0).optional(),
 
+  // Only the local disk provider exists so far; an S3-compatible provider is
+  // added for production behind the same StorageService interface.
+  STORAGE_PROVIDER: z.enum(["local"]).default("local"),
+  STORAGE_LOCAL_ROOT: z.string().default("./uploads"),
+  // Public URL prefix files are served from (the API mounts it for local).
+  STORAGE_PUBLIC_BASE_URL: z.url().default("http://localhost:4002/uploads"),
+  UPLOAD_MAX_IMAGE_BYTES: z.coerce
+    .number()
+    .int()
+    .positive()
+    .default(5 * 1024 * 1024),
+
   // When set, /docs and /openapi.json sit behind a password login page.
   DOCS_PASSWORD: z.string().min(1).optional(),
 });

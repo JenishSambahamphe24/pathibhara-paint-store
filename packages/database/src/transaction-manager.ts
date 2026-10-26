@@ -29,6 +29,10 @@ export class TransactionManager {
 
   constructor(private readonly databaseService: DatabaseService) {}
 
+  isActive(): boolean {
+    return this.storage.getStore() !== undefined;
+  }
+
   current(): DbExecutor {
     return this.storage.getStore()?.tx ?? this.databaseService.db;
   }

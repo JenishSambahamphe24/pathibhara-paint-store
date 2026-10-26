@@ -10,6 +10,7 @@ export {
 } from "./decorators/param.decorator";
 export {
   OkResponse,
+  OkArrayResponse,
   PaginatedOkResponse,
   CreatedResponse,
   NoContentResponse,

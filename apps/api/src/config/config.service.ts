@@ -23,6 +23,13 @@ interface AuthJwtConfig {
   refreshTtlSeconds: number;
 }
 
+interface StorageConfig {
+  provider: "local";
+  localRoot: string;
+  publicBaseUrl: string;
+  maxImageBytes: number;
+}
+
 interface AuthPasswordConfig {
   bcryptCost: number;
 }
@@ -61,6 +68,16 @@ export class ConfigService {
 
   get authPassword(): AuthPasswordConfig {
     return { bcryptCost: EnvHolder.get().BCRYPT_COST };
+  }
+
+  get storage(): StorageConfig {
+    const env = EnvHolder.get();
+    return {
+      provider: env.STORAGE_PROVIDER,
+      localRoot: env.STORAGE_LOCAL_ROOT,
+      publicBaseUrl: env.STORAGE_PUBLIC_BASE_URL,
+      maxImageBytes: env.UPLOAD_MAX_IMAGE_BYTES,
+    };
   }
 
   get corsOrigins(): string[] | "*" | undefined {

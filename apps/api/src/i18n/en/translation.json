@@ -12,7 +12,8 @@
     "conflict": "Conflict",
     "validationFailed": "Validation failed",
     "internalServer": "Internal server error",
-    "tooManyRequests": "Too many attempts. Try again in a few minutes."
+    "tooManyRequests": "Too many attempts. Try again in a few minutes.",
+    "inUse": "This record is still in use and can't be removed."
   },
   "auth": {
     "loginSuccess": "Logged in",
@@ -26,5 +27,52 @@
     "sessionRevoked": "Session has been revoked",
     "sessionExpired": "Session has expired",
     "adminNotFound": "Admin not found"
+  },
+  "file": {
+    "multipartExpected": "Send the file as multipart/form-data.",
+    "missing": "Attach an image in the `file` field.",
+    "tooLarge": "That image is too large.",
+    "tooMany": "Upload one image at a time.",
+    "typeNotAllowed": "Upload a JPEG, PNG, WebP or AVIF image.",
+    "notFound": "One of the images no longer exists. Remove it and upload again.",
+    "uploaded": "Image uploaded"
+  },
+  "slug": {
+    "taken": "This URL slug is already used. Choose another."
+  },
+  "category": {
+    "notFound": "Category not found",
+    "created": "Category created",
+    "updated": "Category saved",
+    "deleted": "Category deleted",
+    "reordered": "Order saved",
+    "reorderMismatch": "The list must contain exactly this category's current subcategories. Refresh and try again.",
+    "moveIntoOwnSubtree": "A category can't be moved inside one of its own subcategories.",
+    "deleteNotEmpty": "This category has subcategories or products. Deactivate it instead."
+  },
+  "product": {
+    "notFound": "Product not found",
+    "created": "Product created",
+    "updated": "Product saved",
+    "variantNotFound": "That product size doesn't exist.",
+    "skuTaken": "This SKU is already used by another product.",
+    "variantVolumeLocked": "This size has stock history, so its volume can't change. Add a new size instead.",
+    "variantHasHistory": "A size you removed has stock history. Deactivate it instead of removing it."
+  },
+  "stock": {
+    "insufficient": "Not enough stock for this change.",
+    "lineShortage": "Only {{available}} in stock; this needs {{requested}} more.",
+    "voidShortageLine": "{{label}}: {{available}} in stock, batch added {{requested}}",
+    "voidWouldGoNegative": "Can't void Batch-{{batchNumber}}: some of its stock has already been sold ({{detail}}). Use a stock adjustment to correct the difference.",
+    "variantInactive": "This size is inactive. Activate it on the product before recording stock.",
+    "dateInFuture": "The date can't be in the future.",
+    "batchNotFound": "Batch not found",
+    "batchCreated": "Batch recorded",
+    "batchVoided": "Batch voided",
+    "batchAlreadyVoided": "This batch is already voided.",
+    "saleNotFound": "No sales recorded for this date yet.",
+    "saleSaved": "Sales saved",
+    "adjustmentNotFound": "Adjustment not found",
+    "adjustmentCreated": "Stock adjusted"
   }
 }

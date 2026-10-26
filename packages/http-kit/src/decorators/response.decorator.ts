@@ -1,6 +1,7 @@
 import type { DtoClass, ResponseMetadata } from "../metadata/metadata-types";
 
 import { METADATA_KEYS } from "../metadata/metadata-keys";
+import { z } from "../zod/zod-extended";
 
 function addResponseMetadata(
   target: object,
@@ -19,6 +20,17 @@ export function OkResponse(dto: DtoClass, description = "OK"): MethodDecorator {
       statusCode: 200,
       description,
       schema: dto.schema,
+    });
+  };
+}
+
+// A plain (unpaginated) list, e.g. a whole category tree.
+export function OkArrayResponse(dto: DtoClass, description = "OK"): MethodDecorator {
+  return (target, propertyKey) => {
+    addResponseMetadata(target, propertyKey, {
+      statusCode: 200,
+      description,
+      schema: z.array(dto.schema),
     });
   };
 }

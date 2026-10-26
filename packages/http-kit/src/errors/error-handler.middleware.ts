@@ -6,8 +6,9 @@ import { I18nService } from "../i18n/i18n.service";
 import { LoggerService } from "../logger/logger.service";
 import { HttpException } from "./http.exception";
 
-/** Postgres `unique_violation` SQLSTATE — a duplicate key, i.e. a conflict. */
 const PG_UNIQUE_VIOLATION = "23505";
+// A delete/update blocked by a RESTRICT foreign key: the row is still in use.
+const PG_FOREIGN_KEY_VIOLATION = "23503";
 
 export class ErrorHandler {
   /**
@@ -69,12 +70,14 @@ export class ErrorHandler {
       // service layer would otherwise surface as a raw 500. Map it to a clean
       // 409 so the client always gets a friendly message — never leaked SQL.
       // It's still logged (warn) so a missing pre-check stays visible.
-      if (ErrorHandler.pgErrorCode(err) === PG_UNIQUE_VIOLATION) {
+      const pgCode = ErrorHandler.pgErrorCode(err);
+      if (pgCode === PG_UNIQUE_VIOLATION || pgCode === PG_FOREIGN_KEY_VIOLATION) {
         logger.warn(
-          { statusCode: 409, method: req.method, path: req.originalUrl },
-          "Request rejected: unique constraint violation",
+          { statusCode: 409, method: req.method, path: req.originalUrl, pgCode },
+          "Request rejected: constraint violation",
         );
-        res.status(409).json({ message: i18n.t("error.conflict") });
+        const key = pgCode === PG_UNIQUE_VIOLATION ? "error.conflict" : "error.inUse";
+        res.status(409).json({ message: i18n.t(key) });
         return;
       }
 

@@ -9,7 +9,13 @@ import { ConfigService } from "#config";
 
 import translationEn from "./i18n/en/translation.json";
 import { AuthController } from "./modules/auth/auth.controller";
+import { CategoryController } from "./modules/category/category.controller";
+import { FileController } from "./modules/file/file.controller";
 import { HealthController } from "./modules/health/health.controller";
+import { ProductController } from "./modules/product/product.controller";
+import { VariantController } from "./modules/product/variant.controller";
+import { StockController } from "./modules/stock/stock.controller";
+import { StorageBootstrap } from "./modules/storage/storage.bootstrap";
 
 export class Bootstrap {
   static async init(): Promise<Express> {
@@ -31,6 +37,8 @@ export class Bootstrap {
       connectionTimeoutMs: config.database.connectionTimeoutMs,
     });
 
+    StorageBootstrap.register();
+
     return AppFactory.create({
       title: "Pathibhara Paints API",
       version: "0.1.0",
@@ -38,7 +46,16 @@ export class Bootstrap {
       corsOrigins: config.corsOrigins,
       trustProxy: config.trustProxy,
       docsAuth: config.docsAuth,
-      controllers: [HealthController, AuthController],
+      middlewares: StorageBootstrap.staticMiddleware(),
+      controllers: [
+        HealthController,
+        AuthController,
+        FileController,
+        CategoryController,
+        ProductController,
+        VariantController,
+        StockController,
+      ],
     });
   }
 }

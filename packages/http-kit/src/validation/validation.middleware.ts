@@ -3,6 +3,17 @@ import type { ZodType } from "zod";
 
 import { ValidationException } from "../errors/validation.exception";
 
+// Bracketed array indexes ("variants[0].sku") match TanStack Form field names,
+// so the frontend can attach each server error to the exact input.
+function toFieldPath(path: ReadonlyArray<PropertyKey>): string {
+  return path
+    .map((segment, index) => {
+      if (typeof segment === "number") return `[${segment}]`;
+      return index === 0 ? String(segment) : `.${String(segment)}`;
+    })
+    .join("");
+}
+
 export interface ValidationSchema {
   body?: ZodType;
   query?: ZodType;
@@ -19,7 +30,7 @@ export class ValidationMiddleware {
         const result = schema.params.safeParse(req.params);
         if (!result.success) {
           for (const issue of result.error.issues) {
-            errors[issue.path.join(".")] = issue.message;
+            errors[toFieldPath(issue.path)] = issue.message;
           }
         } else {
           req.params = result.data as typeof req.params;
@@ -30,7 +41,7 @@ export class ValidationMiddleware {
         const result = schema.query.safeParse(req.query);
         if (!result.success) {
           for (const issue of result.error.issues) {
-            errors[issue.path.join(".")] = issue.message;
+            errors[toFieldPath(issue.path)] = issue.message;
           }
         } else {
           req.query = result.data as typeof req.query;
@@ -41,7 +52,7 @@ export class ValidationMiddleware {
         const result = schema.headers.safeParse(req.headers);
         if (!result.success) {
           for (const issue of result.error.issues) {
-            errors[issue.path.join(".")] = issue.message;
+            errors[toFieldPath(issue.path)] = issue.message;
           }
         }
       }
@@ -50,7 +61,7 @@ export class ValidationMiddleware {
         const result = schema.body.safeParse(req.body);
         if (!result.success) {
           for (const issue of result.error.issues) {
-            errors[issue.path.join(".")] = issue.message;
+            errors[toFieldPath(issue.path)] = issue.message;
           }
         } else {
           req.body = result.data;
