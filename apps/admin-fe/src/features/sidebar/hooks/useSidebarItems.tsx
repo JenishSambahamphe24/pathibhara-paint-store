@@ -2,6 +2,7 @@ import type { ISidebarGroup } from "../types";
 
 import {
   ArrowDownToLine,
+  Calculator,
   FolderTree,
   LayoutDashboard,
   Package,
@@ -29,6 +30,11 @@ export function useSidebarItems() {
           title: m.sidebar_dashboard(),
           icon: <LayoutDashboard size={20} />,
           url: "/dashboard",
+        },
+        {
+          title: m.sidebar_calculator(),
+          icon: <Calculator size={20} />,
+          url: "/calculator",
         },
       ],
     },

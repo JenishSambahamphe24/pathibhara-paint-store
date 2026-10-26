@@ -54,6 +54,8 @@ export class ProductListItemDto extends BaseDto {
     categoryId: z.uuid(),
     categoryName: z.string().nullable(),
     isActive: z.boolean(),
+    coverageSqftPerLitre: z.number(),
+    defaultCoats: z.number().int(),
     coverImage: FileResponseDto.schema.nullable(),
     variantCount: z.number().int(),
     minPricePaisa: z.number().int().nullable(),

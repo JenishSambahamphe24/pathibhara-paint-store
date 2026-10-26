@@ -55,6 +55,8 @@ export class ProductService {
         categoryId: row.product.categoryId,
         categoryName: row.categoryName,
         isActive: row.product.isActive,
+        coverageSqftPerLitre: row.product.coverageSqftPerLitre,
+        defaultCoats: row.product.defaultCoats,
         coverImage: row.coverFile ? this.fileService.toDto(row.coverFile) : null,
         variantCount: row.variantCount,
         minPricePaisa: row.minPricePaisa,

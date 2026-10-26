@@ -74,5 +74,10 @@
     "saleSaved": "Sales saved",
     "adjustmentNotFound": "Adjustment not found",
     "adjustmentCreated": "Stock adjusted"
+  },
+  "calculator": {
+    "productNotFound": "That product no longer exists.",
+    "noActiveSizes": "This product has no active sizes to sell.",
+    "noPaintableArea": "Doors and windows can't cover the whole wall area."
   }
 }

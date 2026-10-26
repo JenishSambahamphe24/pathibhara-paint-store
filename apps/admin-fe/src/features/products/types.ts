@@ -9,6 +9,8 @@ export interface IProductListItem {
   categoryId: string;
   categoryName: string | null;
   isActive: boolean;
+  coverageSqftPerLitre: number;
+  defaultCoats: number;
   coverImage: IFile | null;
   variantCount: number;
   minPricePaisa: number | null;

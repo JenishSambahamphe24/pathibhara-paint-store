@@ -9,6 +9,7 @@ import { ConfigService } from "#config";
 
 import translationEn from "./i18n/en/translation.json";
 import { AuthController } from "./modules/auth/auth.controller";
+import { CalculatorController } from "./modules/calculator/calculator.controller";
 import { CategoryController } from "./modules/category/category.controller";
 import { FileController } from "./modules/file/file.controller";
 import { HealthController } from "./modules/health/health.controller";
@@ -55,6 +56,7 @@ export class Bootstrap {
         ProductController,
         VariantController,
         StockController,
+        CalculatorController,
       ],
     });
   }

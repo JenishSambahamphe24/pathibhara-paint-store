@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as coreProductsIndexRouteImport } from './routes/(core)/products/index'
 import { Route as coreDashboardIndexRouteImport } from './routes/(core)/dashboard/index'
 import { Route as coreCategoriesIndexRouteImport } from './routes/(core)/categories/index'
+import { Route as coreCalculatorIndexRouteImport } from './routes/(core)/calculator/index'
 import { Route as authLoginIndexRouteImport } from './routes/(auth)/login/index'
 import { Route as coreProductsNewRouteImport } from './routes/(core)/products/new'
 import { Route as coreProductsProductIdRouteImport } from './routes/(core)/products/$productId'
@@ -42,6 +43,11 @@ const coreDashboardIndexRoute = coreDashboardIndexRouteImport.update({
 const coreCategoriesIndexRoute = coreCategoriesIndexRouteImport.update({
   id: '/(core)/categories/',
   path: '/categories/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const coreCalculatorIndexRoute = coreCalculatorIndexRouteImport.update({
+  id: '/(core)/calculator/',
+  path: '/calculator/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authLoginIndexRoute = authLoginIndexRouteImport.update({
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/products/$productId': typeof coreProductsProductIdRoute
   '/products/new': typeof coreProductsNewRoute
   '/login/': typeof authLoginIndexRoute
+  '/calculator/': typeof coreCalculatorIndexRoute
   '/categories/': typeof coreCategoriesIndexRoute
   '/dashboard/': typeof coreDashboardIndexRoute
   '/products/': typeof coreProductsIndexRoute
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/products/$productId': typeof coreProductsProductIdRoute
   '/products/new': typeof coreProductsNewRoute
   '/login': typeof authLoginIndexRoute
+  '/calculator': typeof coreCalculatorIndexRoute
   '/categories': typeof coreCategoriesIndexRoute
   '/dashboard': typeof coreDashboardIndexRoute
   '/products': typeof coreProductsIndexRoute
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/(core)/products/$productId': typeof coreProductsProductIdRoute
   '/(core)/products/new': typeof coreProductsNewRoute
   '/(auth)/login/': typeof authLoginIndexRoute
+  '/(core)/calculator/': typeof coreCalculatorIndexRoute
   '/(core)/categories/': typeof coreCategoriesIndexRoute
   '/(core)/dashboard/': typeof coreDashboardIndexRoute
   '/(core)/products/': typeof coreProductsIndexRoute
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/products/$productId'
     | '/products/new'
     | '/login/'
+    | '/calculator/'
     | '/categories/'
     | '/dashboard/'
     | '/products/'
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/products/$productId'
     | '/products/new'
     | '/login'
+    | '/calculator'
     | '/categories'
     | '/dashboard'
     | '/products'
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/(core)/products/$productId'
     | '/(core)/products/new'
     | '/(auth)/login/'
+    | '/(core)/calculator/'
     | '/(core)/categories/'
     | '/(core)/dashboard/'
     | '/(core)/products/'
@@ -201,6 +213,7 @@ export interface RootRouteChildren {
   coreProductsProductIdRoute: typeof coreProductsProductIdRoute
   coreProductsNewRoute: typeof coreProductsNewRoute
   authLoginIndexRoute: typeof authLoginIndexRoute
+  coreCalculatorIndexRoute: typeof coreCalculatorIndexRoute
   coreCategoriesIndexRoute: typeof coreCategoriesIndexRoute
   coreDashboardIndexRoute: typeof coreDashboardIndexRoute
   coreProductsIndexRoute: typeof coreProductsIndexRoute
@@ -241,6 +254,13 @@ declare module '@tanstack/react-router' {
       path: '/categories'
       fullPath: '/categories/'
       preLoaderRoute: typeof coreCategoriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(core)/calculator/': {
+      id: '/(core)/calculator/'
+      path: '/calculator'
+      fullPath: '/calculator/'
+      preLoaderRoute: typeof coreCalculatorIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/login/': {
@@ -321,6 +341,7 @@ const rootRouteChildren: RootRouteChildren = {
   coreProductsProductIdRoute: coreProductsProductIdRoute,
   coreProductsNewRoute: coreProductsNewRoute,
   authLoginIndexRoute: authLoginIndexRoute,
+  coreCalculatorIndexRoute: coreCalculatorIndexRoute,
   coreCategoriesIndexRoute: coreCategoriesIndexRoute,
   coreDashboardIndexRoute: coreDashboardIndexRoute,
   coreProductsIndexRoute: coreProductsIndexRoute,
