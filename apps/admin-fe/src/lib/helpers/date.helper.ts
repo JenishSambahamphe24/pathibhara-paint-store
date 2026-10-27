@@ -33,10 +33,10 @@ export class DateHelper {
 
   // A `YYYY-MM-DD` calendar date is not an instant; formatting it through a
   // timezone conversion could shift it by a day.
-  static formatCalendarDate(value: string | null | undefined): string {
+  static formatCalendarDate(value: string | null | undefined, format = "ll"): string {
     if (!value) return "—";
     const d = dayjs(value);
-    return d.isValid() ? d.format("ll") : "—";
+    return d.isValid() ? d.format(format) : "—";
   }
 
   // Plain calendar arithmetic on YYYY-MM-DD, done in UTC so no zone or DST

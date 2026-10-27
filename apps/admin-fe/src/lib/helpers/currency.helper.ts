@@ -16,6 +16,13 @@ export class CurrencyHelper {
     return `${grouped}.${fraction}`;
   }
 
+  // Whole rupees in lakh/crore shorthand ("Rs 1.3L"), for axis ticks only.
+  static formatCompactNpr(paisa: number): string {
+    const rupees = Number(MoneyHelper.toRupeesString(paisa).split(".")[0]);
+    const compact = new Intl.NumberFormat(NPR_LOCALE, { notation: "compact", maximumFractionDigits: 1 });
+    return `Rs ${compact.format(rupees)}`;
+  }
+
   static toLocaleString(value: number): string {
     return new Intl.NumberFormat(NPR_LOCALE).format(value);
   }

@@ -42,6 +42,7 @@
     "nitro": "catalog:fe",
     "react": "catalog:fe",
     "react-dom": "catalog:fe",
+    "recharts": "catalog:fe",
     "tailwindcss": "catalog:fe",
     "zod": "catalog:generic"
   },

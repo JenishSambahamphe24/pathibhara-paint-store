@@ -13,6 +13,8 @@ import {
 import { I18nService } from "@repo/http-kit";
 
 import translationEn from "../i18n/en/translation.json";
+import { DashboardRepository } from "../modules/dashboard/dashboard.repository";
+import { DashboardService } from "../modules/dashboard/dashboard.service";
 import { ProductRepository } from "../modules/product/product.repository";
 import { DailySaleRepository } from "../modules/stock/daily-sale.repository";
 import { DailySaleService } from "../modules/stock/daily-sale.service";
@@ -65,6 +67,8 @@ export class IntegrationContext {
     this.lineValidator,
     this.i18n,
   );
+
+  readonly dashboard = new DashboardService(new DashboardRepository(this.txManager));
 
   static isConfigured(): boolean {
     return !!process.env.TEST_DATABASE_URL;

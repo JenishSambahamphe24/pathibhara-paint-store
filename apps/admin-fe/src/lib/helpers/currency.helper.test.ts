@@ -19,3 +19,12 @@ describe("CurrencyHelper.formatNpr", () => {
     expect(CurrencyHelper.formatNpr(null)).toBe("—");
   });
 });
+
+describe("CurrencyHelper.formatCompactNpr", () => {
+  test("shortens to thousands, lakhs and crores", () => {
+    expect(CurrencyHelper.formatCompactNpr(0)).toBe("Rs 0");
+    expect(CurrencyHelper.formatCompactNpr(2500000)).toBe("Rs 25K");
+    expect(CurrencyHelper.formatCompactNpr(12500000)).toBe("Rs 1.3L");
+    expect(CurrencyHelper.formatCompactNpr(2000000000)).toBe("Rs 2Cr");
+  });
+});

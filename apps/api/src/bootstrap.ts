@@ -11,6 +11,7 @@ import translationEn from "./i18n/en/translation.json";
 import { AuthController } from "./modules/auth/auth.controller";
 import { CalculatorController } from "./modules/calculator/calculator.controller";
 import { CategoryController } from "./modules/category/category.controller";
+import { DashboardController } from "./modules/dashboard/dashboard.controller";
 import { FileController } from "./modules/file/file.controller";
 import { HealthController } from "./modules/health/health.controller";
 import { PostController } from "./modules/post/post.controller";
@@ -59,6 +60,7 @@ export class Bootstrap {
         StockController,
         CalculatorController,
         PostController,
+        DashboardController,
       ],
     });
   }

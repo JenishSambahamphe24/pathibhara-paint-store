@@ -14,4 +14,10 @@ describe("StoreDateHelper", () => {
     expect(StoreDateHelper.isFuture("2026-10-27", now)).toBe(true);
     expect(StoreDateHelper.isFuture("2026-10-26", now)).toBe(false);
   });
+
+  it("adds calendar days across month and year ends", () => {
+    expect(StoreDateHelper.addDays("2026-10-27", -29)).toBe("2026-09-28");
+    expect(StoreDateHelper.addDays("2026-12-31", 1)).toBe("2027-01-01");
+    expect(StoreDateHelper.addDays("2028-03-01", -1)).toBe("2028-02-29");
+  });
 });

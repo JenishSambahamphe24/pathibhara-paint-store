@@ -10,6 +10,7 @@ export * from "./catalog/category.schemas";
 export * from "./catalog/constants";
 export * from "./catalog/product.schemas";
 export { VolumeHelper } from "./catalog/volume.helper";
+export * from "./dashboard/dashboard.schemas";
 export * from "./file/constants";
 export { SLUG_MAX_LENGTH, slugInputSchema } from "./helpers/slug.schema";
 export { SlugHelper } from "./helpers/slug.helper";

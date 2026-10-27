@@ -69,6 +69,11 @@
   --color-warning-strong: var(--color-amber-800);
   --color-warning-border: var(--color-amber-200);
 
+  /* Charts. One accent: every chart here plots a single series. */
+  --color-chart-series: var(--color-blue-600);
+  --color-chart-series-muted: var(--color-blue-100);
+  --color-chart-grid: var(--color-gray-100);
+
   /* Indicators (categorical dots) */
   --color-indicator-amber: var(--color-amber-400);
   --color-indicator-purple: var(--color-purple-400);
