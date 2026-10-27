@@ -1,19 +1,17 @@
-import type { DateValue } from "@ark-ui/react/date-picker";
-
-import { DatePicker, parseDate, Portal } from "@ark-ui/react";
+import { Popover, Portal } from "@ark-ui/react";
 import clsx from "clsx";
-import {
-  Calendar,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  X,
-} from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { Calendar, ChevronDown, X } from "lucide-react";
+import { useState } from "react";
 
+import { BsDateHelper } from "@repo/shared";
+
+import { BsCalendar } from "#/components/BsCalendar/BsCalendar";
+
+import { DateHelper } from "#/lib/helpers/date.helper";
 import { m } from "#/paraglide/messages";
 
 interface DateRangeFilterProps {
+  /** AD `YYYY-MM-DD`; shown and picked in Bikram Sambat. */
   start: string | null;
   end: string | null;
   onChange: (start: string | null, end: string | null) => void;
@@ -24,9 +22,9 @@ interface DateRangeFilterProps {
 
 function formatRange(start: string | null, end: string | null): string {
   if (!start && !end) return "";
-  if (start && end) return `${start} – ${end}`;
-  if (start) return `${start} – …`;
-  return `… – ${end ?? ""}`;
+  const from = start ? DateHelper.formatCalendarDate(start) : "…";
+  const to = end ? DateHelper.formatCalendarDate(end) : "…";
+  return `${from} – ${to}`;
 }
 
 export function DateRangeFilter({
@@ -37,51 +35,55 @@ export function DateRangeFilter({
   disabled,
   placeholder,
 }: DateRangeFilterProps) {
-  const committedValue: Array<DateValue> = useMemo(() => {
-    const dates: Array<string> = [];
-    if (start) dates.push(start);
-    if (end) dates.push(end);
-    return dates.length > 0 ? parseDate(dates) : [];
-  }, [start, end]);
-
-  const [internalValue, setInternalValue] =
-    useState<Array<DateValue>>(committedValue);
-
-  useEffect(() => {
-    setInternalValue(committedValue);
-  }, [committedValue]);
-
-  const max = useMemo(() => {
-    if (internalValue.length === 1) {
-      return internalValue[0].add({ months: maxRangeMonths });
-    }
-    return undefined;
-  }, [internalValue, maxRangeMonths]);
+  const [isOpen, setIsOpen] = useState(false);
+  // First click of a new range; the committed range stays in the URL until
+  // the second click completes it.
+  const [pendingStart, setPendingStart] = useState<string | null>(null);
 
   const triggerLabel = formatRange(start, end);
   const hasSelection = triggerLabel !== "";
   const resolvedPlaceholder = placeholder ?? m.filter_date_placeholder();
 
+  let max: string | undefined;
+  if (pendingStart) {
+    try {
+      max = BsDateHelper.toAdIso(
+        BsDateHelper.addMonths(
+          BsDateHelper.fromAdIso(pendingStart),
+          maxRangeMonths,
+        ),
+      );
+    } catch {
+      max = undefined;
+    }
+  }
+
+  function select(date: string) {
+    if (!pendingStart || date < pendingStart) {
+      setPendingStart(date);
+      return;
+    }
+    onChange(pendingStart, date);
+    setPendingStart(null);
+    setIsOpen(false);
+  }
+
   return (
-    <DatePicker.Root
-      selectionMode="range"
-      value={internalValue}
-      max={max}
-      onValueChange={(details) => {
-        setInternalValue(details.value);
-        if (details.value.length === 0) {
-          onChange(null, null);
-        } else if (details.value.length === 2) {
-          onChange(details.value[0].toString(), details.value[1].toString());
-        }
+    <Popover.Root
+      open={isOpen}
+      onOpenChange={(details) => {
+        setIsOpen(details.open);
+        setPendingStart(null);
       }}
       positioning={{ placement: "bottom-start" }}
-      disabled={disabled}
+      lazyMount
+      unmountOnExit
     >
-      <DatePicker.Control className="relative">
-        <DatePicker.Trigger
+      <div className="relative">
+        <Popover.Trigger
+          disabled={disabled}
           className={clsx(
-            "inline-flex w-full items-center justify-between gap-2 rounded-lg border border-border-strong bg-surface px-3 py-2 sm:w-72",
+            "inline-flex w-full items-center justify-between gap-2 rounded-lg border border-border-strong bg-surface px-3 py-2 sm:w-80",
             "text-sm text-foreground-muted transition-colors hover:bg-surface-muted",
             "cursor-pointer focus:ring-0 focus:outline-0",
             "disabled:cursor-not-allowed disabled:opacity-50",
@@ -99,7 +101,7 @@ export function DateRangeFilter({
             </span>
           </span>
           <ChevronDown size={14} className="shrink-0 text-foreground-subtle" />
-        </DatePicker.Trigger>
+        </Popover.Trigger>
 
         {hasSelection && !disabled && (
           <button
@@ -117,79 +119,26 @@ export function DateRangeFilter({
             <X size={12} />
           </button>
         )}
-      </DatePicker.Control>
+      </div>
 
       <Portal>
-        <DatePicker.Positioner>
-          <DatePicker.Content
-            className={clsx(
-              "z-50 rounded-lg border border-border bg-surface p-3 shadow-lg",
-              "focus:ring-0 focus:outline-0",
-            )}
-          >
-            <DatePicker.View view="day">
-              <DatePicker.Context>
-                {(api) => (
-                  <>
-                    <DatePicker.ViewControl className="mb-2 flex items-center justify-between gap-2">
-                      <DatePicker.PrevTrigger className="cursor-pointer rounded-md p-1 text-foreground-faint transition-colors hover:bg-surface-subtle hover:text-foreground-muted">
-                        <ChevronLeft size={16} />
-                      </DatePicker.PrevTrigger>
-                      <DatePicker.ViewTrigger className="cursor-pointer rounded-md px-2 py-1 text-sm font-medium text-foreground hover:bg-surface-subtle">
-                        <DatePicker.RangeText />
-                      </DatePicker.ViewTrigger>
-                      <DatePicker.NextTrigger className="cursor-pointer rounded-md p-1 text-foreground-faint transition-colors hover:bg-surface-subtle hover:text-foreground-muted">
-                        <ChevronRight size={16} />
-                      </DatePicker.NextTrigger>
-                    </DatePicker.ViewControl>
-                    <DatePicker.Table className="w-full border-collapse">
-                      <DatePicker.TableHead>
-                        <DatePicker.TableRow>
-                          {api.weekDays.map((day, i) => (
-                            <DatePicker.TableHeader
-                              key={i}
-                              className="px-1 py-1 text-center text-xs font-medium text-foreground-faint"
-                            >
-                              {day.short}
-                            </DatePicker.TableHeader>
-                          ))}
-                        </DatePicker.TableRow>
-                      </DatePicker.TableHead>
-                      <DatePicker.TableBody>
-                        {api.weeks.map((week, i) => (
-                          <DatePicker.TableRow key={i}>
-                            {week.map((day, j) => (
-                              <DatePicker.TableCell
-                                key={j}
-                                value={day}
-                                className="p-0.5"
-                              >
-                                <DatePicker.TableCellTrigger
-                                  className={clsx(
-                                    "flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-sm text-foreground-muted transition-colors",
-                                    "hover:bg-surface-subtle",
-                                    "data-outside-range:text-foreground-faint",
-                                    "data-disabled:cursor-not-allowed data-disabled:opacity-40 data-disabled:hover:bg-transparent",
-                                    "data-in-range:bg-info-subtle data-in-range:text-info-strong",
-                                    "data-selected:bg-info data-selected:font-medium data-selected:text-primary-foreground data-selected:hover:bg-info",
-                                    "data-today:font-semibold",
-                                  )}
-                                >
-                                  {day.day}
-                                </DatePicker.TableCellTrigger>
-                              </DatePicker.TableCell>
-                            ))}
-                          </DatePicker.TableRow>
-                        ))}
-                      </DatePicker.TableBody>
-                    </DatePicker.Table>
-                  </>
-                )}
-              </DatePicker.Context>
-            </DatePicker.View>
-          </DatePicker.Content>
-        </DatePicker.Positioner>
+        <Popover.Positioner className="z-50">
+          <Popover.Content className="rounded-lg border border-border bg-surface p-3 shadow-lg focus:outline-none">
+            <BsCalendar
+              selected={
+                pendingStart
+                  ? [pendingStart]
+                  : [start, end].filter((d): d is string => !!d)
+              }
+              max={max}
+              onSelect={select}
+            />
+            <p className="mt-2 text-xs text-foreground-subtle">
+              {pendingStart ? m.calendar_pick_end() : m.calendar_pick_start()}
+            </p>
+          </Popover.Content>
+        </Popover.Positioner>
       </Portal>
-    </DatePicker.Root>
+    </Popover.Root>
   );
 }

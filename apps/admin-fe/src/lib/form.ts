@@ -1,6 +1,7 @@
 import { createFormHook } from "@tanstack/react-form";
 
 import { FormColorPicker } from "#/components/FormColorPicker/FormColorPicker";
+import { FormDateInput } from "#/components/FormDateInput/FormDateInput";
 import { FormDateTimePicker } from "#/components/FormDateTimePicker/FormDateTimePicker";
 import { FormInput } from "#/components/FormInput/FormInput";
 import { FormMoneyInput } from "#/components/FormMoneyInput/FormMoneyInput";
@@ -20,6 +21,7 @@ export const { useAppForm, withForm, withFieldGroup } = createFormHook({
     FormInput,
     FormSelect,
     FormTextarea,
+    FormDateInput,
     FormDateTimePicker,
     FormColorPicker,
     FormMultiSelect,

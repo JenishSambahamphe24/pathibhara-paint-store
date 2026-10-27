@@ -1,8 +1,14 @@
+import type { BsFormatStyle, BsLocale } from "@repo/shared";
+
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import relativeTime from "dayjs/plugin/relativeTime";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+
+import { BsDateHelper } from "@repo/shared";
+
+import { getLocale } from "#/paraglide/runtime";
 
 dayjs.extend(localizedFormat);
 dayjs.extend(relativeTime);
@@ -15,28 +21,52 @@ export const STORE_TZ = "Asia/Kathmandu";
 
 type TDateInput = string | number | Date | dayjs.Dayjs | null | undefined;
 
+// Every date is shown in Bikram Sambat. The API stores and sends AD (instants
+// and YYYY-MM-DD calendar dates); conversion happens only here and in the
+// BS pickers.
 export class DateHelper {
-  static format(value: TDateInput, format = "LL"): string {
-    if (value === null || value === undefined || value === "") return "—";
-    const d = dayjs(value);
-    if (!d.isValid()) return "—";
-    return d.tz(STORE_TZ).format(format);
+  static bsLocale(): BsLocale {
+    return getLocale();
   }
 
   static formatDate(value: TDateInput): string {
-    return DateHelper.format(value, "ll");
+    const d = DateHelper.parseInstant(value);
+    if (!d) return "—";
+    return BsDateHelper.format(BsDateHelper.fromInstant(d.toDate()), {
+      locale: DateHelper.bsLocale(),
+      style: "long",
+    });
   }
 
   static formatDateTime(value: TDateInput): string {
-    return DateHelper.format(value, "lll");
+    const d = DateHelper.parseInstant(value);
+    if (!d) return "—";
+    return `${DateHelper.formatDate(d)}, ${d.tz(STORE_TZ).format("h:mm A")}`;
   }
 
   // A `YYYY-MM-DD` calendar date is not an instant; formatting it through a
   // timezone conversion could shift it by a day.
-  static formatCalendarDate(value: string | null | undefined, format = "ll"): string {
+  static formatCalendarDate(
+    value: string | null | undefined,
+    style: BsFormatStyle = "long",
+  ): string {
     if (!value) return "—";
-    const d = dayjs(value);
-    return d.isValid() ? d.format(format) : "—";
+    try {
+      return BsDateHelper.format(BsDateHelper.fromAdIso(value), {
+        locale: DateHelper.bsLocale(),
+        style,
+      });
+    } catch {
+      return "—";
+    }
+  }
+
+  static formatCalendarDateWithWeekday(value: string): string {
+    const bs = BsDateHelper.fromAdIso(value);
+    const locale = DateHelper.bsLocale();
+    const weekdays =
+      locale === "ne" ? BsDateHelper.WEEKDAYS_NE : BsDateHelper.WEEKDAYS_EN;
+    return `${weekdays[BsDateHelper.weekday(bs)]}, ${BsDateHelper.format(bs, { locale, style: "long" })}`;
   }
 
   // Plain calendar arithmetic on YYYY-MM-DD, done in UTC so no zone or DST
@@ -50,17 +80,13 @@ export class DateHelper {
   }
 
   static fromNow(value: TDateInput): string {
-    if (value === null || value === undefined || value === "") return "—";
-    const d = dayjs(value);
-    if (!d.isValid()) return "—";
-    return d.fromNow();
+    const d = DateHelper.parseInstant(value);
+    return d ? d.fromNow() : "—";
   }
 
   static toDatetimeLocalInput(value: TDateInput): string {
-    if (value === null || value === undefined || value === "") return "";
-    const d = dayjs(value);
-    if (!d.isValid()) return "";
-    return d.format("YYYY-MM-DDTHH:mm");
+    const d = DateHelper.parseInstant(value);
+    return d ? d.format("YYYY-MM-DDTHH:mm") : "";
   }
 
   static fromDatetimeLocalInput(
@@ -69,5 +95,11 @@ export class DateHelper {
     if (!value) return null;
     const d = dayjs(value);
     return d.isValid() ? d.toISOString() : null;
+  }
+
+  private static parseInstant(value: TDateInput): dayjs.Dayjs | null {
+    if (value === null || value === undefined || value === "") return null;
+    const d = dayjs(value);
+    return d.isValid() ? d : null;
   }
 }

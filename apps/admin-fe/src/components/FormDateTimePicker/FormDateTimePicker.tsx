@@ -142,7 +142,7 @@ export function FormDateTimePicker({
   );
 
   const triggerLabel = value
-    ? DateHelper.format(value, "lll")
+    ? DateHelper.formatDateTime(value)
     : (placeholder ?? "");
   const hasSelection = value !== null && value !== "";
   const resolvedPlaceholder = placeholder ?? m.generic_select_placeholder();

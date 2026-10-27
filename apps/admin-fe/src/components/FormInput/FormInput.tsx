@@ -8,14 +8,12 @@ import { FormHelper } from "#/lib/helpers/form.helper";
 
 interface FormInputProps {
   label: string;
-  type?: "text" | "email" | "password" | "url" | "number" | "time" | "date";
+  type?: "text" | "email" | "password" | "url" | "number" | "time";
   placeholder?: string;
   autoComplete?: string;
   required?: boolean;
   disabled?: boolean;
-  /** Number bound for `type="number"`; `YYYY-MM-DD` bound for `type="date"`. */
   min?: number | string;
-  /** Number bound for `type="number"`; `YYYY-MM-DD` bound for `type="date"`. */
   max?: number | string;
   step?: number;
   inputMode?: "text" | "numeric" | "decimal" | "tel" | "email" | "url";

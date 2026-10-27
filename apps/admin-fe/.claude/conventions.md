@@ -192,9 +192,13 @@ Price inputs take rupee text and convert with `MoneyHelper.parseRupees` from
 `@repo/shared` (never `parseFloat`); edit forms prefill with
 `MoneyHelper.toRupeesString(paisa)`.
 
-Dates go through `DateHelper`, which renders instants in the store's timezone
-(`Asia/Kathmandu`). Calendar dates (`YYYY-MM-DD`, e.g. a daily sales date) use
-`DateHelper.formatCalendarDate`, never a timezone conversion.
+Dates are shown and picked in **Bikram Sambat**, never AD. The API keeps
+sending AD (instants and `YYYY-MM-DD` calendar dates); conversion happens only
+in `DateHelper` (built on `BsDateHelper` from `@repo/shared`) and the BS pickers.
+Instants render as the BS day in `Asia/Kathmandu`; calendar dates use
+`DateHelper.formatCalendarDate`, never a timezone conversion. Date inputs use
+`FormDateInput` / `BsDatePicker` and range filters `DateRangeFilter`, never
+`type="date"` or Ark's Gregorian `DatePicker`.
 
 ## Forms
 

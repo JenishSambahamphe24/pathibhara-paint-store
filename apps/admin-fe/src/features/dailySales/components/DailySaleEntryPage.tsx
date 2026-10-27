@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { BreadCrumb } from "#/components/Breadcrumb/Breadcrumb";
+import { BsDatePicker } from "#/components/BsDatePicker/BsDatePicker";
 import { Button } from "#/components/Button/Button";
 import { PageHeader } from "#/components/PageHeader/PageHeader";
 import { SkeletonCell } from "#/components/Table/SkeletonCell";
@@ -50,15 +51,14 @@ export function DailySaleEntryPage({
             >
               <ChevronLeft size={16} />
             </Button>
-            <input
-              type="date"
-              value={date}
-              max={today}
-              onChange={(event) =>
-                event.target.value && onDateChange(event.target.value)
-              }
-              className="rounded-lg border border-border-strong px-3 py-1.5 text-sm text-foreground"
-            />
+            <div className="w-48">
+              <BsDatePicker
+                value={date}
+                max={today}
+                size="sm"
+                onChange={onDateChange}
+              />
+            </div>
             <Button
               variant="outline"
               size="sm"

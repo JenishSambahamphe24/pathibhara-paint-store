@@ -24,7 +24,7 @@ export function SalesChart({ days }: SalesChartProps) {
           <CartesianGrid vertical={false} stroke="var(--color-chart-grid)" />
           <XAxis
             dataKey="date"
-            tickFormatter={(date: string) => DateHelper.formatCalendarDate(date, "D MMM")}
+            tickFormatter={(date: string) => DateHelper.formatCalendarDate(date, "dayMonth")}
             interval={tickInterval}
             tick={AXIS_TICK}
             tickLine={false}
@@ -55,7 +55,7 @@ function SalesChartTooltip({ active, day }: SalesChartTooltipProps) {
   if (!active || !day) return null;
   return (
     <div className="rounded-lg border border-border bg-surface px-3 py-2 text-sm shadow-md">
-      <p className="font-medium text-foreground">{DateHelper.formatCalendarDate(day.date, "ddd, D MMM YYYY")}</p>
+      <p className="font-medium text-foreground">{DateHelper.formatCalendarDateWithWeekday(day.date)}</p>
       <p className="mt-1 text-foreground-muted">{CurrencyHelper.formatNpr(day.revenuePaisa)}</p>
       <p className="text-foreground-subtle">{m.dashboard_units({ count: day.units })}</p>
     </div>

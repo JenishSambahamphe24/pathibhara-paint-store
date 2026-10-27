@@ -57,9 +57,8 @@ export function BatchFormPage() {
           <div className="grid gap-4 md:grid-cols-3">
             <form.AppField name="receivedOn">
               {(field) => (
-                <field.FormInput
+                <field.FormDateInput
                   label={m.batches_received_on()}
-                  type="date"
                   max={DateHelper.todayInStore()}
                   required
                 />
