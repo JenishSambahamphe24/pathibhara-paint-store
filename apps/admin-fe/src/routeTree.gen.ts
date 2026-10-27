@@ -14,16 +14,20 @@ import { Route as coreProductsIndexRouteImport } from './routes/(core)/products/
 import { Route as coreDashboardIndexRouteImport } from './routes/(core)/dashboard/index'
 import { Route as coreCategoriesIndexRouteImport } from './routes/(core)/categories/index'
 import { Route as coreCalculatorIndexRouteImport } from './routes/(core)/calculator/index'
+import { Route as coreBlogIndexRouteImport } from './routes/(core)/blog/index'
 import { Route as authLoginIndexRouteImport } from './routes/(auth)/login/index'
 import { Route as coreProductsNewRouteImport } from './routes/(core)/products/new'
 import { Route as coreProductsProductIdRouteImport } from './routes/(core)/products/$productId'
+import { Route as coreBlogNewRouteImport } from './routes/(core)/blog/new'
 import { Route as coreStockSalesIndexRouteImport } from './routes/(core)/stock/sales/index'
 import { Route as coreStockMovementsIndexRouteImport } from './routes/(core)/stock/movements/index'
 import { Route as coreStockBatchesIndexRouteImport } from './routes/(core)/stock/batches/index'
 import { Route as coreStockAdjustmentsIndexRouteImport } from './routes/(core)/stock/adjustments/index'
+import { Route as coreBlogPostIdIndexRouteImport } from './routes/(core)/blog/$postId/index'
 import { Route as coreStockSalesDateRouteImport } from './routes/(core)/stock/sales/$date'
 import { Route as coreStockBatchesNewRouteImport } from './routes/(core)/stock/batches/new'
 import { Route as coreStockBatchesBatchIdRouteImport } from './routes/(core)/stock/batches/$batchId'
+import { Route as coreBlogPostIdPreviewRouteImport } from './routes/(core)/blog/$postId/preview'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -50,6 +54,11 @@ const coreCalculatorIndexRoute = coreCalculatorIndexRouteImport.update({
   path: '/calculator/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const coreBlogIndexRoute = coreBlogIndexRouteImport.update({
+  id: '/(core)/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const authLoginIndexRoute = authLoginIndexRouteImport.update({
   id: '/(auth)/login/',
   path: '/login/',
@@ -63,6 +72,11 @@ const coreProductsNewRoute = coreProductsNewRouteImport.update({
 const coreProductsProductIdRoute = coreProductsProductIdRouteImport.update({
   id: '/(core)/products/$productId',
   path: '/products/$productId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const coreBlogNewRoute = coreBlogNewRouteImport.update({
+  id: '/(core)/blog/new',
+  path: '/blog/new',
   getParentRoute: () => rootRouteImport,
 } as any)
 const coreStockSalesIndexRoute = coreStockSalesIndexRouteImport.update({
@@ -86,6 +100,11 @@ const coreStockAdjustmentsIndexRoute =
     path: '/stock/adjustments/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const coreBlogPostIdIndexRoute = coreBlogPostIdIndexRouteImport.update({
+  id: '/(core)/blog/$postId/',
+  path: '/blog/$postId/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const coreStockSalesDateRoute = coreStockSalesDateRouteImport.update({
   id: '/(core)/stock/sales/$date',
   path: '/stock/sales/$date',
@@ -101,19 +120,28 @@ const coreStockBatchesBatchIdRoute = coreStockBatchesBatchIdRouteImport.update({
   path: '/stock/batches/$batchId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const coreBlogPostIdPreviewRoute = coreBlogPostIdPreviewRouteImport.update({
+  id: '/(core)/blog/$postId/preview',
+  path: '/blog/$postId/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/blog/new': typeof coreBlogNewRoute
   '/products/$productId': typeof coreProductsProductIdRoute
   '/products/new': typeof coreProductsNewRoute
   '/login/': typeof authLoginIndexRoute
+  '/blog/': typeof coreBlogIndexRoute
   '/calculator/': typeof coreCalculatorIndexRoute
   '/categories/': typeof coreCategoriesIndexRoute
   '/dashboard/': typeof coreDashboardIndexRoute
   '/products/': typeof coreProductsIndexRoute
+  '/blog/$postId/preview': typeof coreBlogPostIdPreviewRoute
   '/stock/batches/$batchId': typeof coreStockBatchesBatchIdRoute
   '/stock/batches/new': typeof coreStockBatchesNewRoute
   '/stock/sales/$date': typeof coreStockSalesDateRoute
+  '/blog/$postId/': typeof coreBlogPostIdIndexRoute
   '/stock/adjustments/': typeof coreStockAdjustmentsIndexRoute
   '/stock/batches/': typeof coreStockBatchesIndexRoute
   '/stock/movements/': typeof coreStockMovementsIndexRoute
@@ -121,16 +149,20 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/blog/new': typeof coreBlogNewRoute
   '/products/$productId': typeof coreProductsProductIdRoute
   '/products/new': typeof coreProductsNewRoute
   '/login': typeof authLoginIndexRoute
+  '/blog': typeof coreBlogIndexRoute
   '/calculator': typeof coreCalculatorIndexRoute
   '/categories': typeof coreCategoriesIndexRoute
   '/dashboard': typeof coreDashboardIndexRoute
   '/products': typeof coreProductsIndexRoute
+  '/blog/$postId/preview': typeof coreBlogPostIdPreviewRoute
   '/stock/batches/$batchId': typeof coreStockBatchesBatchIdRoute
   '/stock/batches/new': typeof coreStockBatchesNewRoute
   '/stock/sales/$date': typeof coreStockSalesDateRoute
+  '/blog/$postId': typeof coreBlogPostIdIndexRoute
   '/stock/adjustments': typeof coreStockAdjustmentsIndexRoute
   '/stock/batches': typeof coreStockBatchesIndexRoute
   '/stock/movements': typeof coreStockMovementsIndexRoute
@@ -139,16 +171,20 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/(core)/blog/new': typeof coreBlogNewRoute
   '/(core)/products/$productId': typeof coreProductsProductIdRoute
   '/(core)/products/new': typeof coreProductsNewRoute
   '/(auth)/login/': typeof authLoginIndexRoute
+  '/(core)/blog/': typeof coreBlogIndexRoute
   '/(core)/calculator/': typeof coreCalculatorIndexRoute
   '/(core)/categories/': typeof coreCategoriesIndexRoute
   '/(core)/dashboard/': typeof coreDashboardIndexRoute
   '/(core)/products/': typeof coreProductsIndexRoute
+  '/(core)/blog/$postId/preview': typeof coreBlogPostIdPreviewRoute
   '/(core)/stock/batches/$batchId': typeof coreStockBatchesBatchIdRoute
   '/(core)/stock/batches/new': typeof coreStockBatchesNewRoute
   '/(core)/stock/sales/$date': typeof coreStockSalesDateRoute
+  '/(core)/blog/$postId/': typeof coreBlogPostIdIndexRoute
   '/(core)/stock/adjustments/': typeof coreStockAdjustmentsIndexRoute
   '/(core)/stock/batches/': typeof coreStockBatchesIndexRoute
   '/(core)/stock/movements/': typeof coreStockMovementsIndexRoute
@@ -158,16 +194,20 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/blog/new'
     | '/products/$productId'
     | '/products/new'
     | '/login/'
+    | '/blog/'
     | '/calculator/'
     | '/categories/'
     | '/dashboard/'
     | '/products/'
+    | '/blog/$postId/preview'
     | '/stock/batches/$batchId'
     | '/stock/batches/new'
     | '/stock/sales/$date'
+    | '/blog/$postId/'
     | '/stock/adjustments/'
     | '/stock/batches/'
     | '/stock/movements/'
@@ -175,16 +215,20 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/blog/new'
     | '/products/$productId'
     | '/products/new'
     | '/login'
+    | '/blog'
     | '/calculator'
     | '/categories'
     | '/dashboard'
     | '/products'
+    | '/blog/$postId/preview'
     | '/stock/batches/$batchId'
     | '/stock/batches/new'
     | '/stock/sales/$date'
+    | '/blog/$postId'
     | '/stock/adjustments'
     | '/stock/batches'
     | '/stock/movements'
@@ -192,16 +236,20 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/(core)/blog/new'
     | '/(core)/products/$productId'
     | '/(core)/products/new'
     | '/(auth)/login/'
+    | '/(core)/blog/'
     | '/(core)/calculator/'
     | '/(core)/categories/'
     | '/(core)/dashboard/'
     | '/(core)/products/'
+    | '/(core)/blog/$postId/preview'
     | '/(core)/stock/batches/$batchId'
     | '/(core)/stock/batches/new'
     | '/(core)/stock/sales/$date'
+    | '/(core)/blog/$postId/'
     | '/(core)/stock/adjustments/'
     | '/(core)/stock/batches/'
     | '/(core)/stock/movements/'
@@ -210,16 +258,20 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  coreBlogNewRoute: typeof coreBlogNewRoute
   coreProductsProductIdRoute: typeof coreProductsProductIdRoute
   coreProductsNewRoute: typeof coreProductsNewRoute
   authLoginIndexRoute: typeof authLoginIndexRoute
+  coreBlogIndexRoute: typeof coreBlogIndexRoute
   coreCalculatorIndexRoute: typeof coreCalculatorIndexRoute
   coreCategoriesIndexRoute: typeof coreCategoriesIndexRoute
   coreDashboardIndexRoute: typeof coreDashboardIndexRoute
   coreProductsIndexRoute: typeof coreProductsIndexRoute
+  coreBlogPostIdPreviewRoute: typeof coreBlogPostIdPreviewRoute
   coreStockBatchesBatchIdRoute: typeof coreStockBatchesBatchIdRoute
   coreStockBatchesNewRoute: typeof coreStockBatchesNewRoute
   coreStockSalesDateRoute: typeof coreStockSalesDateRoute
+  coreBlogPostIdIndexRoute: typeof coreBlogPostIdIndexRoute
   coreStockAdjustmentsIndexRoute: typeof coreStockAdjustmentsIndexRoute
   coreStockBatchesIndexRoute: typeof coreStockBatchesIndexRoute
   coreStockMovementsIndexRoute: typeof coreStockMovementsIndexRoute
@@ -263,6 +315,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof coreCalculatorIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(core)/blog/': {
+      id: '/(core)/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof coreBlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(auth)/login/': {
       id: '/(auth)/login/'
       path: '/login'
@@ -282,6 +341,13 @@ declare module '@tanstack/react-router' {
       path: '/products/$productId'
       fullPath: '/products/$productId'
       preLoaderRoute: typeof coreProductsProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(core)/blog/new': {
+      id: '/(core)/blog/new'
+      path: '/blog/new'
+      fullPath: '/blog/new'
+      preLoaderRoute: typeof coreBlogNewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(core)/stock/sales/': {
@@ -312,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof coreStockAdjustmentsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(core)/blog/$postId/': {
+      id: '/(core)/blog/$postId/'
+      path: '/blog/$postId'
+      fullPath: '/blog/$postId/'
+      preLoaderRoute: typeof coreBlogPostIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(core)/stock/sales/$date': {
       id: '/(core)/stock/sales/$date'
       path: '/stock/sales/$date'
@@ -333,21 +406,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof coreStockBatchesBatchIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(core)/blog/$postId/preview': {
+      id: '/(core)/blog/$postId/preview'
+      path: '/blog/$postId/preview'
+      fullPath: '/blog/$postId/preview'
+      preLoaderRoute: typeof coreBlogPostIdPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  coreBlogNewRoute: coreBlogNewRoute,
   coreProductsProductIdRoute: coreProductsProductIdRoute,
   coreProductsNewRoute: coreProductsNewRoute,
   authLoginIndexRoute: authLoginIndexRoute,
+  coreBlogIndexRoute: coreBlogIndexRoute,
   coreCalculatorIndexRoute: coreCalculatorIndexRoute,
   coreCategoriesIndexRoute: coreCategoriesIndexRoute,
   coreDashboardIndexRoute: coreDashboardIndexRoute,
   coreProductsIndexRoute: coreProductsIndexRoute,
+  coreBlogPostIdPreviewRoute: coreBlogPostIdPreviewRoute,
   coreStockBatchesBatchIdRoute: coreStockBatchesBatchIdRoute,
   coreStockBatchesNewRoute: coreStockBatchesNewRoute,
   coreStockSalesDateRoute: coreStockSalesDateRoute,
+  coreBlogPostIdIndexRoute: coreBlogPostIdIndexRoute,
   coreStockAdjustmentsIndexRoute: coreStockAdjustmentsIndexRoute,
   coreStockBatchesIndexRoute: coreStockBatchesIndexRoute,
   coreStockMovementsIndexRoute: coreStockMovementsIndexRoute,

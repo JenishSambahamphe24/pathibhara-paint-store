@@ -5,6 +5,7 @@ import {
   Calculator,
   FolderTree,
   LayoutDashboard,
+  Newspaper,
   Package,
   ReceiptText,
   ScrollText,
@@ -50,6 +51,16 @@ export function useSidebarItems() {
           title: m.sidebar_products(),
           icon: <Package size={20} />,
           url: "/products",
+        },
+      ],
+    },
+    {
+      title: m.sidebar_content(),
+      items: [
+        {
+          title: m.sidebar_blog(),
+          icon: <Newspaper size={20} />,
+          url: "/blog",
         },
       ],
     },

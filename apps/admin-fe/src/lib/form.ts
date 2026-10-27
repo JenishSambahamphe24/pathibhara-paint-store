@@ -5,6 +5,7 @@ import { FormDateTimePicker } from "#/components/FormDateTimePicker/FormDateTime
 import { FormInput } from "#/components/FormInput/FormInput";
 import { FormMoneyInput } from "#/components/FormMoneyInput/FormMoneyInput";
 import { FormMultiSelect } from "#/components/FormMultiSelect/FormMultiSelect";
+import { FormRichText } from "#/components/FormRichText/FormRichText";
 import { FormSelect } from "#/components/FormSelect/FormSelect";
 import { FormSwitch } from "#/components/FormSwitch/FormSwitch";
 import { FormTextarea } from "#/components/FormTextarea/FormTextarea";
@@ -23,6 +24,7 @@ export const { useAppForm, withForm, withFieldGroup } = createFormHook({
     FormColorPicker,
     FormMultiSelect,
     FormMoneyInput,
+    FormRichText,
     FormVolumeInput,
     FormSwitch,
   },

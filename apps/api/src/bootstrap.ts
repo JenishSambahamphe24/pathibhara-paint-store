@@ -13,6 +13,7 @@ import { CalculatorController } from "./modules/calculator/calculator.controller
 import { CategoryController } from "./modules/category/category.controller";
 import { FileController } from "./modules/file/file.controller";
 import { HealthController } from "./modules/health/health.controller";
+import { PostController } from "./modules/post/post.controller";
 import { ProductController } from "./modules/product/product.controller";
 import { VariantController } from "./modules/product/variant.controller";
 import { StockController } from "./modules/stock/stock.controller";
@@ -57,6 +58,7 @@ export class Bootstrap {
         VariantController,
         StockController,
         CalculatorController,
+        PostController,
       ],
     });
   }

@@ -79,5 +79,14 @@
     "productNotFound": "That product no longer exists.",
     "noActiveSizes": "This product has no active sizes to sell.",
     "noPaintableArea": "Doors and windows can't cover the whole wall area."
+  },
+  "post": {
+    "notFound": "Post not found",
+    "created": "Draft saved",
+    "saved": "Post saved",
+    "published": "Post published",
+    "unpublished": "Post moved back to draft",
+    "alreadyPublished": "This post is already published.",
+    "unsupportedContent": "The content has formatting the blog can't display. Remove it and try again."
   }
 }
