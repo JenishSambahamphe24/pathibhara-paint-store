@@ -1,5 +1,5 @@
 import type { AnyFormApi, StandardSchemaV1 } from "@tanstack/react-form";
-import type { RefObject } from "react";
+import type { FormEvent, RefObject } from "react";
 import type { z } from "zod";
 
 import { ApiError } from "#/lib/apiError";
@@ -70,6 +70,18 @@ export class FormHelper {
         errors: [],
       }));
     }
+  }
+
+  // Not `<form action={fn}>`: React resets such a form once the action
+  // returns, and Ark's switch, checkbox and colour picker answer a form reset
+  // by reporting the value they mounted with, so a refused save would quietly
+  // undo the admin's toggles. TanStack Form owns every value; nothing here
+  // wants a native submit or reset.
+  static submitHandler(submit: () => void) {
+    return (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      submit();
+    };
   }
 
   static handleSubmitError(error: unknown, formApi: AnyFormApi): void {

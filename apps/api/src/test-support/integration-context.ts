@@ -13,9 +13,14 @@ import {
 import { I18nService } from "@repo/http-kit";
 
 import translationEn from "../i18n/en/translation.json";
+import { ColourSetRepository } from "../modules/colour-set/colour-set.repository";
+import { ColourSetService } from "../modules/colour-set/colour-set.service";
 import { DashboardRepository } from "../modules/dashboard/dashboard.repository";
 import { DashboardService } from "../modules/dashboard/dashboard.service";
 import { ProductRepository } from "../modules/product/product.repository";
+import { ShadeRepository } from "../modules/shade/shade.repository";
+import { ShadeService } from "../modules/shade/shade.service";
+import { SlugRedirectRepository } from "../modules/slug-redirect/slug-redirect.repository";
 import { DailySaleRepository } from "../modules/stock/daily-sale.repository";
 import { DailySaleService } from "../modules/stock/daily-sale.service";
 import { StockAdjustmentRepository } from "../modules/stock/stock-adjustment.repository";
@@ -70,6 +75,19 @@ export class IntegrationContext {
 
   readonly dashboard = new DashboardService(new DashboardRepository(this.txManager));
 
+  private readonly shadeRepository = new ShadeRepository(this.txManager);
+  readonly shades = new ShadeService(
+    this.txManager,
+    this.shadeRepository,
+    new ProductRepository(this.txManager),
+  );
+  readonly colourSets = new ColourSetService(
+    this.txManager,
+    new ColourSetRepository(this.txManager),
+    this.shadeRepository,
+    new SlugRedirectRepository(this.txManager),
+  );
+
   static isConfigured(): boolean {
     return !!process.env.TEST_DATABASE_URL;
   }
@@ -89,6 +107,7 @@ export class IntegrationContext {
 
   async reset(): Promise<void> {
     await this.db.execute(sql`TRUNCATE
+      colour_set_translations, colour_sets, shade_translations, shades, slug_redirects,
       stock_movements, stock_adjustments, daily_sale_items, daily_sales,
       stock_batch_items, stock_batches, product_variants, product_images,
       product_translations, products, category_translations, categories,

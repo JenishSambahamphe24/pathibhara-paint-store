@@ -26,4 +26,6 @@ export { MAX_PRICE_PAISA, MoneyHelper, PAISA_PER_RUPEE, paisaSchema } from "./mo
 export * from "./seo/constants";
 export * from "./stock/constants";
 export * from "./stock/stock.schemas";
+export * from "./visualizer/colour-set.schemas";
 export * from "./visualizer/constants";
+export * from "./visualizer/shade.schemas";

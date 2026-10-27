@@ -174,7 +174,7 @@ erDiagram
     }
 ```
 
-Not drawn: `category_translations`, `product_translations`, `shade_translations` and `colour_set_translations` share the shape `(entity_id, locale) PK, name, description?, seo_title?, seo_description?`. Also not drawn: `slug_redirects (entity_type, old_slug) UK → entity_id`, `store_settings` (single row: store details, `default_wastage_bps`), `admins`, and `sessions`.
+Not drawn: `category_translations` and `product_translations` share the shape `(entity_id, locale) PK, name, description?, seo_title?, seo_description?`; `shade_translations` has only `name`, and `colour_set_translations` has `name, description?`. Also not drawn: `slug_redirects (entity_type, old_slug) UK → entity_id`, `store_settings` (single row: store details, `default_wastage_bps`), `admins`, and `sessions`.
 
 ## Rules the database enforces
 

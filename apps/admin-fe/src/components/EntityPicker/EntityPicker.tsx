@@ -3,9 +3,13 @@ import clsx from "clsx";
 import { Check, ChevronDown, X } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { ColorSwatch } from "#/components/ColorSwatch/ColorSwatch";
+
 export interface IEntityPickerOption {
   value: string;
   label: string;
+  /** `#rrggbb` shown beside the label, e.g. for shades. */
+  swatch?: string;
 }
 
 interface EntityPickerProps {
@@ -16,6 +20,8 @@ interface EntityPickerProps {
   value: string;
   /** Display label for the selected value, used when it isn't in `options`. */
   selectedLabel?: string;
+  /** Swatch for the selected value when it isn't in `options`. */
+  selectedSwatch?: string;
   /** Current (search) result set. */
   options: Array<IEntityPickerOption>;
   isLoading?: boolean;
@@ -36,6 +42,7 @@ export function EntityPicker({
   emptyText,
   value,
   selectedLabel,
+  selectedSwatch,
   options,
   isLoading = false,
   hideLabel = false,
@@ -47,10 +54,11 @@ export function EntityPicker({
   const items = useMemo(() => {
     const base = [...options];
     if (value && selectedLabel && !base.some((o) => o.value === value)) {
-      base.unshift({ value, label: selectedLabel });
+      base.unshift({ value, label: selectedLabel, swatch: selectedSwatch });
     }
     return base;
-  }, [options, value, selectedLabel]);
+  }, [options, value, selectedLabel, selectedSwatch]);
+  const activeSwatch = items.find((item) => item.value === value)?.swatch;
 
   const collection = useMemo(
     () =>
@@ -91,12 +99,20 @@ export function EntityPicker({
         unmountOnExit
       >
         <Combobox.Control className="relative">
+          {activeSwatch && (
+            <ColorSwatch
+              hex={activeSwatch}
+              size="sm"
+              className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2"
+            />
+          )}
           <Combobox.Input
             placeholder={placeholder}
             className={clsx(
-              "w-full rounded-lg border bg-surface py-2.5 pr-16 pl-3 text-sm text-foreground",
+              "w-full rounded-lg border bg-surface py-2.5 pr-16 text-sm text-foreground",
               "placeholder-foreground-faint transition-colors focus:outline-none",
               "border-border-strong focus:border-foreground focus:ring-2 focus:ring-foreground/10",
+              activeSwatch ? "pl-9" : "pl-3",
             )}
           />
           <div className="absolute inset-y-0 right-0 flex items-center gap-0.5 pr-2">
@@ -134,7 +150,10 @@ export function EntityPicker({
                   "data-[state=checked]:bg-info-subtle data-[state=checked]:font-medium data-[state=checked]:text-info-strong",
                 )}
               >
-                <Combobox.ItemText>{item.label}</Combobox.ItemText>
+                <span className="flex min-w-0 items-center gap-2">
+                  {item.swatch && <ColorSwatch hex={item.swatch} size="sm" />}
+                  <Combobox.ItemText>{item.label}</Combobox.ItemText>
+                </span>
                 <Combobox.ItemIndicator>
                   <Check size={14} />
                 </Combobox.ItemIndicator>

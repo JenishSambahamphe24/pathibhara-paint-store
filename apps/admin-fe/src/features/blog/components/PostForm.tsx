@@ -9,6 +9,7 @@ import { PageHeader } from "#/components/PageHeader/PageHeader";
 import { UnsavedChangesDialog } from "#/components/UnsavedChangesDialog/UnsavedChangesDialog";
 
 import { useUnsavedChanges } from "#/hooks/useUnsavedChanges";
+import { FormHelper } from "#/lib/helpers/form.helper";
 import { m } from "#/paraglide/messages";
 
 import { usePostForm } from "../hooks/usePostForm";
@@ -27,7 +28,7 @@ export function PostForm({ post }: PostFormProps) {
   return (
     <form.AppForm>
       <BreadCrumb items={[{ title: m.sidebar_content() }, { title: m.sidebar_blog(), url: "/blog" }, { title }]} />
-      <form action={handleSubmit} noValidate className="space-y-5">
+      <form onSubmit={FormHelper.submitHandler(handleSubmit)} noValidate className="space-y-5">
         <form.Subscribe selector={(state) => [state.isSubmitting, state.isDirty] as const}>
           {([isSubmitting, isDirty]) => (
             <>

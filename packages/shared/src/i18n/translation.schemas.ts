@@ -42,3 +42,35 @@ export const contentTranslationsSchema = z.object({
 });
 export type ContentTranslationsInput = z.input<typeof contentTranslationsSchema>;
 export type ContentTranslations = z.output<typeof contentTranslationsSchema>;
+
+// Shades are named only; colour sets also carry a short description. Their
+// tables have no SEO columns, so these are narrower than the content shape.
+export const nameTranslationsSchema = z.object({
+  en: z.object({ name: TextSchema.required(NAME_MAX, "Name is required") }),
+  ne: z.object({ name: TextSchema.optional(NAME_MAX) }),
+});
+export type NameTranslationsInput = z.input<typeof nameTranslationsSchema>;
+export type NameTranslations = z.output<typeof nameTranslationsSchema>;
+
+export const describedTranslationsSchema = z.object({
+  en: z.object({
+    name: TextSchema.required(NAME_MAX, "Name is required"),
+    description: TextSchema.optional(DESCRIPTION_MAX),
+  }),
+  ne: z
+    .object({
+      name: TextSchema.optional(NAME_MAX),
+      description: TextSchema.optional(DESCRIPTION_MAX),
+    })
+    .superRefine((value, ctx) => {
+      if (!value.name && value.description) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["name"],
+          message: "Add the Nepali name, or clear the Nepali description",
+        });
+      }
+    }),
+});
+export type DescribedTranslationsInput = z.input<typeof describedTranslationsSchema>;
+export type DescribedTranslations = z.output<typeof describedTranslationsSchema>;

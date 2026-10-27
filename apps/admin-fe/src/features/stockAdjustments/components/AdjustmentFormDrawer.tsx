@@ -36,7 +36,11 @@ export function AdjustmentFormDrawer({
       description={m.adjustments_new_description()}
     >
       <form.AppForm>
-        <form action={handleSubmit} noValidate className="space-y-5">
+        <form
+          onSubmit={FormHelper.submitHandler(handleSubmit)}
+          noValidate
+          className="space-y-5"
+        >
           <form.Field name="variantId">
             {(field) => (
               <div className="space-y-1">

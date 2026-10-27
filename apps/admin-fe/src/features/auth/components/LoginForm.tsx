@@ -2,6 +2,7 @@ import { LogIn } from "lucide-react";
 
 import { Button } from "#/components/Button/Button";
 
+import { FormHelper } from "#/lib/helpers/form.helper";
 import { m } from "#/paraglide/messages";
 
 import { useLogin } from "../hooks/useLogin";
@@ -12,7 +13,11 @@ export function LoginForm() {
   return (
     <form.AppForm>
       <div className="rounded-2xl bg-surface p-5 shadow-sm ring-1 ring-border">
-        <form action={handleSubmit} noValidate className="space-y-5">
+        <form
+          onSubmit={FormHelper.submitHandler(handleSubmit)}
+          noValidate
+          className="space-y-5"
+        >
           <form.AppField name="email">
             {(field) => (
               <field.FormInput

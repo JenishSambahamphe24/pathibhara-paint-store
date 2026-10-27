@@ -88,5 +88,22 @@
     "unpublished": "Post moved back to draft",
     "alreadyPublished": "This post is already published.",
     "unsupportedContent": "The content has formatting the blog can't display. Remove it and try again."
+  },
+  "shade": {
+    "notFound": "Shade not found",
+    "created": "Shade created",
+    "updated": "Shade saved",
+    "deleted": "Shade deleted",
+    "codeTaken": "Another shade already uses this code.",
+    "productNotFound": "That product no longer exists.",
+    "usedByActiveSets": "This shade is used by active colour sets ({{names}}). Change their shade or deactivate them first.",
+    "deleteInUse": "This shade is used by {{count}} colour set(s). Deactivate it instead, or change those sets first."
+  },
+  "colourSet": {
+    "notFound": "Colour set not found",
+    "created": "Colour set created",
+    "updated": "Colour set saved",
+    "shadeNotFound": "That shade no longer exists.",
+    "shadeInactive": "This shade is inactive. Pick an active shade, or save the set as inactive."
   }
 }

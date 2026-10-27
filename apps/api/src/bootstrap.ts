@@ -11,12 +11,14 @@ import translationEn from "./i18n/en/translation.json";
 import { AuthController } from "./modules/auth/auth.controller";
 import { CalculatorController } from "./modules/calculator/calculator.controller";
 import { CategoryController } from "./modules/category/category.controller";
+import { ColourSetController } from "./modules/colour-set/colour-set.controller";
 import { DashboardController } from "./modules/dashboard/dashboard.controller";
 import { FileController } from "./modules/file/file.controller";
 import { HealthController } from "./modules/health/health.controller";
 import { PostController } from "./modules/post/post.controller";
 import { ProductController } from "./modules/product/product.controller";
 import { VariantController } from "./modules/product/variant.controller";
+import { ShadeController } from "./modules/shade/shade.controller";
 import { StockController } from "./modules/stock/stock.controller";
 import { StorageBootstrap } from "./modules/storage/storage.bootstrap";
 
@@ -61,6 +63,8 @@ export class Bootstrap {
         CalculatorController,
         PostController,
         DashboardController,
+        ShadeController,
+        ColourSetController,
       ],
     });
   }

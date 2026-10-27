@@ -10,8 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as coreShadesIndexRouteImport } from './routes/(core)/shades/index'
 import { Route as coreProductsIndexRouteImport } from './routes/(core)/products/index'
 import { Route as coreDashboardIndexRouteImport } from './routes/(core)/dashboard/index'
+import { Route as coreColourSetsIndexRouteImport } from './routes/(core)/colour-sets/index'
 import { Route as coreCategoriesIndexRouteImport } from './routes/(core)/categories/index'
 import { Route as coreCalculatorIndexRouteImport } from './routes/(core)/calculator/index'
 import { Route as coreBlogIndexRouteImport } from './routes/(core)/blog/index'
@@ -34,6 +36,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const coreShadesIndexRoute = coreShadesIndexRouteImport.update({
+  id: '/(core)/shades/',
+  path: '/shades/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const coreProductsIndexRoute = coreProductsIndexRouteImport.update({
   id: '/(core)/products/',
   path: '/products/',
@@ -42,6 +49,11 @@ const coreProductsIndexRoute = coreProductsIndexRouteImport.update({
 const coreDashboardIndexRoute = coreDashboardIndexRouteImport.update({
   id: '/(core)/dashboard/',
   path: '/dashboard/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const coreColourSetsIndexRoute = coreColourSetsIndexRouteImport.update({
+  id: '/(core)/colour-sets/',
+  path: '/colour-sets/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const coreCategoriesIndexRoute = coreCategoriesIndexRouteImport.update({
@@ -135,8 +147,10 @@ export interface FileRoutesByFullPath {
   '/blog/': typeof coreBlogIndexRoute
   '/calculator/': typeof coreCalculatorIndexRoute
   '/categories/': typeof coreCategoriesIndexRoute
+  '/colour-sets/': typeof coreColourSetsIndexRoute
   '/dashboard/': typeof coreDashboardIndexRoute
   '/products/': typeof coreProductsIndexRoute
+  '/shades/': typeof coreShadesIndexRoute
   '/blog/$postId/preview': typeof coreBlogPostIdPreviewRoute
   '/stock/batches/$batchId': typeof coreStockBatchesBatchIdRoute
   '/stock/batches/new': typeof coreStockBatchesNewRoute
@@ -156,8 +170,10 @@ export interface FileRoutesByTo {
   '/blog': typeof coreBlogIndexRoute
   '/calculator': typeof coreCalculatorIndexRoute
   '/categories': typeof coreCategoriesIndexRoute
+  '/colour-sets': typeof coreColourSetsIndexRoute
   '/dashboard': typeof coreDashboardIndexRoute
   '/products': typeof coreProductsIndexRoute
+  '/shades': typeof coreShadesIndexRoute
   '/blog/$postId/preview': typeof coreBlogPostIdPreviewRoute
   '/stock/batches/$batchId': typeof coreStockBatchesBatchIdRoute
   '/stock/batches/new': typeof coreStockBatchesNewRoute
@@ -178,8 +194,10 @@ export interface FileRoutesById {
   '/(core)/blog/': typeof coreBlogIndexRoute
   '/(core)/calculator/': typeof coreCalculatorIndexRoute
   '/(core)/categories/': typeof coreCategoriesIndexRoute
+  '/(core)/colour-sets/': typeof coreColourSetsIndexRoute
   '/(core)/dashboard/': typeof coreDashboardIndexRoute
   '/(core)/products/': typeof coreProductsIndexRoute
+  '/(core)/shades/': typeof coreShadesIndexRoute
   '/(core)/blog/$postId/preview': typeof coreBlogPostIdPreviewRoute
   '/(core)/stock/batches/$batchId': typeof coreStockBatchesBatchIdRoute
   '/(core)/stock/batches/new': typeof coreStockBatchesNewRoute
@@ -201,8 +219,10 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/calculator/'
     | '/categories/'
+    | '/colour-sets/'
     | '/dashboard/'
     | '/products/'
+    | '/shades/'
     | '/blog/$postId/preview'
     | '/stock/batches/$batchId'
     | '/stock/batches/new'
@@ -222,8 +242,10 @@ export interface FileRouteTypes {
     | '/blog'
     | '/calculator'
     | '/categories'
+    | '/colour-sets'
     | '/dashboard'
     | '/products'
+    | '/shades'
     | '/blog/$postId/preview'
     | '/stock/batches/$batchId'
     | '/stock/batches/new'
@@ -243,8 +265,10 @@ export interface FileRouteTypes {
     | '/(core)/blog/'
     | '/(core)/calculator/'
     | '/(core)/categories/'
+    | '/(core)/colour-sets/'
     | '/(core)/dashboard/'
     | '/(core)/products/'
+    | '/(core)/shades/'
     | '/(core)/blog/$postId/preview'
     | '/(core)/stock/batches/$batchId'
     | '/(core)/stock/batches/new'
@@ -265,8 +289,10 @@ export interface RootRouteChildren {
   coreBlogIndexRoute: typeof coreBlogIndexRoute
   coreCalculatorIndexRoute: typeof coreCalculatorIndexRoute
   coreCategoriesIndexRoute: typeof coreCategoriesIndexRoute
+  coreColourSetsIndexRoute: typeof coreColourSetsIndexRoute
   coreDashboardIndexRoute: typeof coreDashboardIndexRoute
   coreProductsIndexRoute: typeof coreProductsIndexRoute
+  coreShadesIndexRoute: typeof coreShadesIndexRoute
   coreBlogPostIdPreviewRoute: typeof coreBlogPostIdPreviewRoute
   coreStockBatchesBatchIdRoute: typeof coreStockBatchesBatchIdRoute
   coreStockBatchesNewRoute: typeof coreStockBatchesNewRoute
@@ -287,6 +313,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(core)/shades/': {
+      id: '/(core)/shades/'
+      path: '/shades'
+      fullPath: '/shades/'
+      preLoaderRoute: typeof coreShadesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(core)/products/': {
       id: '/(core)/products/'
       path: '/products'
@@ -299,6 +332,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof coreDashboardIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(core)/colour-sets/': {
+      id: '/(core)/colour-sets/'
+      path: '/colour-sets'
+      fullPath: '/colour-sets/'
+      preLoaderRoute: typeof coreColourSetsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(core)/categories/': {
@@ -425,8 +465,10 @@ const rootRouteChildren: RootRouteChildren = {
   coreBlogIndexRoute: coreBlogIndexRoute,
   coreCalculatorIndexRoute: coreCalculatorIndexRoute,
   coreCategoriesIndexRoute: coreCategoriesIndexRoute,
+  coreColourSetsIndexRoute: coreColourSetsIndexRoute,
   coreDashboardIndexRoute: coreDashboardIndexRoute,
   coreProductsIndexRoute: coreProductsIndexRoute,
+  coreShadesIndexRoute: coreShadesIndexRoute,
   coreBlogPostIdPreviewRoute: coreBlogPostIdPreviewRoute,
   coreStockBatchesBatchIdRoute: coreStockBatchesBatchIdRoute,
   coreStockBatchesNewRoute: coreStockBatchesNewRoute,

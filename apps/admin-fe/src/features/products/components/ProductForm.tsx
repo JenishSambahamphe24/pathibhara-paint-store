@@ -41,7 +41,11 @@ export function ProductForm({ product }: ProductFormProps) {
           { title },
         ]}
       />
-      <form action={handleSubmit} noValidate className="space-y-5">
+      <form
+        onSubmit={FormHelper.submitHandler(handleSubmit)}
+        noValidate
+        className="space-y-5"
+      >
         <form.Subscribe
           selector={(state) => [state.isSubmitting, state.isDirty] as const}
         >

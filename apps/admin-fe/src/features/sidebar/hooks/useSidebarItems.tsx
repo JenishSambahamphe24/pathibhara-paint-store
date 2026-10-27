@@ -7,9 +7,11 @@ import {
   LayoutDashboard,
   Newspaper,
   Package,
+  Palette,
   ReceiptText,
   ScrollText,
   SlidersHorizontal,
+  SwatchBook,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -51,6 +53,21 @@ export function useSidebarItems() {
           title: m.sidebar_products(),
           icon: <Package size={20} />,
           url: "/products",
+        },
+      ],
+    },
+    {
+      title: m.sidebar_colours(),
+      items: [
+        {
+          title: m.sidebar_shades(),
+          icon: <Palette size={20} />,
+          url: "/shades",
+        },
+        {
+          title: m.sidebar_colour_sets(),
+          icon: <SwatchBook size={20} />,
+          url: "/colour-sets",
         },
       ],
     },

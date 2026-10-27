@@ -31,7 +31,11 @@ export function CalculatorForm({ defaultWastagePercent }: CalculatorFormProps) {
 
   return (
     <form.AppForm>
-      <form action={handleSubmit} noValidate className="space-y-5">
+      <form
+        onSubmit={FormHelper.submitHandler(handleSubmit)}
+        noValidate
+        className="space-y-5"
+      >
         <form.Field name="sections" mode="array">
           {(sections) => (
             <>

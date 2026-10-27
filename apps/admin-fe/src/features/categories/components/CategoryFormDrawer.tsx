@@ -6,6 +6,7 @@ import { Drawer } from "#/components/Drawer/Drawer";
 import { TranslationFields } from "#/components/TranslationFields/TranslationFields";
 import { UnsavedChangesDialog } from "#/components/UnsavedChangesDialog/UnsavedChangesDialog";
 
+import { FormHelper } from "#/lib/helpers/form.helper";
 import { m } from "#/paraglide/messages";
 
 import { useUnsavedChanges } from "#/hooks/useUnsavedChanges";
@@ -49,7 +50,11 @@ export function CategoryFormDrawer({
           onClose={onClose}
         >
           <form.AppForm>
-            <form action={handleSubmit} noValidate className="space-y-5">
+            <form
+              onSubmit={FormHelper.submitHandler(handleSubmit)}
+              noValidate
+              className="space-y-5"
+            >
               <form.AppField name="parentId">
                 {(field) => (
                   <field.FormSelect

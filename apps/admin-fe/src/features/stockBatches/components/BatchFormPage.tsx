@@ -30,7 +30,11 @@ export function BatchFormPage() {
           { title: m.batches_new_title() },
         ]}
       />
-      <form action={handleSubmit} noValidate className="space-y-5">
+      <form
+        onSubmit={FormHelper.submitHandler(handleSubmit)}
+        noValidate
+        className="space-y-5"
+      >
         <PageHeader
           title={m.batches_new_title()}
           description={m.batches_new_description()}

@@ -204,6 +204,10 @@ Instants render as the BS day in `Asia/Kathmandu`; calendar dates use
 
 - Every `<form>` has `noValidate` and exactly one `type="submit"` button. `Button`
   and `ActionButton` default to `type="button"`; never rely on a default submit.
+- Submit with `onSubmit={FormHelper.submitHandler(handleSubmit)}`, never
+  `action={handleSubmit}`: React resets an action form when the action returns,
+  and Ark's switch, checkbox and colour picker then snap back to their initial
+  values, undoing the admin's changes after a refused save.
 - Rows of an array field are `withForm` components that read their line with
   `form.Subscribe` (see `DailySaleLineRow`). Don't read nested values from the
   array field's own `state.value`; it doesn't update when a nested field does.

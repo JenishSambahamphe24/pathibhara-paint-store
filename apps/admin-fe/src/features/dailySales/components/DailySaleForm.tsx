@@ -28,7 +28,11 @@ export function DailySaleForm({ date, sale }: DailySaleFormProps) {
 
   return (
     <form.AppForm>
-      <form action={handleSubmit} noValidate className="space-y-5">
+      <form
+        onSubmit={FormHelper.submitHandler(handleSubmit)}
+        noValidate
+        className="space-y-5"
+      >
         {sale && (
           <p className="text-sm text-foreground-subtle">
             {m.sales_last_saved({
