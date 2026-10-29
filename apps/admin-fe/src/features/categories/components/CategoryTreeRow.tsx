@@ -83,13 +83,8 @@ export function CategoryTreeRow({
                   : "text-foreground-subtle",
               )}
             >
-              {category.translations.en.name}
+              {category.name}
             </span>
-            {category.translations.ne && (
-              <span className="truncate text-sm text-foreground-subtle">
-                {category.translations.ne.name}
-              </span>
-            )}
             {!category.isActive && (
               <Chip variant="neutral">{m.common_inactive()}</Chip>
             )}

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { slugInputSchema } from "../helpers/slug.schema";
-import { contentTranslationsSchema } from "../i18n/translation.schemas";
+import { contentFieldsShape } from "../content/content.schemas";
 import {
   ACTIVE_FILTERS,
   ListQuerySchema,
@@ -50,7 +50,7 @@ export const productInputSchema = z.object({
     .min(MIN_COATS)
     .max(MAX_COATS),
   isActive: z.boolean(),
-  translations: contentTranslationsSchema,
+  ...contentFieldsShape,
   imageFileIds: z.array(z.uuid()).max(MAX_PRODUCT_IMAGES),
   variants: z
     .array(productVariantInputSchema)

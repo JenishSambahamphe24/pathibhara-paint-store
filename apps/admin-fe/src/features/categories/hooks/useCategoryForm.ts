@@ -7,8 +7,8 @@ import { useRef } from "react";
 import { categoryInputSchema } from "@repo/shared";
 
 import { useAppForm } from "#/lib/form";
+import { ContentFormHelper } from "#/lib/helpers/contentForm.helper";
 import { FormHelper } from "#/lib/helpers/form.helper";
-import { TranslationFormHelper } from "#/lib/helpers/translationForm.helper";
 import { toaster } from "#/lib/toaster";
 import { m } from "#/paraglide/messages";
 
@@ -52,13 +52,13 @@ export function useCategoryForm({
         parentId: category.parentId,
         slug: category.slug,
         isActive: category.isActive,
-        translations: TranslationFormHelper.fromApi(category.translations),
+        ...ContentFormHelper.fromApi(category),
       }
     : {
         parentId: defaultParentId,
         slug: "",
         isActive: true,
-        translations: TranslationFormHelper.empty(),
+        ...ContentFormHelper.empty(),
       };
 
   const form = useAppForm({

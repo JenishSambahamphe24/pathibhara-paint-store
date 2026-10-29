@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { slugInputSchema } from "../helpers/slug.schema";
-import { describedTranslationsSchema } from "../i18n/translation.schemas";
+import { contentDescriptionSchema, contentNameSchema } from "../content/content.schemas";
 import {
   ACTIVE_FILTERS,
   ListQuerySchema,
@@ -24,7 +24,8 @@ export const colourSetShadesSchema = z.object({
 export const colourSetInputSchema = z.object({
   slug: slugInputSchema,
   isActive: z.boolean(),
-  translations: describedTranslationsSchema,
+  name: contentNameSchema,
+  description: contentDescriptionSchema,
   shades: colourSetShadesSchema,
 });
 export type ColourSetInput = z.input<typeof colourSetInputSchema>;

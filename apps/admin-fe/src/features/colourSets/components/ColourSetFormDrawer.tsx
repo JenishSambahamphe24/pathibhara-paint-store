@@ -147,45 +147,16 @@ function ColourSetForm({
         </FormSection>
 
         <FormSection title={m.colour_sets_section_details()}>
-          <div className="grid gap-5 sm:grid-cols-2">
-            {(["en", "ne"] as const).map((locale) => (
-              <div
-                key={locale}
-                className="space-y-4 rounded-lg border border-border-muted bg-surface-muted p-4"
-              >
-                <div>
-                  <p className="text-sm font-semibold text-foreground">
-                    {locale === "en"
-                      ? m.translations_english()
-                      : m.translations_nepali()}
-                  </p>
-                  {locale === "ne" && (
-                    <p className="text-xs text-foreground-subtle">
-                      {m.translations_nepali_hint()}
-                    </p>
-                  )}
-                </div>
-                <form.AppField name={`translations.${locale}.name`}>
-                  {(field) => (
-                    <field.FormInput
-                      label={m.translations_name()}
-                      required={locale === "en"}
-                    />
-                  )}
-                </form.AppField>
-                <form.AppField name={`translations.${locale}.description`}>
-                  {(field) => (
-                    <field.FormTextarea
-                      label={m.translations_description()}
-                      rows={3}
-                    />
-                  )}
-                </form.AppField>
-              </div>
-            ))}
-          </div>
+          <form.AppField name="name">
+            {(field) => <field.FormInput label={m.content_name()} required />}
+          </form.AppField>
+          <form.AppField name="description">
+            {(field) => (
+              <field.FormTextarea label={m.content_description()} rows={3} />
+            )}
+          </form.AppField>
 
-          <div className="mt-5 grid gap-5 sm:grid-cols-2">
+          <div className="grid gap-5 sm:grid-cols-2">
             <form.AppField name="slug">
               {(field) => (
                 <field.FormInput

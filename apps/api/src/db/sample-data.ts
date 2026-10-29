@@ -8,7 +8,7 @@ export interface ISampleCategory {
   key: string;
   parentKey: string | null;
   slug: string;
-  name: { en: string; ne?: string };
+  name: string;
 }
 
 export interface ISampleVariant {
@@ -21,71 +21,71 @@ export interface ISampleProduct {
   key: string;
   categoryKey: string;
   slug: string;
-  name: { en: string; ne?: string };
+  name: string;
   coverageSqftPerLitre: number;
   defaultCoats: number;
   variants: Array<ISampleVariant>;
 }
 
 export const SAMPLE_CATEGORIES: Array<ISampleCategory> = [
-  { key: "primer", parentKey: null, slug: "primer", name: { en: "Primer", ne: "प्राइमर" } },
+  { key: "primer", parentKey: null, slug: "primer", name: "Primer" },
   {
     key: "exteriorPrimer",
     parentKey: "primer",
     slug: "exterior-primer",
-    name: { en: "Exterior Primer", ne: "बाहिरी प्राइमर" },
+    name: "Exterior Primer",
   },
   {
     key: "dampProofPrimer",
     parentKey: "exteriorPrimer",
     slug: "damp-proof-primer",
-    name: { en: "Damp-proof Primer", ne: "ड्याम्प-प्रुफ प्राइमर" },
+    name: "Damp-proof Primer",
   },
   {
     key: "normalPrimer",
     parentKey: "exteriorPrimer",
     slug: "normal-primer",
-    name: { en: "Normal Primer", ne: "साधारण प्राइमर" },
+    name: "Normal Primer",
   },
   {
     key: "interiorPrimer",
     parentKey: "primer",
     slug: "interior-primer",
-    name: { en: "Interior Primer", ne: "भित्री प्राइमर" },
+    name: "Interior Primer",
   },
   {
     key: "interiorColour",
     parentKey: null,
     slug: "interior-colour",
-    name: { en: "Interior Colour", ne: "भित्री रङ" },
+    name: "Interior Colour",
   },
-  { key: "apexRoyal", parentKey: "interiorColour", slug: "apex-royal", name: { en: "Apex Royal" } },
+  { key: "apexRoyal", parentKey: "interiorColour", slug: "apex-royal", name: "Apex Royal" },
   {
     key: "premiumEmulsion",
     parentKey: "interiorColour",
     slug: "premium-emulsion",
-    name: { en: "Premium Emulsion" },
+    name: "Premium Emulsion",
   },
   {
     key: "tractorEmulsion",
     parentKey: "interiorColour",
     slug: "tractor-emulsion",
-    name: { en: "Tractor Emulsion" },
+    name: "Tractor Emulsion",
   },
   {
     key: "exteriorColour",
     parentKey: null,
     slug: "exterior-colour",
-    name: { en: "Exterior Colour", ne: "बाहिरी रङ" },
+    name: "Exterior Colour",
   },
   {
     key: "weatherproofEmulsion",
     parentKey: "exteriorColour",
     slug: "weatherproof-emulsion",
-    name: { en: "Weatherproof Emulsion" },
+    name: "Weatherproof Emulsion",
   },
-  { key: "enamel", parentKey: null, slug: "enamel", name: { en: "Enamel", ne: "इनामेल" } },
-  { key: "glossEnamel", parentKey: "enamel", slug: "gloss-enamel", name: { en: "Gloss Enamel" } },
+  { key: "enamel", parentKey: null, slug: "enamel", name: "Enamel" },
+  { key: "glossEnamel", parentKey: "enamel", slug: "gloss-enamel", name: "Gloss Enamel" },
 ];
 
 const STANDARD_SIZES = [1000, 4000, 10000, 20000];
@@ -103,7 +103,7 @@ export const SAMPLE_PRODUCTS: Array<ISampleProduct> = [
     key: "dampProof",
     categoryKey: "dampProofPrimer",
     slug: "damp-proof-primer",
-    name: { en: "Damp-proof Primer", ne: "ड्याम्प-प्रुफ प्राइमर" },
+    name: "Damp-proof Primer",
     coverageSqftPerLitre: 12,
     defaultCoats: 1,
     // No 1L size on purpose: the calculator's "least overshoot" path.
@@ -113,7 +113,7 @@ export const SAMPLE_PRODUCTS: Array<ISampleProduct> = [
     key: "normalPrimer",
     categoryKey: "normalPrimer",
     slug: "exterior-primer-normal",
-    name: { en: "Exterior Primer (Normal)" },
+    name: "Exterior Primer (Normal)",
     coverageSqftPerLitre: 14,
     defaultCoats: 1,
     variants: sizes([420, 1550, 3700, 7100], [10, 5, 3, 2]),
@@ -122,7 +122,7 @@ export const SAMPLE_PRODUCTS: Array<ISampleProduct> = [
     key: "interiorPrimer",
     categoryKey: "interiorPrimer",
     slug: "interior-primer",
-    name: { en: "Interior Primer", ne: "भित्री प्राइमर" },
+    name: "Interior Primer",
     coverageSqftPerLitre: 16,
     defaultCoats: 1,
     variants: sizes([380, 1400, 3300, 6300], [10, 5, 3, 2]),
@@ -131,7 +131,7 @@ export const SAMPLE_PRODUCTS: Array<ISampleProduct> = [
     key: "apexRoyal",
     categoryKey: "apexRoyal",
     slug: "apex-royal-luxury-emulsion",
-    name: { en: "Apex Royal Luxury Emulsion" },
+    name: "Apex Royal Luxury Emulsion",
     coverageSqftPerLitre: 35,
     defaultCoats: 2,
     variants: sizes([1050, 3950, 9600, 18800], [6, 4, 2, 2]),
@@ -140,7 +140,7 @@ export const SAMPLE_PRODUCTS: Array<ISampleProduct> = [
     key: "premiumEmulsion",
     categoryKey: "premiumEmulsion",
     slug: "premium-emulsion",
-    name: { en: "Premium Emulsion" },
+    name: "Premium Emulsion",
     coverageSqftPerLitre: 28,
     defaultCoats: 2,
     variants: sizes([700, 2650, 6400, 12400], [8, 4, 2, 2]),
@@ -149,7 +149,7 @@ export const SAMPLE_PRODUCTS: Array<ISampleProduct> = [
     key: "tractorEmulsion",
     categoryKey: "tractorEmulsion",
     slug: "tractor-emulsion",
-    name: { en: "Tractor Emulsion" },
+    name: "Tractor Emulsion",
     coverageSqftPerLitre: 20,
     defaultCoats: 2,
     variants: sizes([450, 1650, 3900, 7500], [12, 6, 3, 2]),
@@ -158,7 +158,7 @@ export const SAMPLE_PRODUCTS: Array<ISampleProduct> = [
     key: "weatherproof",
     categoryKey: "weatherproofEmulsion",
     slug: "weatherproof-exterior-emulsion",
-    name: { en: "Weatherproof Exterior Emulsion" },
+    name: "Weatherproof Exterior Emulsion",
     coverageSqftPerLitre: 30,
     defaultCoats: 2,
     variants: sizes([980, 3700, 8900, 17400], [6, 4, 2, 2]),
@@ -167,7 +167,7 @@ export const SAMPLE_PRODUCTS: Array<ISampleProduct> = [
     key: "glossEnamel",
     categoryKey: "glossEnamel",
     slug: "gloss-enamel",
-    name: { en: "Gloss Enamel", ne: "ग्लस इनामेल" },
+    name: "Gloss Enamel",
     coverageSqftPerLitre: 18,
     defaultCoats: 2,
     variants: sizes([360, 650, 2400], [10, 8, 3], [500, 1000, 4000]),
@@ -263,7 +263,7 @@ export interface ISampleShade {
   key: string;
   code: string;
   hex: string;
-  name: { en: string; ne?: string };
+  name: string;
   productKey?: string;
 }
 
@@ -272,18 +272,18 @@ export const SAMPLE_SHADES: Array<ISampleShade> = [
     key: "ivory",
     code: "SMP-1001",
     hex: "#f3e5c0",
-    name: { en: "Ivory Cream", ne: "आइभरी क्रिम" },
+    name: "Ivory Cream",
   },
-  { key: "terracotta", code: "SMP-1002", hex: "#c8643b", name: { en: "Terracotta" } },
-  { key: "brick", code: "SMP-1003", hex: "#8b2f23", name: { en: "Brick Red" } },
-  { key: "charcoal", code: "SMP-1004", hex: "#333a40", name: { en: "Charcoal" } },
-  { key: "white", code: "SMP-1005", hex: "#fafaf7", name: { en: "Pure White", ne: "सेतो" } },
-  { key: "slate", code: "SMP-1006", hex: "#6b7280", name: { en: "Slate Grey" } },
+  { key: "terracotta", code: "SMP-1002", hex: "#c8643b", name: "Terracotta" },
+  { key: "brick", code: "SMP-1003", hex: "#8b2f23", name: "Brick Red" },
+  { key: "charcoal", code: "SMP-1004", hex: "#333a40", name: "Charcoal" },
+  { key: "white", code: "SMP-1005", hex: "#fafaf7", name: "Pure White" },
+  { key: "slate", code: "SMP-1006", hex: "#6b7280", name: "Slate Grey" },
   {
     key: "forest",
     code: "SMP-1007",
     hex: "#2f5d3a",
-    name: { en: "Forest Green" },
+    name: "Forest Green",
     productKey: "weatherproof",
   },
 ];

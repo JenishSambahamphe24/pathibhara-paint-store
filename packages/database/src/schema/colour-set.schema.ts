@@ -1,7 +1,6 @@
-import { boolean, integer, pgTable, primaryKey, text, uuid } from "drizzle-orm/pg-core";
+import { boolean, integer, pgTable, text, uuid } from "drizzle-orm/pg-core";
 
 import { primaryId, timestamps } from "./columns";
-import { localeEnum } from "./enums";
 import { shades } from "./shade.schema";
 
 // One column per VISUALIZER_COMPONENTS entry, so "exactly one shade per
@@ -9,6 +8,8 @@ import { shades } from "./shade.schema";
 export const colourSets = pgTable("colour_sets", {
   id: primaryId(),
   slug: text("slug").notNull().unique(),
+  name: text("name").notNull(),
+  description: text("description"),
   mainSurfaceShadeId: uuid("main_surface_shade_id")
     .notNull()
     .references(() => shades.id, { onDelete: "restrict" }),
@@ -25,17 +26,3 @@ export const colourSets = pgTable("colour_sets", {
   isActive: boolean("is_active").notNull().default(true),
   ...timestamps,
 });
-
-export const colourSetTranslations = pgTable(
-  "colour_set_translations",
-  {
-    colourSetId: uuid("colour_set_id")
-      .notNull()
-      .references(() => colourSets.id, { onDelete: "cascade" }),
-    locale: localeEnum("locale").notNull(),
-    name: text("name").notNull(),
-    description: text("description"),
-    ...timestamps,
-  },
-  (table) => [primaryKey({ columns: [table.colourSetId, table.locale] })],
-);

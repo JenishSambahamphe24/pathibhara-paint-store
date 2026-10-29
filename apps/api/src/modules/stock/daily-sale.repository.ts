@@ -7,7 +7,7 @@ import { injectable } from "tsyringe";
 import { dailySaleItems, dailySales, productVariants, TransactionManager } from "@repo/database";
 import { PaginationHelper } from "@repo/http-kit";
 
-import { createdByAdmin, updatedByAdmin, variantProductName } from "./stock-joins";
+import { createdByAdmin, updatedByAdmin, variantProduct } from "./stock-joins";
 
 @injectable()
 export class DailySaleRepository {
@@ -94,22 +94,16 @@ export class DailySaleRepository {
       .select({
         item: dailySaleItems,
         productId: productVariants.productId,
-        productName: variantProductName.name,
+        productName: variantProduct.name,
         volumeMl: productVariants.volumeMl,
         sku: productVariants.sku,
         currentStock: productVariants.currentStock,
       })
       .from(dailySaleItems)
       .innerJoin(productVariants, eq(productVariants.id, dailySaleItems.variantId))
-      .innerJoin(
-        variantProductName,
-        and(
-          eq(variantProductName.productId, productVariants.productId),
-          eq(variantProductName.locale, "en"),
-        ),
-      )
+      .innerJoin(variantProduct, eq(variantProduct.id, productVariants.productId))
       .where(eq(dailySaleItems.dailySaleId, dailySaleId))
-      .orderBy(asc(variantProductName.name), asc(productVariants.volumeMl));
+      .orderBy(asc(variantProduct.name), asc(productVariants.volumeMl));
   }
 
   async lockByDate(saleDate: string) {

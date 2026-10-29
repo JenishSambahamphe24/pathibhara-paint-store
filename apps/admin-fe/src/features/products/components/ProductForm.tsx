@@ -7,7 +7,7 @@ import { BreadCrumb } from "#/components/Breadcrumb/Breadcrumb";
 import { Button } from "#/components/Button/Button";
 import { FormSection } from "#/components/FormSection/FormSection";
 import { PageHeader } from "#/components/PageHeader/PageHeader";
-import { TranslationFields } from "#/components/TranslationFields/TranslationFields";
+import { ContentFields } from "#/components/ContentFields/ContentFields";
 import { UnsavedChangesDialog } from "#/components/UnsavedChangesDialog/UnsavedChangesDialog";
 
 import { CategoryTreeHelper } from "#/features/categories/helpers/categoryTree.helper";
@@ -30,7 +30,7 @@ export function ProductForm({ product }: ProductFormProps) {
   const { form, handleSubmit } = useProductForm(product);
   const { data: categories = [] } = useCategories();
   const savedVariants = new Map(product?.variants.map((v) => [v.id, v]) ?? []);
-  const title = product ? product.translations.en.name : m.products_new_title();
+  const title = product ? product.name : m.products_new_title();
 
   return (
     <form.AppForm>
@@ -128,7 +128,15 @@ export function ProductForm({ product }: ProductFormProps) {
           title={m.products_section_content()}
           description={m.products_section_content_hint()}
         >
-          <TranslationFields form={form} fields="translations" showSeo />
+          <ContentFields
+            form={form}
+            fields={{
+              name: "name",
+              description: "description",
+              seoTitle: "seoTitle",
+              seoDescription: "seoDescription",
+            }}
+          />
         </FormSection>
 
         <FormSection

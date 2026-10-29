@@ -2,19 +2,14 @@ import type { PostListQuery } from "@repo/shared";
 import type { SQL } from "drizzle-orm";
 
 import { and, asc, desc, eq, ilike, ne, or, sql } from "drizzle-orm";
-import { alias } from "drizzle-orm/pg-core";
 import { injectable } from "tsyringe";
 
-import { admins, files, posts, postTranslations, TransactionManager } from "@repo/database";
+import { admins, files, posts, TransactionManager } from "@repo/database";
 import { PaginationHelper } from "@repo/http-kit";
 
 import { LikeHelper } from "#helpers/like.helper";
 
 export type PostRow = typeof posts.$inferSelect;
-export type PostTranslationValues = Omit<typeof postTranslations.$inferInsert, "postId" | "locale">;
-
-const enTitle = alias(postTranslations, "en_title");
-const neTitle = alias(postTranslations, "ne_title");
 
 @injectable()
 export class PostRepository {
@@ -28,7 +23,7 @@ export class PostRepository {
     const conditions: Array<SQL | undefined> = [];
     if (query.search) {
       const term = LikeHelper.contains(query.search);
-      conditions.push(or(ilike(enTitle.title, term), ilike(neTitle.title, term), ilike(posts.slug, term)));
+      conditions.push(or(ilike(posts.title, term), ilike(posts.slug, term)));
     }
     if (query.status) conditions.push(eq(posts.status, query.status));
     const where = and(...conditions);
@@ -37,21 +32,17 @@ export class PostRepository {
       updatedAt: posts.updatedAt,
       publishedAt: posts.publishedAt,
       createdAt: posts.createdAt,
-      title: enTitle.title,
+      title: posts.title,
     }[query.sortBy];
     const direction = query.sortOrder === "asc" ? asc : desc;
 
     const rows = await this.db
       .select({
         post: posts,
-        title: enTitle.title,
-        hasNepali: sql<boolean>`${neTitle.postId} IS NOT NULL`,
         authorName: admins.name,
         coverFile: files,
       })
       .from(posts)
-      .innerJoin(enTitle, and(eq(enTitle.postId, posts.id), eq(enTitle.locale, "en")))
-      .leftJoin(neTitle, and(eq(neTitle.postId, posts.id), eq(neTitle.locale, "ne")))
       .innerJoin(admins, eq(admins.id, posts.authorId))
       .leftJoin(files, eq(files.id, posts.coverImageFileId))
       .where(where)
@@ -62,8 +53,6 @@ export class PostRepository {
     const [{ total }] = await this.db
       .select({ total: sql<number>`count(*)::int` })
       .from(posts)
-      .innerJoin(enTitle, and(eq(enTitle.postId, posts.id), eq(enTitle.locale, "en")))
-      .leftJoin(neTitle, and(eq(neTitle.postId, posts.id), eq(neTitle.locale, "ne")))
       .where(where);
     return { rows, total };
   }
@@ -77,10 +66,6 @@ export class PostRepository {
       .where(eq(posts.id, id))
       .limit(1);
     return row;
-  }
-
-  async findTranslations(postId: string) {
-    return this.db.select().from(postTranslations).where(eq(postTranslations.postId, postId));
   }
 
   async lockById(id: string): Promise<PostRow | undefined> {
@@ -107,18 +92,5 @@ export class PostRepository {
       .update(posts)
       .set({ ...values, updatedAt: new Date() })
       .where(eq(posts.id, id));
-  }
-
-  async saveTranslation(postId: string, locale: "en" | "ne", values: PostTranslationValues): Promise<void> {
-    await this.db
-      .insert(postTranslations)
-      .values({ postId, locale, ...values })
-      .onConflictDoUpdate({ target: [postTranslations.postId, postTranslations.locale], set: values });
-  }
-
-  async deleteTranslation(postId: string, locale: "en" | "ne"): Promise<void> {
-    await this.db
-      .delete(postTranslations)
-      .where(and(eq(postTranslations.postId, postId), eq(postTranslations.locale, locale)));
   }
 }

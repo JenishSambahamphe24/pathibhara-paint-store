@@ -1,4 +1,4 @@
-import type { BsFormatStyle, BsLocale } from "@repo/shared";
+import type { BsFormatStyle } from "@repo/shared";
 
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
@@ -7,8 +7,6 @@ import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 
 import { BsDateHelper } from "@repo/shared";
-
-import { getLocale } from "#/paraglide/runtime";
 
 dayjs.extend(localizedFormat);
 dayjs.extend(relativeTime);
@@ -25,17 +23,10 @@ type TDateInput = string | number | Date | dayjs.Dayjs | null | undefined;
 // and YYYY-MM-DD calendar dates); conversion happens only here and in the
 // BS pickers.
 export class DateHelper {
-  static bsLocale(): BsLocale {
-    return getLocale();
-  }
-
   static formatDate(value: TDateInput): string {
     const d = DateHelper.parseInstant(value);
     if (!d) return "—";
-    return BsDateHelper.format(BsDateHelper.fromInstant(d.toDate()), {
-      locale: DateHelper.bsLocale(),
-      style: "long",
-    });
+    return BsDateHelper.format(BsDateHelper.fromInstant(d.toDate()), "long");
   }
 
   static formatDateTime(value: TDateInput): string {
@@ -52,10 +43,7 @@ export class DateHelper {
   ): string {
     if (!value) return "—";
     try {
-      return BsDateHelper.format(BsDateHelper.fromAdIso(value), {
-        locale: DateHelper.bsLocale(),
-        style,
-      });
+      return BsDateHelper.format(BsDateHelper.fromAdIso(value), style);
     } catch {
       return "—";
     }
@@ -63,10 +51,7 @@ export class DateHelper {
 
   static formatCalendarDateWithWeekday(value: string): string {
     const bs = BsDateHelper.fromAdIso(value);
-    const locale = DateHelper.bsLocale();
-    const weekdays =
-      locale === "ne" ? BsDateHelper.WEEKDAYS_NE : BsDateHelper.WEEKDAYS_EN;
-    return `${weekdays[BsDateHelper.weekday(bs)]}, ${BsDateHelper.format(bs, { locale, style: "long" })}`;
+    return `${BsDateHelper.WEEKDAYS[BsDateHelper.weekday(bs)]}, ${BsDateHelper.format(bs, "long")}`;
   }
 
   // Plain calendar arithmetic on YYYY-MM-DD, done in UTC so no zone or DST

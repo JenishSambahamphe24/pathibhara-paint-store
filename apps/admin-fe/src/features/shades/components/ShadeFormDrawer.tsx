@@ -116,21 +116,9 @@ function ShadeForm({ shade, onClose, onDirtyChange }: ShadeFormProps) {
             </form.AppField>
           </div>
 
-          <div className="grid gap-4 rounded-lg border border-border-muted bg-surface-muted p-4 sm:grid-cols-2">
-            <form.AppField name="translations.en.name">
-              {(field) => (
-                <field.FormInput label={m.shades_name_en()} required />
-              )}
-            </form.AppField>
-            <form.AppField name="translations.ne.name">
-              {(field) => (
-                <field.FormInput
-                  label={m.shades_name_ne()}
-                  hint={m.translations_nepali_hint()}
-                />
-              )}
-            </form.AppField>
-          </div>
+          <form.AppField name="name">
+            {(field) => <field.FormInput label={m.content_name()} required />}
+          </form.AppField>
 
           <form.Field name="productId">
             {(field) => (
@@ -205,7 +193,7 @@ function ShadeForm({ shade, onClose, onDirtyChange }: ShadeFormProps) {
         onOpenChange={setIsDeleting}
         title={m.shades_delete_title()}
         description={m.shades_delete_description({
-          name: shade ? `${shade.code} · ${shade.translations.en.name}` : "",
+          name: shade ? `${shade.code} · ${shade.name}` : "",
         })}
         confirmLabel={m.common_delete()}
         isLoading={removeMutation.isPending}

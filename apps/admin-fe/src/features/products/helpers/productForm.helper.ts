@@ -4,7 +4,7 @@ import type {
   TProductVariantFormValue,
 } from "../types";
 
-import { TranslationFormHelper } from "#/lib/helpers/translationForm.helper";
+import { ContentFormHelper } from "#/lib/helpers/contentForm.helper";
 
 export class ProductFormHelper {
   static emptyVariant(): TProductVariantFormValue {
@@ -28,7 +28,7 @@ export class ProductFormHelper {
         coverageSqftPerLitre: null,
         defaultCoats: 2,
         isActive: true,
-        translations: TranslationFormHelper.empty(),
+        ...ContentFormHelper.empty(),
         imageFileIds: [],
         variants: [ProductFormHelper.emptyVariant()],
       };
@@ -39,7 +39,7 @@ export class ProductFormHelper {
       coverageSqftPerLitre: product.coverageSqftPerLitre,
       defaultCoats: product.defaultCoats,
       isActive: product.isActive,
-      translations: TranslationFormHelper.fromApi(product.translations),
+      ...ContentFormHelper.fromApi(product),
       imageFileIds: product.images.map((image) => image.id),
       variants: product.variants.map((variant) => ({
         id: variant.id,

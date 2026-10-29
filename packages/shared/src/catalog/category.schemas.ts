@@ -1,13 +1,13 @@
 import { z } from "zod";
 
 import { slugInputSchema } from "../helpers/slug.schema";
-import { contentTranslationsSchema } from "../i18n/translation.schemas";
+import { contentFieldsShape } from "../content/content.schemas";
 
 export const categoryInputSchema = z.object({
   parentId: z.uuid().nullable(),
   slug: slugInputSchema,
   isActive: z.boolean(),
-  translations: contentTranslationsSchema,
+  ...contentFieldsShape,
 });
 export type CategoryInput = z.input<typeof categoryInputSchema>;
 

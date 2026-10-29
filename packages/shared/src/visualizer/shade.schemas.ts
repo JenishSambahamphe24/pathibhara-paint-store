@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { nameTranslationsSchema } from "../i18n/translation.schemas";
+import { contentNameSchema } from "../content/content.schemas";
 import {
   ACTIVE_FILTERS,
   ListQuerySchema,
@@ -30,7 +30,7 @@ export const shadeInputSchema = z.object({
   hex: hexColourSchema,
   productId: z.uuid().nullable(),
   isActive: z.boolean(),
-  translations: nameTranslationsSchema,
+  name: contentNameSchema,
 });
 export type ShadeInput = z.input<typeof shadeInputSchema>;
 

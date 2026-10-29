@@ -3,10 +3,8 @@ import { sql } from "drizzle-orm";
 import {
   admins,
   categories,
-  categoryTranslations,
   DatabaseService,
   products,
-  productTranslations,
   productVariants,
   TransactionManager,
 } from "@repo/database";
@@ -107,10 +105,10 @@ export class IntegrationContext {
 
   async reset(): Promise<void> {
     await this.db.execute(sql`TRUNCATE
-      colour_set_translations, colour_sets, shade_translations, shades, slug_redirects,
+      colour_sets, shades, slug_redirects,
       stock_movements, stock_adjustments, daily_sale_items, daily_sales,
       stock_batch_items, stock_batches, product_variants, product_images,
-      product_translations, products, category_translations, categories,
+      products, categories,
       sessions, admins RESTART IDENTITY CASCADE`);
   }
 
@@ -119,17 +117,14 @@ export class IntegrationContext {
       .insert(admins)
       .values({ email: "test@example.com", name: "Tester", passwordHash: "x" })
       .returning();
-    const [category] = await this.db.insert(categories).values({ slug: "test" }).returning();
-    await this.db
-      .insert(categoryTranslations)
-      .values({ categoryId: category.id, locale: "en", name: "Test" });
+    const [category] = await this.db
+      .insert(categories)
+      .values({ slug: "test", name: "Test" })
+      .returning();
     const [product] = await this.db
       .insert(products)
-      .values({ categoryId: category.id, slug: "paint", coverageSqftPerLitre: 20 })
+      .values({ categoryId: category.id, slug: "paint", name: "Paint", coverageSqftPerLitre: 20 })
       .returning();
-    await this.db
-      .insert(productTranslations)
-      .values({ productId: product.id, locale: "en", name: "Paint" });
     const [litre, fourLitre] = await this.db
       .insert(productVariants)
       .values([

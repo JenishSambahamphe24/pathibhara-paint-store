@@ -58,9 +58,13 @@ Enum values live as `as const` arrays in `@repo/shared`. The `pgEnum` in `packag
 
 There is no `deleted_at` column. Records retire through their domain state (`is_active`, `voided_at`, `status`). Ledger and history rows are never deleted.
 
+### English only
+
+The store is English-only (decided with the client). Content has one set of text fields on each record; there are no translation tables, locale enum or Nepali fields, so don't reintroduce them. Dates are still shown in Bikram Sambat, written in English ("10 Kartik 2083").
+
 ### SEO
 
-`user-fe` is server-rendered and must stay SEO friendly (English now, Nepali next): locale-prefixed URLs, stable slugs with redirects, per-page metadata, JSON-LD and a sitemap. `admin-fe` is client-rendered and `noindex`. See `CONVENTIONS.md` section 13.
+`user-fe` is server-rendered and must stay SEO friendly: stable slugs with redirects, per-page metadata, JSON-LD and a sitemap. `admin-fe` is client-rendered and `noindex`. See `CONVENTIONS.md` section 13.
 
 ### Stock changes go through the ledger
 

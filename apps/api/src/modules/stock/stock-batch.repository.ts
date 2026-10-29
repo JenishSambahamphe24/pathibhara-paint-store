@@ -9,7 +9,7 @@ import { PaginationHelper } from "@repo/http-kit";
 
 import { LikeHelper } from "#helpers/like.helper";
 
-import { createdByAdmin, variantProductName, voidedByAdmin } from "./stock-joins";
+import { createdByAdmin, variantProduct, voidedByAdmin } from "./stock-joins";
 
 @injectable()
 export class StockBatchRepository {
@@ -111,22 +111,16 @@ export class StockBatchRepository {
       .select({
         item: stockBatchItems,
         productId: productVariants.productId,
-        productName: variantProductName.name,
+        productName: variantProduct.name,
         volumeMl: productVariants.volumeMl,
         sku: productVariants.sku,
         currentStock: productVariants.currentStock,
       })
       .from(stockBatchItems)
       .innerJoin(productVariants, eq(productVariants.id, stockBatchItems.variantId))
-      .innerJoin(
-        variantProductName,
-        and(
-          eq(variantProductName.productId, productVariants.productId),
-          eq(variantProductName.locale, "en"),
-        ),
-      )
+      .innerJoin(variantProduct, eq(variantProduct.id, productVariants.productId))
       .where(eq(stockBatchItems.batchId, batchId))
-      .orderBy(asc(variantProductName.name), asc(productVariants.volumeMl));
+      .orderBy(asc(variantProduct.name), asc(productVariants.volumeMl));
   }
 
   async lockById(id: string) {

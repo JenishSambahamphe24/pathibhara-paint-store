@@ -10,7 +10,7 @@ import { PaginationHelper } from "@repo/http-kit";
 import { LikeHelper } from "#helpers/like.helper";
 import { StoreDayHelper } from "#helpers/store-day.helper";
 
-import { createdByAdmin, variantProductName } from "./stock-joins";
+import { createdByAdmin, variantProduct } from "./stock-joins";
 
 @injectable()
 export class StockAdjustmentRepository {
@@ -25,20 +25,14 @@ export class StockAdjustmentRepository {
       .select({
         adjustment: stockAdjustments,
         productId: productVariants.productId,
-        productName: variantProductName.name,
+        productName: variantProduct.name,
         volumeMl: productVariants.volumeMl,
         sku: productVariants.sku,
         createdByName: createdByAdmin.name,
       })
       .from(stockAdjustments)
       .innerJoin(productVariants, eq(productVariants.id, stockAdjustments.variantId))
-      .innerJoin(
-        variantProductName,
-        and(
-          eq(variantProductName.productId, productVariants.productId),
-          eq(variantProductName.locale, "en"),
-        ),
-      )
+      .innerJoin(variantProduct, eq(variantProduct.id, productVariants.productId))
       .innerJoin(createdByAdmin, eq(createdByAdmin.id, stockAdjustments.createdBy))
       .$dynamic();
   }
@@ -49,7 +43,7 @@ export class StockAdjustmentRepository {
       const term = LikeHelper.contains(query.search);
       conditions.push(
         or(
-          ilike(variantProductName.name, term),
+          ilike(variantProduct.name, term),
           ilike(productVariants.sku, term),
           ilike(stockAdjustments.note, term),
         ),
@@ -77,13 +71,7 @@ export class StockAdjustmentRepository {
       .select({ total: sql<number>`count(*)::int` })
       .from(stockAdjustments)
       .innerJoin(productVariants, eq(productVariants.id, stockAdjustments.variantId))
-      .innerJoin(
-        variantProductName,
-        and(
-          eq(variantProductName.productId, productVariants.productId),
-          eq(variantProductName.locale, "en"),
-        ),
-      )
+      .innerJoin(variantProduct, eq(variantProduct.id, productVariants.productId))
       .where(where);
     return { rows, total };
   }

@@ -95,7 +95,7 @@ export function ColourSetListPage({
             {filterShade && <ColorSwatch hex={filterShade.hex} size="sm" />}
             {m.colour_sets_using_shade({
               shade: filterShade
-                ? `${filterShade.code} · ${filterShade.translations.en.name}`
+                ? `${filterShade.code} · ${filterShade.name}`
                 : "…",
             })}
             <button

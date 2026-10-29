@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import { BsDateHelper } from "./bs-date.helper";
-import { NumeralHelper } from "./numeral.helper";
 
 const DAY_MS = 86_400_000;
 
@@ -47,18 +46,16 @@ describe("BsDateHelper", () => {
     expect(BsDateHelper.isValid({ year: 2083, month: 8, day: 30 })).toBe(false);
   });
 
-  it("formats in English and Nepali", () => {
+  it("formats each style", () => {
     const date = { year: 2083, month: 7, day: 10 };
     expect(BsDateHelper.format(date)).toBe("2083-07-10");
-    expect(BsDateHelper.format(date, { style: "long" })).toBe("10 Kartik 2083");
-    expect(BsDateHelper.format(date, { style: "dayMonth" })).toBe("10 Kartik");
-    expect(BsDateHelper.format(date, { style: "monthYear" })).toBe("Kartik 2083");
-    expect(BsDateHelper.format(date, { locale: "ne", style: "long" })).toBe("२०८३ कार्तिक १०");
-    expect(BsDateHelper.format(date, { locale: "ne" })).toBe("२०८३-०७-१०");
+    expect(BsDateHelper.format(date, "long")).toBe("10 Kartik 2083");
+    expect(BsDateHelper.format(date, "dayMonth")).toBe("10 Kartik");
+    expect(BsDateHelper.format(date, "monthYear")).toBe("Kartik 2083");
   });
 
-  it("parses ASCII and Devanagari digits", () => {
-    expect(BsDateHelper.parse("२०८३-७-१०")).toEqual({ year: 2083, month: 7, day: 10 });
+  it("parses YYYY-MM-DD", () => {
+    expect(BsDateHelper.parse(" 2083-7-10 ")).toEqual({ year: 2083, month: 7, day: 10 });
     expect(() => BsDateHelper.parse("2083/07/10")).toThrow(RangeError);
   });
 
@@ -72,12 +69,5 @@ describe("BsDateHelper", () => {
     // Kartik 2083 has 30 days, Mangsir 29.
     expect(BsDateHelper.addMonths({ year: 2083, month: 7, day: 30 }, 1)).toEqual({ year: 2083, month: 8, day: 29 });
     expect(BsDateHelper.compare({ year: 2083, month: 6, day: 30 }, { year: 2083, month: 7, day: 1 })).toBeLessThan(0);
-  });
-});
-
-describe("NumeralHelper", () => {
-  it("converts digits both ways", () => {
-    expect(NumeralHelper.toNepali("2083-07-10")).toBe("२०८३-०७-१०");
-    expect(NumeralHelper.toEnglish("२०८३")).toBe("2083");
   });
 });

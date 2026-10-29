@@ -20,10 +20,10 @@ function category(
     path: [name],
     productCount: 0,
     childCount: 0,
-    translations: {
-      en: { name, description: null, seoTitle: null, seoDescription: null },
-      ne: null,
-    },
+    name,
+    description: null,
+    seoTitle: null,
+    seoDescription: null,
   };
 }
 

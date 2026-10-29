@@ -160,7 +160,7 @@ export function CategoryTreePage() {
         onOpenChange={(open) => !open && setDeleting(null)}
         title={m.categories_delete_title()}
         description={m.categories_delete_description({
-          name: deleting?.translations.en.name ?? "",
+          name: deleting?.name ?? "",
         })}
         confirmLabel={m.common_delete()}
         isLoading={isRemoving}

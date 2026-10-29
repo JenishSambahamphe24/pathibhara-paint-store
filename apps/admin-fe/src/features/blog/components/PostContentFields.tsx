@@ -12,45 +12,43 @@ async function uploadInlineImage(file: File) {
   return { src: uploaded.url, alt: uploaded.altText ?? file.name.replace(/\.[^.]+$/, "") };
 }
 
-export const PostLocaleFields = withForm({
+export const PostContentFields = withForm({
   defaultValues: PostFormHelper.defaults(null),
-  props: { locale: "en" as "en" | "ne" },
-  render: function Render({ form, locale }) {
-    const required = locale === "en";
+  render: function Render({ form }) {
     return (
       <div className="space-y-4">
-        <form.AppField name={`translations.${locale}.title`}>
-          {(field) => <field.FormInput label={m.blog_field_title()} required={required} />}
+        <form.AppField name="title">
+          {(field) => <field.FormInput label={m.blog_field_title()} required />}
         </form.AppField>
-        <form.AppField name={`translations.${locale}.excerpt`}>
+        <form.AppField name="excerpt">
           {(field) => <field.FormTextarea label={m.blog_field_excerpt()} rows={2} hint={m.blog_field_excerpt_hint()} />}
         </form.AppField>
-        <form.AppField name={`translations.${locale}.contentJson`}>
+        <form.AppField name="contentJson">
           {(field) => (
             <field.FormRichText
               label={m.blog_field_content()}
-              required={required}
+              required
               placeholder={m.blog_field_content_placeholder()}
               onUploadImage={uploadInlineImage}
             />
           )}
         </form.AppField>
         <div className="grid gap-4 md:grid-cols-2">
-          <form.AppField name={`translations.${locale}.seoTitle`}>
+          <form.AppField name="seoTitle">
             {(field) => (
               <field.FormInput
-                label={m.translations_seo_title()}
+                label={m.content_seo_title()}
                 maxLength={SEO_TITLE_MAX_LENGTH}
-                hint={m.translations_seo_title_hint({ max: SEO_TITLE_MAX_LENGTH })}
+                hint={m.content_seo_title_hint({ max: SEO_TITLE_MAX_LENGTH })}
               />
             )}
           </form.AppField>
-          <form.AppField name={`translations.${locale}.seoDescription`}>
+          <form.AppField name="seoDescription">
             {(field) => (
               <field.FormTextarea
-                label={m.translations_seo_description()}
+                label={m.content_seo_description()}
                 rows={2}
-                hint={m.translations_seo_description_hint({ max: SEO_DESCRIPTION_MAX_LENGTH })}
+                hint={m.content_seo_description_hint({ max: SEO_DESCRIPTION_MAX_LENGTH })}
               />
             )}
           </form.AppField>

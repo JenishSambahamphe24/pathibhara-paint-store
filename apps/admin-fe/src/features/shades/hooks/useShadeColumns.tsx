@@ -33,11 +33,6 @@ export function useShadeColumns(
               <span className="block font-mono text-xs text-foreground-subtle">
                 {shade.code} · {shade.hex}
               </span>
-              {!shade.hasNepali && (
-                <span className="block text-xs text-foreground-faint">
-                  {m.shades_missing_nepali()}
-                </span>
-              )}
             </span>
           </button>
         );

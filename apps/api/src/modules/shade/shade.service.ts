@@ -38,9 +38,8 @@ export class ShadeService {
         id: row.shade.id,
         code: row.shade.code,
         hex: row.shade.hex,
-        name: row.name,
+        name: row.shade.name,
         isActive: row.shade.isActive,
-        hasNepali: row.hasNepali,
         productId: row.shade.productId,
         productName: row.productName,
         colourSetCount: row.colourSetCount,
@@ -54,18 +53,12 @@ export class ShadeService {
   }
 
   async get(id: string): Promise<TShade> {
-    const [detail, translations] = await Promise.all([
-      this.shadeRepository.findDetail(id),
-      this.shadeRepository.findTranslations(id),
-    ]);
+    const detail = await this.shadeRepository.findDetail(id);
     if (!detail) throw new NotFoundException(tk("shade.notFound"));
-    const name = (locale: "en" | "ne") => translations.find((t) => t.locale === locale)?.name;
-    const ne = name("ne");
     return ShadeResponseDto.parse({
       ...detail.shade,
       productName: detail.productName,
       colourSetCount: detail.colourSetCount,
-      translations: { en: { name: name("en") }, ne: ne ? { name: ne } : null },
       createdAt: detail.shade.createdAt.toISOString(),
       updatedAt: detail.shade.updatedAt.toISOString(),
     });
@@ -76,11 +69,11 @@ export class ShadeService {
       await this.assertValid(input);
       const row = await this.shadeRepository.create({
         code: input.code,
+        name: input.name,
         hex: input.hex,
         productId: input.productId,
         isActive: input.isActive,
       });
-      await this.shadeRepository.saveTranslations(row.id, input.translations);
       return row.id;
     });
     return this.get(id);
@@ -105,11 +98,11 @@ export class ShadeService {
 
       await this.shadeRepository.update(id, {
         code: input.code,
+        name: input.name,
         hex: input.hex,
         productId: input.productId,
         isActive: input.isActive,
       });
-      await this.shadeRepository.saveTranslations(id, input.translations);
     });
     return this.get(id);
   }

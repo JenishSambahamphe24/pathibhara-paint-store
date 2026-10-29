@@ -36,15 +36,8 @@ export function useProductColumns(): Array<ColumnDef<IProductListItem>> {
                 <ImageOff size={16} className="text-foreground-faint" />
               )}
             </span>
-            <span className="min-w-0">
-              <span className="block truncate font-medium text-foreground">
-                {product.name}
-              </span>
-              {!product.hasNepali && (
-                <span className="block text-xs text-foreground-faint">
-                  {m.products_missing_nepali()}
-                </span>
-              )}
+            <span className="min-w-0 truncate font-medium text-foreground">
+              {product.name}
             </span>
           </Link>
         );

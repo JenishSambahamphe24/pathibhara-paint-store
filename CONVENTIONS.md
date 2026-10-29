@@ -357,7 +357,7 @@ src/
    prod. Ported in Phase 3 together with the multipart middleware.
 7. `docker-compose.yml` runs Postgres only, and the ledger has integration tests
    against `TEST_DATABASE_URL`.
-8. English only for now (Paraglide is ready for more locales).
+8. English only. Nepali was dropped with the client (see section 13).
 9. No 2FA in v1.
 10. The repo is a git repository.
 - **Wastage default:** 10%.
@@ -381,34 +381,31 @@ These trim bitsky conventions that exist for bitsky's scale, not ours:
 5. admin-fe renders client-side only (section 6).
 6. One *exported* component per file (section 2).
 
-Kept on purpose: Paraglide in both frontends (Nepali is coming), and the
-API's i18n'd error messages (`tk()`).
+Kept on purpose: Paraglide as the admin's message catalogue (English only),
+and the API's keyed error messages (`tk()`).
 
 ## 13. SEO (customer site)
 
-The customer site (`user-fe`) must be SEO optimised, in English and later
-Nepali. It keeps SSR. Planned, and partly shaped in the Phase 2 schema:
+The customer site (`user-fe`) must be SEO optimised. It is English only and
+keeps SSR. Planned, and partly shaped in the Phase 2 schema:
 
-- **Locale in the URL:** `/` (English) and `/ne/...` (Nepali) via Paraglide's
-  URL strategy, with `hreflang` alternates and `x-default` on every page.
-- **Stable, readable URLs:** category, product and blog slugs are unique and
-  stay English for both locales. A changed slug must leave a 301 from the old
-  one (a `slug_redirects` table).
+- **Stable, readable URLs:** category, product and blog slugs are unique. A
+  changed slug must leave a 301 from the old one (a `slug_redirects` table).
 - **Per-page metadata:** an optional SEO title and description on categories,
   products and posts, falling back to name/excerpt. Canonical URLs, Open Graph
   and Twitter tags. The cover image is the OG image.
 - **Structured data:** JSON-LD `Product` (with an `AggregateOffer` over variant
   prices and availability from stock), `BreadcrumbList` and `BlogPosting`.
-- **`sitemap.xml`** (per locale, with `lastmod` from `updated_at`) and
+- **`sitemap.xml`** (with `lastmod` from `updated_at`) and
   `robots.txt` served by user-fe; the API exposes `/public/*` read endpoints
   that return only active and published content.
 - **Images:** the `files` table stores width, height and alt text, so pages can
   avoid layout shift and describe images.
-- **Translated content (decided after Checkpoint 1):** each translatable table
-  has a `*_translations` table keyed `(entity_id, locale)` holding name,
-  description and SEO fields. English is required; Nepali is optional and
-  falls back to English. A third language is a new `LOCALES` value plus a
-  migration for the `locale` enum, with no table changes. See `docs/schema.md`.
+- **English only (decided with the client after Phase 5):** Nepali content was
+  dropped. Name, description and SEO fields live on each record itself
+  (migration `0003_flatten_english_content` moved the English text off the old
+  `*_translations` tables and dropped them with the `locale` enum). Dates stay
+  in Bikram Sambat, written in English. See `docs/schema.md`.
 
 ## 14. Phase 3 decisions and fixes over bitsky
 

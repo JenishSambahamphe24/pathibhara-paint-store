@@ -9,7 +9,6 @@ import { ConflictException, NotFoundException, ValidationException } from "@repo
 import { UniqueSlugHelper } from "#helpers/unique-slug.helper";
 import { tk } from "#i18n/tk";
 
-import { ContentTranslationsMapper } from "../common/content-translations.dto";
 import { SlugRedirectRepository } from "../slug-redirect/slug-redirect.repository";
 import { CategoryInputDto, CategoryReorderDto, CategoryResponseDto } from "./category.dto";
 import { CategoryRepository } from "./category.repository";
@@ -28,9 +27,6 @@ export class CategoryService {
   // categories, not thousands, so one round trip beats paging a tree.
   async list(): Promise<Array<TCategory>> {
     const rows = await this.categoryRepository.findAll();
-    const translations = await this.categoryRepository.findTranslations(
-      rows.map((r) => r.category.id),
-    );
 
     const byParent = new Map<string | null, typeof rows>();
     for (const row of rows) {
@@ -42,10 +38,7 @@ export class CategoryService {
     const result: Array<TCategory> = [];
     const walk = (parentId: string | null, depth: number, path: Array<string>) => {
       for (const row of byParent.get(parentId) ?? []) {
-        const mapped = ContentTranslationsMapper.fromRows(
-          translations.filter((t) => t.categoryId === row.category.id),
-        );
-        const ownPath = [...path, mapped.en.name];
+        const ownPath = [...path, row.category.name];
         result.push(
           CategoryResponseDto.parse({
             ...row.category,
@@ -53,7 +46,6 @@ export class CategoryService {
             path: ownPath,
             productCount: row.productCount,
             childCount: byParent.get(row.category.id)?.length ?? 0,
-            translations: mapped,
           }),
         );
         walk(row.category.id, depth + 1, ownPath);
@@ -72,16 +64,16 @@ export class CategoryService {
   async create(input: DtoType<typeof CategoryInputDto>): Promise<TCategory> {
     const id = await this.txManager.run(async () => {
       if (input.parentId) await this.requireExisting(input.parentId, "parentId");
-      const slug = await UniqueSlugHelper.resolve(input.slug, input.translations.en.name, (s) =>
+      const slug = await UniqueSlugHelper.resolve(input.slug, input.name, (s) =>
         this.categoryRepository.slugTaken(s),
       );
       const row = await this.categoryRepository.create({
         parentId: input.parentId,
         slug,
         isActive: input.isActive,
+        ...CategoryService.content(input),
         sortOrder: await this.categoryRepository.nextSortOrder(input.parentId),
       });
-      await this.categoryRepository.saveTranslations(row.id, input.translations);
       return row.id;
     });
     return this.get(id);
@@ -98,10 +90,8 @@ export class CategoryService {
         await this.assertNotDescendant(id, input.parentId);
       }
 
-      const slug = await UniqueSlugHelper.resolve(
-        input.slug || current.slug,
-        input.translations.en.name,
-        (s) => this.categoryRepository.slugTaken(s, id),
+      const slug = await UniqueSlugHelper.resolve(input.slug || current.slug, input.name, (s) =>
+        this.categoryRepository.slugTaken(s, id),
       );
       if (slug !== current.slug) {
         await this.slugRedirectRepository.recordChange("category", id, current.slug, slug);
@@ -111,9 +101,9 @@ export class CategoryService {
         parentId: input.parentId,
         slug,
         isActive: input.isActive,
+        ...CategoryService.content(input),
         ...(moved && { sortOrder: await this.categoryRepository.nextSortOrder(input.parentId) }),
       });
-      await this.categoryRepository.saveTranslations(id, input.translations);
     });
     return this.get(id);
   }
@@ -142,6 +132,15 @@ export class CategoryService {
       }
       await this.categoryRepository.delete(id);
     });
+  }
+
+  private static content(input: DtoType<typeof CategoryInputDto>) {
+    return {
+      name: input.name,
+      description: input.description,
+      seoTitle: input.seoTitle,
+      seoDescription: input.seoDescription,
+    };
   }
 
   private async requireExisting(id: string, field: string): Promise<CategoryRow> {

@@ -3,7 +3,6 @@ import { pgEnum } from "drizzle-orm/pg-core";
 import {
   ADMIN_STATUSES,
   FILE_PROVIDERS,
-  LOCALES,
   POST_STATUSES,
   SLUG_ENTITY_TYPES,
   STOCK_ADJUSTMENT_REASONS,
@@ -11,7 +10,6 @@ import {
 } from "@repo/shared";
 
 export const adminStatusEnum = pgEnum("admin_status", ADMIN_STATUSES);
-export const localeEnum = pgEnum("locale", LOCALES);
 export const fileProviderEnum = pgEnum("file_provider", FILE_PROVIDERS);
 export const stockMovementTypeEnum = pgEnum("stock_movement_type", STOCK_MOVEMENT_TYPES);
 export const stockAdjustmentReasonEnum = pgEnum("stock_adjustment_reason", STOCK_ADJUSTMENT_REASONS);

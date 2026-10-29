@@ -24,7 +24,7 @@ async function shade(code: string, name: string, overrides: Partial<ShadeInput> 
       hex: "#AABBCC",
       productId: null,
       isActive: true,
-      translations: { en: { name }, ne: { name: "" } },
+      name,
       ...overrides,
     }),
   );
@@ -39,7 +39,8 @@ function setInput(
   return colourSetInputSchema.parse({
     slug: "",
     isActive: true,
-    translations: { en: { name, description: "" }, ne: { name: "", description: "" } },
+    name,
+    description: "",
     shades: { main_surface, columns, doors_windows, roof_edge },
     ...overrides,
   });
@@ -123,7 +124,7 @@ describe.skipIf(!IntegrationContext.isConfigured())("shades and colour sets (Pos
       hex: b.hex,
       productId: null,
       isActive: false,
-      translations: { en: { name: "Beta" }, ne: { name: "" } },
+      name: "Beta",
     });
 
     await expect(ctx.shades.update(b.id, retire)).rejects.toMatchObject({

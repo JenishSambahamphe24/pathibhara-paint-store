@@ -41,8 +41,7 @@ export class ColourSetService {
       ColourSetListItemDto.parse({
         id: row.colourSet.id,
         slug: row.colourSet.slug,
-        name: row.name,
-        hasNepali: row.hasNepali,
+        name: row.colourSet.name,
         isActive: row.colourSet.isActive,
         shades: ColourSetService.componentShades(row.colourSet, shades),
         updatedAt: row.colourSet.updatedAt.toISOString(),
@@ -57,19 +56,13 @@ export class ColourSetService {
   async get(id: string): Promise<TColourSet> {
     const colourSet = await this.colourSetRepository.findById(id);
     if (!colourSet) throw new NotFoundException(tk("colourSet.notFound"));
-    const [translations, shades] = await Promise.all([
-      this.colourSetRepository.findTranslations(id),
-      this.shadeRepository.findSummaries(ColourSetService.shadeIds(colourSet)),
-    ]);
-    const pick = (locale: "en" | "ne") => {
-      const row = translations.find((t) => t.locale === locale);
-      return row ? { name: row.name, description: row.description } : null;
-    };
+    const shades = await this.shadeRepository.findSummaries(ColourSetService.shadeIds(colourSet));
     return ColourSetResponseDto.parse({
       id: colourSet.id,
       slug: colourSet.slug,
       isActive: colourSet.isActive,
-      translations: { en: pick("en"), ne: pick("ne") },
+      name: colourSet.name,
+      description: colourSet.description,
       shades: ColourSetService.componentShades(colourSet, shades),
       createdAt: colourSet.createdAt.toISOString(),
       updatedAt: colourSet.updatedAt.toISOString(),
@@ -79,15 +72,16 @@ export class ColourSetService {
   async create(input: TColourSetInput): Promise<TColourSet> {
     const id = await this.txManager.run(async () => {
       await this.assertShades(input);
-      const slug = await UniqueSlugHelper.resolve(input.slug, input.translations.en.name, (s) =>
+      const slug = await UniqueSlugHelper.resolve(input.slug, input.name, (s) =>
         this.colourSetRepository.slugTaken(s),
       );
       const row = await this.colourSetRepository.create({
         slug,
+        name: input.name,
+        description: input.description,
         isActive: input.isActive,
         ...ColourSetService.shadeColumns(input),
       });
-      await this.colourSetRepository.saveTranslations(row.id, input.translations);
       return row.id;
     });
     return this.get(id);
@@ -99,10 +93,8 @@ export class ColourSetService {
       if (!current) throw new NotFoundException(tk("colourSet.notFound"));
       await this.assertShades(input);
 
-      const slug = await UniqueSlugHelper.resolve(
-        input.slug || current.slug,
-        input.translations.en.name,
-        (s) => this.colourSetRepository.slugTaken(s, id),
+      const slug = await UniqueSlugHelper.resolve(input.slug || current.slug, input.name, (s) =>
+        this.colourSetRepository.slugTaken(s, id),
       );
       if (slug !== current.slug) {
         await this.slugRedirectRepository.recordChange("colourSet", id, current.slug, slug);
@@ -110,10 +102,11 @@ export class ColourSetService {
 
       await this.colourSetRepository.update(id, {
         slug,
+        name: input.name,
+        description: input.description,
         isActive: input.isActive,
         ...ColourSetService.shadeColumns(input),
       });
-      await this.colourSetRepository.saveTranslations(id, input.translations);
     });
     return this.get(id);
   }

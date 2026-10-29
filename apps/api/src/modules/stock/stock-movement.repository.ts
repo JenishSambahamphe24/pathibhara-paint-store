@@ -17,7 +17,7 @@ import { PaginationHelper } from "@repo/http-kit";
 import { LikeHelper } from "#helpers/like.helper";
 import { StoreDayHelper } from "#helpers/store-day.helper";
 
-import { createdByAdmin, variantProductName } from "./stock-joins";
+import { createdByAdmin, variantProduct } from "./stock-joins";
 
 @injectable()
 export class StockMovementRepository {
@@ -31,7 +31,7 @@ export class StockMovementRepository {
     const conditions: Array<SQL | undefined> = [];
     if (query.search) {
       const term = LikeHelper.contains(query.search);
-      conditions.push(or(ilike(variantProductName.name, term), ilike(productVariants.sku, term)));
+      conditions.push(or(ilike(variantProduct.name, term), ilike(productVariants.sku, term)));
     }
     if (query.type) conditions.push(eq(stockMovements.type, query.type));
     if (query.variantId) conditions.push(eq(stockMovements.variantId, query.variantId));
@@ -44,16 +44,13 @@ export class StockMovementRepository {
       quantityDelta: stockMovements.quantityDelta,
     }[query.sortBy];
     const direction = query.sortOrder === "asc" ? asc : desc;
-    const joinVariant = and(
-      eq(variantProductName.productId, productVariants.productId),
-      eq(variantProductName.locale, "en"),
-    );
+    const joinVariant = eq(variantProduct.id, productVariants.productId);
 
     const rows = await this.db
       .select({
         movement: stockMovements,
         productId: productVariants.productId,
-        productName: variantProductName.name,
+        productName: variantProduct.name,
         volumeMl: productVariants.volumeMl,
         sku: productVariants.sku,
         batchNumber: stockBatches.batchNumber,
@@ -63,7 +60,7 @@ export class StockMovementRepository {
       })
       .from(stockMovements)
       .innerJoin(productVariants, eq(productVariants.id, stockMovements.variantId))
-      .innerJoin(variantProductName, joinVariant)
+      .innerJoin(variantProduct, joinVariant)
       .innerJoin(createdByAdmin, eq(createdByAdmin.id, stockMovements.createdBy))
       .leftJoin(stockBatches, eq(stockBatches.id, stockMovements.batchId))
       .leftJoin(dailySales, eq(dailySales.id, stockMovements.dailySaleId))
@@ -79,7 +76,7 @@ export class StockMovementRepository {
       .select({ total: sql<number>`count(*)::int` })
       .from(stockMovements)
       .innerJoin(productVariants, eq(productVariants.id, stockMovements.variantId))
-      .innerJoin(variantProductName, joinVariant)
+      .innerJoin(variantProduct, joinVariant)
       .where(where);
     return { rows, total };
   }

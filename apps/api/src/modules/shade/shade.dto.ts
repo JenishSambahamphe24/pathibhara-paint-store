@@ -19,7 +19,6 @@ export const shadeSummarySchema = z.object({
 
 export class ShadeListItemDto extends BaseDto {
   static override readonly schema = shadeSummarySchema.extend({
-    hasNepali: z.boolean(),
     productId: z.uuid().nullable(),
     productName: z.string().nullable(),
     colourSetCount: z.number().int(),
@@ -31,16 +30,13 @@ export class ShadeResponseDto extends BaseDto {
   static override readonly schema = z.object({
     id: z.uuid(),
     code: z.string(),
+    name: z.string(),
     hex: z.string(),
     productId: z.uuid().nullable(),
     productName: z.string().nullable(),
     isActive: z.boolean(),
     // Deleting is only possible while no colour set uses the shade.
     colourSetCount: z.number().int(),
-    translations: z.object({
-      en: z.object({ name: z.string() }),
-      ne: z.object({ name: z.string() }).nullable(),
-    }),
     createdAt: z.iso.datetime(),
     updatedAt: z.iso.datetime(),
   });

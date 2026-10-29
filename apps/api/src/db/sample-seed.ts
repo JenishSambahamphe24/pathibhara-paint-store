@@ -7,16 +7,12 @@ import { asc, eq, sql } from "drizzle-orm";
 import {
   admins,
   categories,
-  categoryTranslations,
   colourSets,
-  colourSetTranslations,
   dailySaleItems,
   dailySales,
   products,
-  productTranslations,
   productVariants,
   shades,
-  shadeTranslations,
   stockAdjustments,
   stockBatches,
   stockBatchItems,
@@ -72,19 +68,13 @@ export class SampleSeed {
         .insert(categories)
         .values({
           slug: category.slug,
+          name: category.name,
+          description: SAMPLE_NOTE,
           parentId: category.parentKey ? ids.get(category.parentKey) : null,
           sortOrder,
         })
         .returning({ id: categories.id });
       ids.set(category.key, row.id);
-      await tx.insert(categoryTranslations).values(
-        Object.entries(category.name).map(([locale, name]) => ({
-          categoryId: row.id,
-          locale: locale as "en" | "ne",
-          name,
-          description: locale === "en" ? SAMPLE_NOTE : null,
-        })),
-      );
     }
     return ids;
   }
@@ -101,18 +91,12 @@ export class SampleSeed {
         .values({
           categoryId: categoryIds.get(product.categoryKey)!,
           slug: product.slug,
+          name: product.name,
+          description: SAMPLE_NOTE,
           coverageSqftPerLitre: product.coverageSqftPerLitre,
           defaultCoats: product.defaultCoats,
         })
         .returning({ id: products.id });
-      await tx.insert(productTranslations).values(
-        Object.entries(product.name).map(([locale, name]) => ({
-          productId: row.id,
-          locale: locale as "en" | "ne",
-          name,
-          description: locale === "en" ? SAMPLE_NOTE : null,
-        })),
-      );
       for (const variant of product.variants) {
         const pricePaisa = variant.priceRupees * PAISA_PER_RUPEE;
         const [variantRow] = await tx
@@ -260,38 +244,25 @@ export class SampleSeed {
         .insert(shades)
         .values({
           code: shade.code,
+          name: shade.name,
           hex: shade.hex,
           sortOrder,
           productId: product ? productIds.get(product.slug) : null,
         })
         .returning({ id: shades.id });
       shadeIds.set(shade.key, row.id);
-      await tx.insert(shadeTranslations).values(
-        Object.entries(shade.name).map(([locale, name]) => ({
-          shadeId: row.id,
-          locale: locale as "en" | "ne",
-          name,
-        })),
-      );
     }
 
     for (const [sortOrder, set] of SAMPLE_COLOUR_SETS.entries()) {
-      const [row] = await tx
-        .insert(colourSets)
-        .values({
-          slug: set.slug,
-          sortOrder,
-          mainSurfaceShadeId: shadeIds.get(set.mainSurface)!,
-          columnsShadeId: shadeIds.get(set.columns)!,
-          doorsWindowsShadeId: shadeIds.get(set.doorsWindows)!,
-          roofEdgeShadeId: shadeIds.get(set.roofEdge)!,
-        })
-        .returning({ id: colourSets.id });
-      await tx.insert(colourSetTranslations).values({
-        colourSetId: row.id,
-        locale: "en",
+      await tx.insert(colourSets).values({
+        slug: set.slug,
         name: set.name,
         description: set.description,
+        sortOrder,
+        mainSurfaceShadeId: shadeIds.get(set.mainSurface)!,
+        columnsShadeId: shadeIds.get(set.columns)!,
+        doorsWindowsShadeId: shadeIds.get(set.doorsWindows)!,
+        roofEdgeShadeId: shadeIds.get(set.roofEdge)!,
       });
     }
   }

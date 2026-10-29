@@ -3,7 +3,7 @@ import { injectable } from "tsyringe";
 
 import { dailySaleItems, dailySales, products, productVariants, TransactionManager } from "@repo/database";
 
-import { variantProductName } from "../stock/stock-joins";
+import { variantProduct } from "../stock/stock-joins";
 
 export interface IDashboardPeriod {
   today: string;
@@ -76,7 +76,7 @@ export class DashboardRepository {
       .select({
         variantId: productVariants.id,
         productId: productVariants.productId,
-        productName: variantProductName.name,
+        productName: variantProduct.name,
         volumeMl: productVariants.volumeMl,
         units: sql<number>`sum(${dailySaleItems.quantity})::int`,
         revenuePaisa,
@@ -85,12 +85,12 @@ export class DashboardRepository {
       .innerJoin(dailySales, eq(dailySales.id, dailySaleItems.dailySaleId))
       .innerJoin(productVariants, eq(productVariants.id, dailySaleItems.variantId))
       .innerJoin(
-        variantProductName,
-        and(eq(variantProductName.productId, productVariants.productId), eq(variantProductName.locale, "en")),
+        variantProduct,
+        eq(variantProduct.id, productVariants.productId),
       )
       .where(between(dailySales.saleDate, from, to))
-      .groupBy(productVariants.id, variantProductName.name)
-      .orderBy(desc(revenuePaisa), asc(variantProductName.name), asc(productVariants.volumeMl))
+      .groupBy(productVariants.id, variantProduct.name)
+      .orderBy(desc(revenuePaisa), asc(variantProduct.name), asc(productVariants.volumeMl))
       .limit(limit);
   }
 
@@ -112,7 +112,7 @@ export class DashboardRepository {
       .select({
         variantId: productVariants.id,
         productId: productVariants.productId,
-        productName: variantProductName.name,
+        productName: variantProduct.name,
         volumeMl: productVariants.volumeMl,
         sku: productVariants.sku,
         currentStock: productVariants.currentStock,
@@ -121,14 +121,14 @@ export class DashboardRepository {
       .from(productVariants)
       .innerJoin(products, eq(products.id, productVariants.productId))
       .innerJoin(
-        variantProductName,
-        and(eq(variantProductName.productId, productVariants.productId), eq(variantProductName.locale, "en")),
+        variantProduct,
+        eq(variantProduct.id, productVariants.productId),
       )
       .where(and(this.sellableVariant, lte(productVariants.currentStock, productVariants.reorderLevel)))
       .orderBy(
         asc(productVariants.currentStock),
         desc(sql`${productVariants.reorderLevel} - ${productVariants.currentStock}`),
-        asc(variantProductName.name),
+        asc(variantProduct.name),
       )
       .limit(limit);
   }
@@ -150,7 +150,7 @@ export class DashboardRepository {
       .select({
         variantId: productVariants.id,
         productId: productVariants.productId,
-        productName: variantProductName.name,
+        productName: variantProduct.name,
         volumeMl: productVariants.volumeMl,
         currentStock: productVariants.currentStock,
         stockValuePaisa,
@@ -159,11 +159,11 @@ export class DashboardRepository {
       .from(productVariants)
       .innerJoin(products, eq(products.id, productVariants.productId))
       .innerJoin(
-        variantProductName,
-        and(eq(variantProductName.productId, productVariants.productId), eq(variantProductName.locale, "en")),
+        variantProduct,
+        eq(variantProduct.id, productVariants.productId),
       )
       .where(and(this.sellableVariant, gt(productVariants.currentStock, 0), sql`NOT ${soldInPeriod}`))
-      .orderBy(desc(stockValuePaisa), asc(variantProductName.name))
+      .orderBy(desc(stockValuePaisa), asc(variantProduct.name))
       .limit(limit);
   }
 }

@@ -1,13 +1,8 @@
-export interface IContentTranslation {
+export interface IContent {
   name: string;
   description: string | null;
   seoTitle: string | null;
   seoDescription: string | null;
-}
-
-export interface IContentTranslations {
-  en: IContentTranslation;
-  ne: IContentTranslation | null;
 }
 
 export interface IFile {

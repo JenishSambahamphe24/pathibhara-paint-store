@@ -1,6 +1,6 @@
-import type { IContentTranslations } from "#/types/content.types";
+import type { IContent } from "#/types/content.types";
 
-export interface ICategory {
+export interface ICategory extends IContent {
   id: string;
   parentId: string | null;
   slug: string;
@@ -10,5 +10,4 @@ export interface ICategory {
   path: Array<string>;
   productCount: number;
   childCount: number;
-  translations: IContentTranslations;
 }

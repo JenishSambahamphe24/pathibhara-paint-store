@@ -1,4 +1,4 @@
-import type { ContentTranslations, ProductListQuery, VariantSearchQuery } from "@repo/shared";
+import type { ProductListQuery, VariantSearchQuery } from "@repo/shared";
 import type { SQL } from "drizzle-orm";
 
 import { and, asc, desc, eq, exists, ilike, inArray, ne, or, sql } from "drizzle-orm";
@@ -7,11 +7,9 @@ import { injectable } from "tsyringe";
 
 import {
   categories,
-  categoryTranslations,
   files,
   productImages,
   products,
-  productTranslations,
   productVariants,
   stockMovements,
   TransactionManager,
@@ -23,9 +21,7 @@ import { LikeHelper } from "#helpers/like.helper";
 export type ProductRow = typeof products.$inferSelect;
 export type VariantRow = typeof productVariants.$inferSelect;
 
-const enName = alias(productTranslations, "en_name");
-const neName = alias(productTranslations, "ne_name");
-const categoryName = alias(categoryTranslations, "category_name");
+const productCategory = alias(categories, "product_category");
 
 @injectable()
 export class ProductRepository {
@@ -65,7 +61,7 @@ export class ProductRepository {
 
     const where = this.listWhere(query, variantStats.lowStockCount);
     const sortColumn = {
-      name: enName.name,
+      name: products.name,
       createdAt: products.createdAt,
       updatedAt: products.updatedAt,
       stock: sql`coalesce(${variantStats.totalStock}, 0)`,
@@ -75,9 +71,7 @@ export class ProductRepository {
     const rows = await this.db
       .select({
         product: products,
-        name: enName.name,
-        hasNepali: sql<boolean>`${neName.productId} IS NOT NULL`,
-        categoryName: categoryName.name,
+        categoryName: productCategory.name,
         variantCount: sql<number>`coalesce(${variantStats.variantCount}, 0)`,
         minPricePaisa: variantStats.minPricePaisa,
         maxPricePaisa: variantStats.maxPricePaisa,
@@ -86,13 +80,8 @@ export class ProductRepository {
         coverFile: files,
       })
       .from(products)
-      .innerJoin(enName, and(eq(enName.productId, products.id), eq(enName.locale, "en")))
-      .leftJoin(neName, and(eq(neName.productId, products.id), eq(neName.locale, "ne")))
       .leftJoin(variantStats, eq(variantStats.productId, products.id))
-      .leftJoin(
-        categoryName,
-        and(eq(categoryName.categoryId, products.categoryId), eq(categoryName.locale, "en")),
-      )
+      .leftJoin(productCategory, eq(productCategory.id, products.categoryId))
       .leftJoin(cover, eq(cover.productId, products.id))
       .leftJoin(files, eq(files.id, cover.fileId))
       .where(where)
@@ -103,8 +92,6 @@ export class ProductRepository {
     const [{ total }] = await this.db
       .select({ total: sql<number>`count(*)::int` })
       .from(products)
-      .innerJoin(enName, and(eq(enName.productId, products.id), eq(enName.locale, "en")))
-      .leftJoin(neName, and(eq(neName.productId, products.id), eq(neName.locale, "ne")))
       .leftJoin(variantStats, eq(variantStats.productId, products.id))
       .where(where);
 
@@ -118,8 +105,7 @@ export class ProductRepository {
       const term = LikeHelper.contains(query.search);
       conditions.push(
         or(
-          ilike(enName.name, term),
-          ilike(neName.name, term),
+          ilike(products.name, term),
           ilike(products.slug, term),
           exists(
             this.db
@@ -162,13 +148,6 @@ export class ProductRepository {
       .limit(1)
       .for("update");
     return row;
-  }
-
-  async findTranslations(productId: string) {
-    return this.db
-      .select()
-      .from(productTranslations)
-      .where(eq(productTranslations.productId, productId));
   }
 
   async findVariants(productId: string): Promise<Array<VariantRow & { hasHistory: boolean }>> {
@@ -235,37 +214,10 @@ export class ProductRepository {
     await this.db.update(products).set(values).where(eq(products.id, id));
   }
 
-  // Always bump updated_at: changing only translations, images or sizes is
+  // Always bump updated_at: changing only images or sizes is
   // still an edit to the product as the list and sitemap see it.
   async touch(id: string): Promise<void> {
     await this.db.update(products).set({ updatedAt: new Date() }).where(eq(products.id, id));
-  }
-
-  async saveTranslations(productId: string, translations: ContentTranslations): Promise<void> {
-    await this.db
-      .insert(productTranslations)
-      .values({ productId, locale: "en", ...translations.en })
-      .onConflictDoUpdate({
-        target: [productTranslations.productId, productTranslations.locale],
-        set: translations.en,
-      });
-
-    if (translations.ne.name) {
-      const ne = { ...translations.ne, name: translations.ne.name };
-      await this.db
-        .insert(productTranslations)
-        .values({ productId, locale: "ne", ...ne })
-        .onConflictDoUpdate({
-          target: [productTranslations.productId, productTranslations.locale],
-          set: ne,
-        });
-    } else {
-      await this.db
-        .delete(productTranslations)
-        .where(
-          and(eq(productTranslations.productId, productId), eq(productTranslations.locale, "ne")),
-        );
-    }
   }
 
   async replaceImages(productId: string, fileIds: Array<string>): Promise<void> {
@@ -299,29 +251,27 @@ export class ProductRepository {
     }
     if (query.search) {
       const term = LikeHelper.contains(query.search);
-      conditions.push(or(ilike(enName.name, term), ilike(productVariants.sku, term)));
+      conditions.push(or(ilike(products.name, term), ilike(productVariants.sku, term)));
     }
     const where = and(...conditions);
 
     const rows = await this.db
       .select({
         variant: this.variantColumns(),
-        productName: enName.name,
+        productName: products.name,
         productSlug: products.slug,
         productIsActive: products.isActive,
       })
       .from(productVariants)
       .innerJoin(products, eq(products.id, productVariants.productId))
-      .innerJoin(enName, and(eq(enName.productId, products.id), eq(enName.locale, "en")))
       .where(where)
-      .orderBy(asc(enName.name), asc(productVariants.volumeMl))
+      .orderBy(asc(products.name), asc(productVariants.volumeMl))
       .limit(query.perPage)
       .offset(PaginationHelper.offset(query.page, query.perPage));
     const [{ total }] = await this.db
       .select({ total: sql<number>`count(*)::int` })
       .from(productVariants)
       .innerJoin(products, eq(products.id, productVariants.productId))
-      .innerJoin(enName, and(eq(enName.productId, products.id), eq(enName.locale, "en")))
       .where(where);
     return { rows, total };
   }
@@ -331,13 +281,12 @@ export class ProductRepository {
     return this.db
       .select({
         variant: this.variantColumns(),
-        productName: enName.name,
+        productName: products.name,
         productSlug: products.slug,
         productIsActive: products.isActive,
       })
       .from(productVariants)
       .innerJoin(products, eq(products.id, productVariants.productId))
-      .innerJoin(enName, and(eq(enName.productId, products.id), eq(enName.locale, "en")))
       .where(inArray(productVariants.id, variantIds));
   }
 

@@ -1,13 +1,7 @@
-import { and, eq, inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { injectable } from "tsyringe";
 
-import {
-  products,
-  productTranslations,
-  productVariants,
-  storeSettings,
-  TransactionManager,
-} from "@repo/database";
+import { products, productVariants, storeSettings, TransactionManager } from "@repo/database";
 
 @injectable()
 export class CalculatorRepository {
@@ -22,7 +16,7 @@ export class CalculatorRepository {
     return this.db
       .select({
         id: products.id,
-        name: productTranslations.name,
+        name: products.name,
         coverageSqftPerLitre: products.coverageSqftPerLitre,
         variantId: productVariants.id,
         volumeMl: productVariants.volumeMl,
@@ -31,10 +25,6 @@ export class CalculatorRepository {
         currentStock: productVariants.currentStock,
       })
       .from(products)
-      .innerJoin(
-        productTranslations,
-        and(eq(productTranslations.productId, products.id), eq(productTranslations.locale, "en")),
-      )
       .leftJoin(productVariants, eq(productVariants.productId, products.id))
       .where(inArray(products.id, ids));
   }

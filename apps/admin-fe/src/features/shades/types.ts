@@ -7,7 +7,6 @@ export interface IShadeSummary {
 }
 
 export interface IShadeListItem extends IShadeSummary {
-  hasNepali: boolean;
   productId: string | null;
   productName: string | null;
   colourSetCount: number;
@@ -17,15 +16,12 @@ export interface IShadeListItem extends IShadeSummary {
 export interface IShade {
   id: string;
   code: string;
+  name: string;
   hex: string;
   productId: string | null;
   productName: string | null;
   isActive: boolean;
   colourSetCount: number;
-  translations: {
-    en: { name: string };
-    ne: { name: string } | null;
-  };
   createdAt: string;
   updatedAt: string;
 }

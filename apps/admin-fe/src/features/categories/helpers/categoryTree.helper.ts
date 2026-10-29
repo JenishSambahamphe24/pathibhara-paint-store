@@ -34,10 +34,7 @@ export class CategoryTreeHelper {
   ) {
     const term = search.trim().toLowerCase();
     const matches = (c: ICategory) =>
-      (!term ||
-        c.translations.en.name.toLowerCase().includes(term) ||
-        (c.translations.ne?.name.toLowerCase().includes(term) ?? false) ||
-        c.slug.includes(term)) &&
+      (!term || c.name.toLowerCase().includes(term) || c.slug.includes(term)) &&
       (!status || c.isActive === (status === "active"));
 
     if (!term && !status) return categories;

@@ -1,17 +1,9 @@
 import type { StockMovementType } from "@repo/shared";
 
-import { and, asc, eq, inArray, sql } from "drizzle-orm";
-import { alias } from "drizzle-orm/pg-core";
+import { asc, eq, inArray, sql } from "drizzle-orm";
 import { injectable } from "tsyringe";
 
-import {
-  productTranslations,
-  productVariants,
-  stockMovements,
-  TransactionManager,
-} from "@repo/database";
-
-const enName = alias(productTranslations, "en_name");
+import { products, productVariants, stockMovements, TransactionManager } from "@repo/database";
 
 export interface ILockedVariant {
   id: string;
@@ -37,13 +29,10 @@ export class StockLedgerRepository {
         id: productVariants.id,
         currentStock: productVariants.currentStock,
         volumeMl: productVariants.volumeMl,
-        productName: enName.name,
+        productName: products.name,
       })
       .from(productVariants)
-      .innerJoin(
-        enName,
-        and(eq(enName.productId, productVariants.productId), eq(enName.locale, "en")),
-      )
+      .innerJoin(products, eq(products.id, productVariants.productId))
       .where(inArray(productVariants.id, ids))
       .orderBy(asc(productVariants.id))
       .for("update", { of: productVariants });

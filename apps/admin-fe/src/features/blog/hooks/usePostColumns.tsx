@@ -17,7 +17,6 @@ export function usePostColumns(): Array<ColumnDef<IPostListItem>> {
       cell: ({ row }) => (
         <Link to="/blog/$postId" params={{ postId: row.original.id }} className="block max-w-md hover:underline">
           <span className="block truncate font-medium text-foreground">{row.original.title}</span>
-          {!row.original.hasNepali && <span className="block text-xs text-foreground-faint">{m.blog_no_nepali()}</span>}
         </Link>
       ),
     },

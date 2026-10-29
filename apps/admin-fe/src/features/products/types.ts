@@ -1,11 +1,10 @@
 import type { ProductInput, ProductVariantInput } from "@repo/shared";
-import type { IContentTranslations, IFile } from "#/types/content.types";
+import type { IContent, IFile } from "#/types/content.types";
 
 export interface IProductListItem {
   id: string;
   slug: string;
   name: string;
-  hasNepali: boolean;
   categoryId: string;
   categoryName: string | null;
   isActive: boolean;
@@ -31,7 +30,7 @@ export interface IProductVariant {
   hasHistory: boolean;
 }
 
-export interface IProduct {
+export interface IProduct extends IContent {
   id: string;
   categoryId: string;
   categoryPath: Array<string>;
@@ -39,7 +38,6 @@ export interface IProduct {
   coverageSqftPerLitre: number;
   defaultCoats: number;
   isActive: boolean;
-  translations: IContentTranslations;
   images: Array<IFile>;
   variants: Array<IProductVariant>;
   createdAt: string;

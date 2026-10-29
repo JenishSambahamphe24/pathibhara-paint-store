@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
-import { BsDateHelper, NumeralHelper } from "@repo/shared";
+import { BsDateHelper } from "@repo/shared";
 
 import { DateHelper } from "#/lib/helpers/date.helper";
 import { m } from "#/paraglide/messages";
@@ -42,9 +42,6 @@ function shiftMonth(month: IMonth, by: number): IMonth | null {
 // pickers around it hand the API the same values as before.
 export function BsCalendar({ selected, min, max, onSelect }: BsCalendarProps) {
   const [view, setView] = useState<IMonth>(() => initialMonth(selected));
-  const locale = DateHelper.bsLocale();
-  const weekdays =
-    locale === "ne" ? BsDateHelper.WEEKDAYS_NE : BsDateHelper.WEEKDAYS_EN;
   const today = DateHelper.todayInStore();
   const [rangeStart, rangeEnd] = selected;
 
@@ -84,7 +81,7 @@ export function BsCalendar({ selected, min, max, onSelect }: BsCalendarProps) {
           className="text-sm font-medium text-foreground"
           aria-live="polite"
         >
-          {BsDateHelper.format(first, { locale, style: "monthYear" })}
+          {BsDateHelper.format(first, "monthYear")}
         </span>
         <button
           type="button"
@@ -98,7 +95,7 @@ export function BsCalendar({ selected, min, max, onSelect }: BsCalendarProps) {
       </div>
 
       <div className="grid grid-cols-7 gap-0.5">
-        {weekdays.map((weekday) => (
+        {BsDateHelper.WEEKDAYS.map((weekday) => (
           <span
             key={weekday}
             className="py-1 text-center text-xs font-medium text-foreground-faint"
@@ -120,7 +117,7 @@ export function BsCalendar({ selected, min, max, onSelect }: BsCalendarProps) {
               type="button"
               disabled={isDisabled}
               aria-pressed={isSelected}
-              aria-label={BsDateHelper.format(bs, { locale, style: "long" })}
+              aria-label={BsDateHelper.format(bs, "long")}
               onClick={() => onSelect(ad)}
               className={clsx(
                 "flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-sm text-foreground-muted transition-colors",
@@ -132,7 +129,7 @@ export function BsCalendar({ selected, min, max, onSelect }: BsCalendarProps) {
                   "bg-info font-medium text-primary-foreground hover:bg-info",
               )}
             >
-              {locale === "ne" ? NumeralHelper.toNepali(bs.day) : bs.day}
+              {bs.day}
             </button>
           );
         })}

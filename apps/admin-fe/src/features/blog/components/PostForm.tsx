@@ -14,7 +14,7 @@ import { m } from "#/paraglide/messages";
 
 import { usePostForm } from "../hooks/usePostForm";
 import { PostCoverField } from "./PostCoverField";
-import { PostLocaleFields } from "./PostLocaleFields";
+import { PostContentFields } from "./PostContentFields";
 import { PostPublishBar } from "./PostPublishBar";
 
 interface PostFormProps {
@@ -23,7 +23,7 @@ interface PostFormProps {
 
 export function PostForm({ post }: PostFormProps) {
   const { form, handleSubmit } = usePostForm(post);
-  const title = post ? post.translations.en.title : m.blog_new_title();
+  const title = post ? post.title : m.blog_new_title();
 
   return (
     <form.AppForm>
@@ -52,12 +52,8 @@ export function PostForm({ post }: PostFormProps) {
           )}
         </form.Subscribe>
 
-        <FormSection title={m.translations_english()}>
-          <PostLocaleFields form={form} locale="en" />
-        </FormSection>
-
-        <FormSection title={m.translations_nepali()} description={m.blog_nepali_hint()}>
-          <PostLocaleFields form={form} locale="ne" />
+        <FormSection title={m.blog_section_post()}>
+          <PostContentFields form={form} />
         </FormSection>
 
         <FormSection title={m.blog_section_cover()}>

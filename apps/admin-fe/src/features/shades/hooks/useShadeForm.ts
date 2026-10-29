@@ -47,17 +47,14 @@ export function useShadeForm({ shade, onSaved }: UseShadeFormOptions) {
         hex: shade.hex,
         productId: shade.productId,
         isActive: shade.isActive,
-        translations: {
-          en: { name: shade.translations.en.name },
-          ne: { name: shade.translations.ne?.name ?? "" },
-        },
+        name: shade.name,
       }
     : {
         code: "",
         hex: "#ffffff",
         productId: null,
         isActive: true,
-        translations: { en: { name: "" }, ne: { name: "" } },
+        name: "",
       };
 
   const form = useAppForm({

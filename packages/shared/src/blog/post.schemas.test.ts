@@ -7,41 +7,23 @@ const doc = (text: string) => ({ type: "doc" as const, content: [{ type: "paragr
 const empty = { title: "", excerpt: "", contentJson: PostContentHelper.empty(), seoTitle: "", seoDescription: "" };
 
 describe("postInputSchema", () => {
-  it("accepts an English-only post", () => {
-    const result = postInputSchema.safeParse({
-      slug: "",
-      coverImageFileId: null,
-      translations: { en: { ...empty, title: "Choosing exterior paint", contentJson: doc("Hello") }, ne: empty },
-    });
+  const base = { slug: "", coverImageFileId: null, ...empty };
+
+  it("accepts a post with a title and content", () => {
+    const result = postInputSchema.safeParse({ ...base, title: "Choosing exterior paint", contentJson: doc("Hello") });
     expect(result.success).toBe(true);
   });
 
-  it("rejects an English post with no content", () => {
-    const result = postInputSchema.safeParse({
-      slug: "",
-      coverImageFileId: null,
-      translations: { en: { ...empty, title: "Empty" }, ne: empty },
-    });
-    expect(result.error?.issues[0].path).toEqual(["translations", "en", "contentJson"]);
-  });
-
-  it("needs a Nepali title once Nepali content is written", () => {
-    const result = postInputSchema.safeParse({
-      slug: "",
-      coverImageFileId: null,
-      translations: { en: { ...empty, title: "T", contentJson: doc("x") }, ne: { ...empty, contentJson: doc("नमस्ते") } },
-    });
-    expect(result.error?.issues[0].path).toEqual(["translations", "ne", "title"]);
+  it("rejects a post with no content", () => {
+    const result = postInputSchema.safeParse({ ...base, title: "Empty" });
+    expect(result.error?.issues[0].path).toEqual(["contentJson"]);
   });
 
   it("rejects unknown keys inside the document", () => {
     const result = postInputSchema.safeParse({
-      slug: "",
-      coverImageFileId: null,
-      translations: {
-        en: { ...empty, title: "T", contentJson: { type: "doc", content: [{ type: "paragraph", onclick: "x" }] } },
-        ne: empty,
-      },
+      ...base,
+      title: "T",
+      contentJson: { type: "doc", content: [{ type: "paragraph", onclick: "x" }] },
     });
     expect(result.success).toBe(false);
   });

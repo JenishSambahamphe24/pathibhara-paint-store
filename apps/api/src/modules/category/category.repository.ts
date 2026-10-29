@@ -1,9 +1,7 @@
-import type { ContentTranslations } from "@repo/shared";
-
-import { and, asc, eq, inArray, ne, sql } from "drizzle-orm";
+import { and, asc, eq, ne, sql } from "drizzle-orm";
 import { injectable } from "tsyringe";
 
-import { categories, categoryTranslations, products, TransactionManager } from "@repo/database";
+import { categories, products, TransactionManager } from "@repo/database";
 
 export type CategoryRow = typeof categories.$inferSelect;
 
@@ -33,14 +31,6 @@ export class CategoryRepository {
       .from(categories)
       .leftJoin(productCounts, eq(productCounts.categoryId, categories.id))
       .orderBy(asc(categories.sortOrder), asc(categories.createdAt));
-  }
-
-  async findTranslations(categoryIds: Array<string>) {
-    if (categoryIds.length === 0) return [];
-    return this.db
-      .select()
-      .from(categoryTranslations)
-      .where(inArray(categoryTranslations.categoryId, categoryIds));
   }
 
   async findById(id: string): Promise<CategoryRow | undefined> {
@@ -126,35 +116,5 @@ export class CategoryRepository {
 
   async delete(id: string): Promise<void> {
     await this.db.delete(categories).where(eq(categories.id, id));
-  }
-
-  async saveTranslations(categoryId: string, translations: ContentTranslations): Promise<void> {
-    await this.db
-      .insert(categoryTranslations)
-      .values({ categoryId, locale: "en", ...translations.en })
-      .onConflictDoUpdate({
-        target: [categoryTranslations.categoryId, categoryTranslations.locale],
-        set: translations.en,
-      });
-
-    if (translations.ne.name) {
-      const ne = { ...translations.ne, name: translations.ne.name };
-      await this.db
-        .insert(categoryTranslations)
-        .values({ categoryId, locale: "ne", ...ne })
-        .onConflictDoUpdate({
-          target: [categoryTranslations.categoryId, categoryTranslations.locale],
-          set: ne,
-        });
-    } else {
-      await this.db
-        .delete(categoryTranslations)
-        .where(
-          and(
-            eq(categoryTranslations.categoryId, categoryId),
-            eq(categoryTranslations.locale, "ne"),
-          ),
-        );
-    }
   }
 }

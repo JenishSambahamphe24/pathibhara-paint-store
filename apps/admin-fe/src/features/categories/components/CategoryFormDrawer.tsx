@@ -1,8 +1,8 @@
 import type { ICategory } from "../types";
 
 import { Button } from "#/components/Button/Button";
+import { ContentFields } from "#/components/ContentFields/ContentFields";
 import { FormDrawer } from "#/components/FormDrawer/FormDrawer";
-import { TranslationFields } from "#/components/TranslationFields/TranslationFields";
 
 import { FormHelper } from "#/lib/helpers/form.helper";
 import { m } from "#/paraglide/messages";
@@ -66,7 +66,15 @@ export function CategoryFormDrawer({
                 )}
               </form.AppField>
 
-              <TranslationFields form={form} fields="translations" showSeo />
+              <ContentFields
+                form={form}
+                fields={{
+                  name: "name",
+                  description: "description",
+                  seoTitle: "seoTitle",
+                  seoDescription: "seoDescription",
+                }}
+              />
 
               <form.AppField name="slug">
                 {(field) => (

@@ -8,7 +8,7 @@ Source of truth: `packages/database/src/schema/*.schema.ts`. Migrations: `packag
 - `created_at` / `updated_at` `timestamptz`. History tables (`stock_movements`, `stock_adjustments`, `files`, `slug_redirects`) have only `created_at`; they are never edited.
 - **No soft delete.** Rows retire through domain state: `is_active`, `voided_at`, `status`.
 - Money: integer **paisa** in `bigint` columns named `*_paisa`. Volume: integer **millilitres** (`volume_ml`).
-- Translatable text lives in `*_translations` tables keyed `(entity_id, locale)`, with `locale ∈ {en, ne}`. English is required by the API; Nepali is optional and falls back to English. Slugs are not translated.
+- English only: each record holds its own text (`name`, `description`, `seo_title`, `seo_description`; posts have `title`, `excerpt`, `content_json`, `content_html` and the SEO pair). There are no translation tables.
 - Enum values come from `@repo/shared` (one source of truth).
 
 ## Diagram
@@ -23,11 +23,9 @@ erDiagram
     admins ||--o{ posts : "author"
 
     categories ||--o{ categories : "parent_id"
-    categories ||--|{ category_translations : "en, ne"
     categories ||--o{ products : "category_id"
     files |o--o{ categories : "image"
 
-    products ||--|{ product_translations : "en, ne"
     products ||--o{ product_images : ""
     files ||--o{ product_images : ""
     products ||--|{ product_variants : "sizes"
@@ -43,18 +41,16 @@ erDiagram
     daily_sales |o--o{ stock_movements : "sale / saleEdit"
     stock_adjustments |o--o| stock_movements : "adjustment"
 
-    posts ||--|{ post_translations : "en, ne"
     files |o--o{ posts : "cover"
 
-    shades ||--|{ shade_translations : "en, ne"
     products |o--o{ shades : "optional link"
-    colour_sets ||--|{ colour_set_translations : "en, ne"
     shades ||--o{ colour_sets : "4 component FKs"
 
     categories {
         uuid id PK
         uuid parent_id FK "nullable, restrict"
         text slug UK
+        text name
         int sort_order
         bool is_active
         uuid image_file_id FK
@@ -63,6 +59,7 @@ erDiagram
         uuid id PK
         uuid category_id FK "restrict"
         text slug UK
+        text name
         numeric coverage_sqft_per_litre "per coat, > 0"
         smallint default_coats "1..10"
         bool is_active
@@ -131,24 +128,19 @@ erDiagram
     posts {
         uuid id PK
         text slug UK
+        text title
+        text excerpt
+        jsonb content_json "TipTap"
+        text content_html "sanitized"
         enum status "draft | published"
         timestamptz published_at
         uuid cover_image_file_id FK
         uuid author_id FK
     }
-    post_translations {
-        uuid post_id PK
-        enum locale PK
-        text title
-        text excerpt
-        jsonb content_json "TipTap"
-        text content_html "sanitized"
-        text seo_title
-        text seo_description
-    }
     shades {
         uuid id PK
         text code UK
+        text name
         text hex "#rrggbb"
         uuid product_id FK "nullable"
         bool is_active
@@ -156,6 +148,7 @@ erDiagram
     colour_sets {
         uuid id PK
         text slug UK
+        text name
         uuid main_surface_shade_id FK
         uuid columns_shade_id FK
         uuid doors_windows_shade_id FK
@@ -174,7 +167,7 @@ erDiagram
     }
 ```
 
-Not drawn: `category_translations` and `product_translations` share the shape `(entity_id, locale) PK, name, description?, seo_title?, seo_description?`; `shade_translations` has only `name`, and `colour_set_translations` has `name, description?`. Also not drawn: `slug_redirects (entity_type, old_slug) UK → entity_id`, `store_settings` (single row: store details, `default_wastage_bps`), `admins`, and `sessions`.
+Not drawn: the optional text columns (`description`, `seo_title`, `seo_description` on categories, products and posts; `description` on colour sets). Also not drawn: `slug_redirects (entity_type, old_slug) UK → entity_id`, `store_settings` (single row: store details, `default_wastage_bps`), `admins`, and `sessions`.
 
 ## Rules the database enforces
 
@@ -228,6 +221,5 @@ Invariant (checked by tests): for every variant, `current_stock = SUM(stock_move
   - 8 products with 30 variants, including a 0.5L enamel and a damp-proof primer with **no 1L size** (for the calculator's least-overshoot path);
   - 2 batches, 3 days of sales and 1 adjustment, all written through the ledger;
   - 7 shades and 2 colour sets;
-  - some Nepali translations, to exercise the fallback.
 
   Every record says "Sample data" in its notes or description, and every SKU starts with `SMP-`. Tractor Emulsion 1L ends below its reorder level, so the low-stock alert has something to show.

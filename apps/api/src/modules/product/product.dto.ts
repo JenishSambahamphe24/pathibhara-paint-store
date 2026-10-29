@@ -1,7 +1,7 @@
 import { BaseDto, z } from "@repo/http-kit";
 import { productInputSchema, productListQuerySchema, variantSearchQuerySchema } from "@repo/shared";
 
-import { contentTranslationsResponseSchema } from "../common/content-translations.dto";
+import { contentResponseShape } from "../common/content.dto";
 import { FileResponseDto } from "../file/file.dto";
 
 export class ProductInputDto extends BaseDto {
@@ -37,7 +37,7 @@ export class ProductResponseDto extends BaseDto {
     coverageSqftPerLitre: z.number(),
     defaultCoats: z.number().int(),
     isActive: z.boolean(),
-    translations: contentTranslationsResponseSchema,
+    ...contentResponseShape,
     images: z.array(FileResponseDto.schema),
     variants: z.array(variantSchema),
     createdAt: z.iso.datetime(),
@@ -50,7 +50,6 @@ export class ProductListItemDto extends BaseDto {
     id: z.uuid(),
     slug: z.string(),
     name: z.string(),
-    hasNepali: z.boolean(),
     categoryId: z.uuid(),
     categoryName: z.string().nullable(),
     isActive: z.boolean(),

@@ -35,11 +35,6 @@ export function useColourSetColumns(
               <span className="block text-xs text-foreground-subtle">
                 /{colourSet.slug}
               </span>
-              {!colourSet.hasNepali && (
-                <span className="block text-xs text-foreground-faint">
-                  {m.colour_sets_missing_nepali()}
-                </span>
-              )}
             </span>
           </button>
         );

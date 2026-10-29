@@ -17,7 +17,6 @@ import { tk } from "#i18n/tk";
 
 import { CategoryRepository } from "../category/category.repository";
 import { CategoryService } from "../category/category.service";
-import { ContentTranslationsMapper } from "../common/content-translations.dto";
 import { FileService } from "../file/file.service";
 import { SlugRedirectRepository } from "../slug-redirect/slug-redirect.repository";
 import {
@@ -50,8 +49,7 @@ export class ProductService {
       ProductListItemDto.parse({
         id: row.product.id,
         slug: row.product.slug,
-        name: row.name,
-        hasNepali: row.hasNepali,
+        name: row.product.name,
         categoryId: row.product.categoryId,
         categoryName: row.categoryName,
         isActive: row.product.isActive,
@@ -76,8 +74,7 @@ export class ProductService {
     const product = await this.productRepository.findById(id);
     if (!product) throw new NotFoundException(tk("product.notFound"));
 
-    const [translations, variants, images, category] = await Promise.all([
-      this.productRepository.findTranslations(id),
+    const [variants, images, category] = await Promise.all([
       this.productRepository.findVariants(id),
       this.productRepository.findImages(id),
       this.categoryService.get(product.categoryId),
@@ -86,7 +83,6 @@ export class ProductService {
     return ProductResponseDto.parse({
       ...product,
       categoryPath: category.path,
-      translations: ContentTranslationsMapper.fromRows(translations),
       images: images.map((image) => this.fileService.toDto(image.file)),
       variants: variants.map((variant) => ({
         id: variant.id,
@@ -111,14 +107,14 @@ export class ProductService {
 
       const product = await this.productRepository.create({
         categoryId: input.categoryId,
-        slug: await UniqueSlugHelper.resolve(input.slug, input.translations.en.name, (s) =>
+        slug: await UniqueSlugHelper.resolve(input.slug, input.name, (s) =>
           this.productRepository.slugTaken(s),
         ),
         coverageSqftPerLitre: input.coverageSqftPerLitre,
         defaultCoats: input.defaultCoats,
         isActive: input.isActive,
+        ...ProductService.content(input),
       });
-      await this.productRepository.saveTranslations(product.id, input.translations);
       await this.productRepository.replaceImages(product.id, input.imageFileIds);
       for (const variant of variants) {
         await this.productRepository.insertVariant({
@@ -139,10 +135,8 @@ export class ProductService {
       const variants = this.normaliseVariants(input);
       await this.assertSkusFree(variants, id);
 
-      const slug = await UniqueSlugHelper.resolve(
-        input.slug || current.slug,
-        input.translations.en.name,
-        (s) => this.productRepository.slugTaken(s, id),
+      const slug = await UniqueSlugHelper.resolve(input.slug || current.slug, input.name, (s) =>
+        this.productRepository.slugTaken(s, id),
       );
       if (slug !== current.slug) {
         await this.slugRedirectRepository.recordChange("product", id, current.slug, slug);
@@ -154,8 +148,8 @@ export class ProductService {
         coverageSqftPerLitre: input.coverageSqftPerLitre,
         defaultCoats: input.defaultCoats,
         isActive: input.isActive,
+        ...ProductService.content(input),
       });
-      await this.productRepository.saveTranslations(id, input.translations);
       await this.productRepository.replaceImages(id, input.imageFileIds);
       await this.syncVariants(id, variants);
       await this.productRepository.touch(id);
@@ -178,6 +172,15 @@ export class ProductService {
     const [row] = await this.productRepository.findVariantSummaries([id]);
     if (!row) throw new NotFoundException(tk("product.variantNotFound"));
     return this.toVariantSummary(row);
+  }
+
+  private static content(input: TProductInput) {
+    return {
+      name: input.name,
+      description: input.description,
+      seoTitle: input.seoTitle,
+      seoDescription: input.seoDescription,
+    };
   }
 
   private toVariantSummary(row: {

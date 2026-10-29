@@ -1,5 +1,4 @@
 import { BS_CALENDAR } from "./bs-calendar.data";
-import { NumeralHelper } from "./numeral.helper";
 
 export interface ISimpleDate {
   year: number;
@@ -8,24 +7,17 @@ export interface ISimpleDate {
   day: number;
 }
 
-export type BsLocale = "en" | "ne";
-
 /**
- * iso       → 2083-07-10 / २०८३-०७-१०
- * long      → 10 Kartik 2083 / २०८३ कार्तिक १०
- * dayMonth  → 10 Kartik / कार्तिक १०
- * monthYear → Kartik 2083 / कार्तिक २०८३
+ * iso       → 2083-07-10
+ * long      → 10 Kartik 2083
+ * dayMonth  → 10 Kartik
+ * monthYear → Kartik 2083
  */
 export type BsFormatStyle = "iso" | "long" | "dayMonth" | "monthYear";
 
-export interface IBsFormatOptions {
-  locale?: BsLocale;
-  style?: BsFormatStyle;
-}
-
 const { minYear: MIN_YEAR, maxYear: MAX_YEAR } = BS_CALENDAR;
 
-const MONTHS_EN = Object.freeze([
+const MONTHS = Object.freeze([
   "Baisakh",
   "Jestha",
   "Asar",
@@ -39,22 +31,7 @@ const MONTHS_EN = Object.freeze([
   "Falgun",
   "Chaitra",
 ]);
-const MONTHS_NE = Object.freeze([
-  "बैशाख",
-  "जेठ",
-  "असार",
-  "साउन",
-  "भदौ",
-  "असोज",
-  "कार्तिक",
-  "मंसिर",
-  "पुस",
-  "माघ",
-  "फागुन",
-  "चैत",
-]);
-const WEEKDAYS_EN = Object.freeze(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]);
-const WEEKDAYS_NE = Object.freeze(["आइत", "सोम", "मंगल", "बुध", "बिही", "शुक्र", "शनि"]);
+const WEEKDAYS = Object.freeze(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]);
 
 // BS 2000-01-01 is AD 1943-04-14. All AD arithmetic is done in UTC so the
 // host's timezone can never shift a date.
@@ -96,7 +73,7 @@ function assertValid(date: ISimpleDate): void {
   const max = BsDateHelper.daysInMonth(date.year, date.month);
   assertInteger("day", date.day);
   if (date.day < 1 || date.day > max) {
-    throw new RangeError(`${MONTHS_EN[date.month - 1]} ${date.year} has ${max} days, got day ${date.day}`);
+    throw new RangeError(`${MONTHS[date.month - 1]} ${date.year} has ${max} days, got day ${date.day}`);
   }
 }
 
@@ -109,10 +86,8 @@ const pad = (value: number) => String(value).padStart(2, "0");
 export class BsDateHelper {
   static readonly MIN_YEAR = MIN_YEAR;
   static readonly MAX_YEAR = MAX_YEAR;
-  static readonly MONTHS_EN = MONTHS_EN;
-  static readonly MONTHS_NE = MONTHS_NE;
-  static readonly WEEKDAYS_EN = WEEKDAYS_EN;
-  static readonly WEEKDAYS_NE = WEEKDAYS_NE;
+  static readonly MONTHS = MONTHS;
+  static readonly WEEKDAYS = WEEKDAYS;
 
   static daysInMonth(year: number, month: number): number {
     assertInteger("year", year);
@@ -195,7 +170,7 @@ export class BsDateHelper {
     return BsDateHelper.fromInstant(now);
   }
 
-  /** 0 = Sunday (आइतबार) … 6 = Saturday (शनिबार). */
+  /** 0 = Sunday … 6 = Saturday. */
   static weekday(bs: ISimpleDate): number {
     const ad = BsDateHelper.toAd(bs);
     return new Date(Date.UTC(ad.year, ad.month - 1, ad.day)).getUTCDay();
@@ -214,33 +189,28 @@ export class BsDateHelper {
     return a.year - b.year || a.month - b.month || a.day - b.day;
   }
 
-  /** Accepts "YYYY-MM-DD" in ASCII or Devanagari digits. */
+  /** Accepts "YYYY-MM-DD". */
   static parse(text: string): ISimpleDate {
-    const normalized = NumeralHelper.toEnglish(text).trim();
-    const match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(normalized);
+    const match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(text.trim());
     if (!match) throw new RangeError(`Expected a BS date as YYYY-MM-DD, got "${text}"`);
     const date = { year: Number(match[1]), month: Number(match[2]), day: Number(match[3]) };
     assertValid(date);
     return date;
   }
 
-  static format(bs: ISimpleDate, { locale = "en", style = "iso" }: IBsFormatOptions = {}): string {
+  static format(bs: ISimpleDate, style: BsFormatStyle = "iso"): string {
     assertValid(bs);
-    const ne = locale === "ne";
-    const digits = (value: string | number) => (ne ? NumeralHelper.toNepali(value) : String(value));
-    const monthName = (ne ? MONTHS_NE : MONTHS_EN)[bs.month - 1];
+    const monthName = MONTHS[bs.month - 1];
 
     switch (style) {
       case "iso":
-        return digits(`${bs.year}-${pad(bs.month)}-${pad(bs.day)}`);
+        return `${bs.year}-${pad(bs.month)}-${pad(bs.day)}`;
       case "long":
-        return ne
-          ? `${digits(bs.year)} ${monthName} ${digits(bs.day)}`
-          : `${bs.day} ${monthName} ${bs.year}`;
+        return `${bs.day} ${monthName} ${bs.year}`;
       case "dayMonth":
-        return ne ? `${monthName} ${digits(bs.day)}` : `${bs.day} ${monthName}`;
+        return `${bs.day} ${monthName}`;
       case "monthYear":
-        return `${monthName} ${digits(bs.year)}`;
+        return `${monthName} ${bs.year}`;
       default:
         throw new RangeError(`Unknown style "${String(style)}"`);
     }

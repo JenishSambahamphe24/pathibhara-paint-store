@@ -63,16 +63,8 @@ export function useColourSetForm({
     ? {
         slug: colourSet.slug,
         isActive: colourSet.isActive,
-        translations: {
-          en: {
-            name: colourSet.translations.en.name,
-            description: colourSet.translations.en.description ?? "",
-          },
-          ne: {
-            name: colourSet.translations.ne?.name ?? "",
-            description: colourSet.translations.ne?.description ?? "",
-          },
-        },
+        name: colourSet.name,
+        description: colourSet.description ?? "",
         shades: {
           main_surface: colourSet.shades.main_surface.id,
           columns: colourSet.shades.columns.id,
@@ -83,10 +75,8 @@ export function useColourSetForm({
     : {
         slug: "",
         isActive: true,
-        translations: {
-          en: { name: "", description: "" },
-          ne: { name: "", description: "" },
-        },
+        name: "",
+        description: "",
         shades: {
           main_surface: "",
           columns: "",

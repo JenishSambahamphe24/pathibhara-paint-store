@@ -11,14 +11,14 @@ describe("shadeInputSchema", () => {
     hex: "#F3E5C0",
     productId: null,
     isActive: true,
-    translations: { en: { name: "Ivory Cream" }, ne: { name: "" } },
+    name: " Ivory Cream ",
   };
 
   it("normalises the code to upper case and the colour to lower case", () => {
     const parsed = shadeInputSchema.parse(base);
     expect(parsed.code).toBe("SMP-1001");
     expect(parsed.hex).toBe("#f3e5c0");
-    expect(parsed.translations.ne.name).toBeNull();
+    expect(parsed.name).toBe("Ivory Cream");
   });
 
   it("rejects colours that aren't #rrggbb", () => {
@@ -38,15 +38,17 @@ describe("colourSetInputSchema", () => {
   const base = {
     slug: "",
     isActive: true,
-    translations: {
-      en: { name: "Classic", description: "" },
-      ne: { name: "", description: "" },
-    },
+    name: "Classic",
+    description: "",
     shades,
   };
 
   it("accepts one shade per component, reusing a shade across components", () => {
     expect(colourSetInputSchema.safeParse(base).success).toBe(true);
+  });
+
+  it("stores an empty description as null", () => {
+    expect(colourSetInputSchema.parse(base).description).toBeNull();
   });
 
   it("asks for each missing shade on its own field", () => {
@@ -57,13 +59,5 @@ describe("colourSetInputSchema", () => {
     expect(result.error?.issues).toMatchObject([
       { path: ["shades", "roof_edge"], message: "Pick a shade" },
     ]);
-  });
-
-  it("needs a Nepali name before a Nepali description", () => {
-    const result = colourSetInputSchema.safeParse({
-      ...base,
-      translations: { ...base.translations, ne: { name: "", description: "रातो" } },
-    });
-    expect(result.error?.issues[0]?.path).toEqual(["translations", "ne", "name"]);
   });
 });
