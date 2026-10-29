@@ -1,15 +1,11 @@
 import type { ICategory } from "../types";
-import type { ReactNode } from "react";
 
 import { Button } from "#/components/Button/Button";
-import { Drawer } from "#/components/Drawer/Drawer";
+import { FormDrawer } from "#/components/FormDrawer/FormDrawer";
 import { TranslationFields } from "#/components/TranslationFields/TranslationFields";
-import { UnsavedChangesDialog } from "#/components/UnsavedChangesDialog/UnsavedChangesDialog";
 
 import { FormHelper } from "#/lib/helpers/form.helper";
 import { m } from "#/paraglide/messages";
-
-import { useUnsavedChanges } from "#/hooks/useUnsavedChanges";
 
 import { CategoryTreeHelper } from "../helpers/categoryTree.helper";
 import { useCategoryForm } from "../hooks/useCategoryForm";
@@ -20,6 +16,7 @@ interface CategoryFormDrawerProps {
   defaultParentId: string | null;
   categories: Array<ICategory>;
   onClose: () => void;
+  onExitComplete: () => void;
 }
 
 export function CategoryFormDrawer({
@@ -28,6 +25,7 @@ export function CategoryFormDrawer({
   defaultParentId,
   categories,
   onClose,
+  onExitComplete,
 }: CategoryFormDrawerProps) {
   const { form, handleSubmit } = useCategoryForm({
     category,
@@ -41,13 +39,15 @@ export function CategoryFormDrawer({
       selector={(state) => state.isDirty && !state.isSubmitSuccessful}
     >
       {(isDirty) => (
-        <CategoryDrawerFrame
+        <FormDrawer
           open={open}
           isDirty={isDirty}
           title={
             category ? m.categories_edit_title() : m.categories_new_title()
           }
+          size="xl"
           onClose={onClose}
+          onExitComplete={onExitComplete}
         >
           <form.AppForm>
             <form
@@ -101,48 +101,8 @@ export function CategoryFormDrawer({
               </form.Subscribe>
             </form>
           </form.AppForm>
-        </CategoryDrawerFrame>
+        </FormDrawer>
       )}
     </form.Subscribe>
-  );
-}
-
-interface CategoryDrawerFrameProps {
-  open: boolean;
-  isDirty: boolean;
-  title: string;
-  onClose: () => void;
-  children: ReactNode;
-}
-
-function CategoryDrawerFrame({
-  open,
-  isDirty,
-  title,
-  onClose,
-  children,
-}: CategoryDrawerFrameProps) {
-  const { isBlocked, proceed, reset, guardClose } = useUnsavedChanges({
-    isDirty,
-  });
-  return (
-    <>
-      <Drawer
-        open={open}
-        onOpenChange={(next) => !next && guardClose(onClose)}
-        title={title}
-        size="xl"
-      >
-        {children}
-      </Drawer>
-      <UnsavedChangesDialog
-        open={isBlocked}
-        onDiscard={() => {
-          proceed();
-          onClose();
-        }}
-        onCancel={reset}
-      />
-    </>
   );
 }

@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Dialog, Portal } from "@ark-ui/react";
 import clsx from "clsx";
 import { X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface DrawerProps {
   open: boolean;
@@ -11,6 +12,8 @@ interface DrawerProps {
   description?: string;
   children: ReactNode;
   size?: "md" | "xl";
+  /** Fires once the close animation has finished; see useDrawerState. */
+  onExitComplete?: () => void;
 }
 
 export function Drawer({
@@ -20,11 +23,21 @@ export function Drawer({
   description,
   children,
   size = "md",
+  onExitComplete,
 }: DrawerProps) {
+  // Pages mount a drawer already open. An Ark dialog that starts out open
+  // applies its page lock (body `pointer-events: none`, `aria-hidden` on the
+  // rest of the page) in a way its close never undoes, leaving the app dead
+  // after the first drawer. Mounting closed and opening on the next render
+  // takes the normal open/close path, which cleans up.
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => setHasMounted(true), []);
+
   return (
     <Dialog.Root
-      open={open}
+      open={open && hasMounted}
       onOpenChange={({ open: isOpen }) => onOpenChange(isOpen)}
+      onExitComplete={onExitComplete}
       unmountOnExit
     >
       <Portal>

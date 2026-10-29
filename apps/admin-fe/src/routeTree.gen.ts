@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as coreVisualizerIndexRouteImport } from './routes/(core)/visualizer/index'
 import { Route as coreShadesIndexRouteImport } from './routes/(core)/shades/index'
 import { Route as coreProductsIndexRouteImport } from './routes/(core)/products/index'
 import { Route as coreDashboardIndexRouteImport } from './routes/(core)/dashboard/index'
@@ -34,6 +35,11 @@ import { Route as coreBlogPostIdPreviewRouteImport } from './routes/(core)/blog/
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const coreVisualizerIndexRoute = coreVisualizerIndexRouteImport.update({
+  id: '/(core)/visualizer/',
+  path: '/visualizer/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const coreShadesIndexRoute = coreShadesIndexRouteImport.update({
@@ -151,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/': typeof coreDashboardIndexRoute
   '/products/': typeof coreProductsIndexRoute
   '/shades/': typeof coreShadesIndexRoute
+  '/visualizer/': typeof coreVisualizerIndexRoute
   '/blog/$postId/preview': typeof coreBlogPostIdPreviewRoute
   '/stock/batches/$batchId': typeof coreStockBatchesBatchIdRoute
   '/stock/batches/new': typeof coreStockBatchesNewRoute
@@ -174,6 +181,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof coreDashboardIndexRoute
   '/products': typeof coreProductsIndexRoute
   '/shades': typeof coreShadesIndexRoute
+  '/visualizer': typeof coreVisualizerIndexRoute
   '/blog/$postId/preview': typeof coreBlogPostIdPreviewRoute
   '/stock/batches/$batchId': typeof coreStockBatchesBatchIdRoute
   '/stock/batches/new': typeof coreStockBatchesNewRoute
@@ -198,6 +206,7 @@ export interface FileRoutesById {
   '/(core)/dashboard/': typeof coreDashboardIndexRoute
   '/(core)/products/': typeof coreProductsIndexRoute
   '/(core)/shades/': typeof coreShadesIndexRoute
+  '/(core)/visualizer/': typeof coreVisualizerIndexRoute
   '/(core)/blog/$postId/preview': typeof coreBlogPostIdPreviewRoute
   '/(core)/stock/batches/$batchId': typeof coreStockBatchesBatchIdRoute
   '/(core)/stock/batches/new': typeof coreStockBatchesNewRoute
@@ -223,6 +232,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/products/'
     | '/shades/'
+    | '/visualizer/'
     | '/blog/$postId/preview'
     | '/stock/batches/$batchId'
     | '/stock/batches/new'
@@ -246,6 +256,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/products'
     | '/shades'
+    | '/visualizer'
     | '/blog/$postId/preview'
     | '/stock/batches/$batchId'
     | '/stock/batches/new'
@@ -269,6 +280,7 @@ export interface FileRouteTypes {
     | '/(core)/dashboard/'
     | '/(core)/products/'
     | '/(core)/shades/'
+    | '/(core)/visualizer/'
     | '/(core)/blog/$postId/preview'
     | '/(core)/stock/batches/$batchId'
     | '/(core)/stock/batches/new'
@@ -293,6 +305,7 @@ export interface RootRouteChildren {
   coreDashboardIndexRoute: typeof coreDashboardIndexRoute
   coreProductsIndexRoute: typeof coreProductsIndexRoute
   coreShadesIndexRoute: typeof coreShadesIndexRoute
+  coreVisualizerIndexRoute: typeof coreVisualizerIndexRoute
   coreBlogPostIdPreviewRoute: typeof coreBlogPostIdPreviewRoute
   coreStockBatchesBatchIdRoute: typeof coreStockBatchesBatchIdRoute
   coreStockBatchesNewRoute: typeof coreStockBatchesNewRoute
@@ -311,6 +324,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(core)/visualizer/': {
+      id: '/(core)/visualizer/'
+      path: '/visualizer'
+      fullPath: '/visualizer/'
+      preLoaderRoute: typeof coreVisualizerIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(core)/shades/': {
@@ -469,6 +489,7 @@ const rootRouteChildren: RootRouteChildren = {
   coreDashboardIndexRoute: coreDashboardIndexRoute,
   coreProductsIndexRoute: coreProductsIndexRoute,
   coreShadesIndexRoute: coreShadesIndexRoute,
+  coreVisualizerIndexRoute: coreVisualizerIndexRoute,
   coreBlogPostIdPreviewRoute: coreBlogPostIdPreviewRoute,
   coreStockBatchesBatchIdRoute: coreStockBatchesBatchIdRoute,
   coreStockBatchesNewRoute: coreStockBatchesNewRoute,

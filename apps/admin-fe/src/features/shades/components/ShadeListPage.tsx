@@ -1,7 +1,6 @@
 import type { ShadeListQuery } from "@repo/shared";
 
 import { Plus } from "lucide-react";
-import { useState } from "react";
 
 import { BreadCrumb } from "#/components/Breadcrumb/Breadcrumb";
 import { Button } from "#/components/Button/Button";
@@ -13,6 +12,8 @@ import { SearchInput } from "#/components/SearchInput/SearchInput";
 import { PaginationHelper } from "#/lib/helpers/pagination.helper";
 import { SortingHelper } from "#/lib/helpers/sorting.helper";
 import { m } from "#/paraglide/messages";
+
+import { useDrawerState } from "#/hooks/useDrawerState";
 
 import { useShadeColumns } from "../hooks/useShadeColumns";
 import { useShades } from "../hooks/useShades";
@@ -29,8 +30,10 @@ interface IDrawerState {
 
 export function ShadeListPage({ search, onSearchChange }: ShadeListPageProps) {
   const { data, isLoading } = useShades(search);
-  const [drawer, setDrawer] = useState<IDrawerState | null>(null);
-  const columns = useShadeColumns((shade) => setDrawer({ shadeId: shade.id }));
+  const drawer = useDrawerState<IDrawerState>();
+  const columns = useShadeColumns((shade) =>
+    drawer.open({ shadeId: shade.id }),
+  );
 
   function filter(patch: Partial<ShadeListQuery>) {
     onSearchChange({ ...patch, page: 1 });
@@ -47,7 +50,7 @@ export function ShadeListPage({ search, onSearchChange }: ShadeListPageProps) {
         actions={
           <Button
             startIcon={<Plus size={16} />}
-            onClick={() => setDrawer({ shadeId: null })}
+            onClick={() => drawer.open({ shadeId: null })}
           >
             {m.shades_add()}
           </Button>
@@ -104,11 +107,13 @@ export function ShadeListPage({ search, onSearchChange }: ShadeListPageProps) {
         emptyState={m.shades_empty()}
       />
 
-      {drawer && (
+      {drawer.value && (
         <ShadeFormDrawer
-          key={drawer.shadeId ?? "new"}
-          shadeId={drawer.shadeId}
-          onClose={() => setDrawer(null)}
+          key={drawer.value.shadeId ?? "new"}
+          shadeId={drawer.value.shadeId}
+          open={drawer.isOpen}
+          onClose={drawer.close}
+          onExitComplete={drawer.clear}
         />
       )}
     </>

@@ -1,6 +1,9 @@
 import type { IColourSetListItem } from "../types";
 import type { ColumnDef } from "@tanstack/react-table";
 
+import { Link } from "@tanstack/react-router";
+import { House } from "lucide-react";
+
 import { Chip } from "#/components/Chip/Chip";
 
 import { DateHelper } from "#/lib/helpers/date.helper";
@@ -52,6 +55,22 @@ export function useColourSetColumns(
         ) : (
           <Chip variant="neutral">{m.common_inactive()}</Chip>
         ),
+    },
+    {
+      id: "visualizer",
+      header: "",
+      enableSorting: false,
+      meta: { skipTruncate: true },
+      cell: ({ row }) => (
+        <Link
+          to="/visualizer"
+          search={{ colourSetId: row.original.id }}
+          className="inline-flex items-center gap-1.5 text-sm text-info-strong hover:underline"
+        >
+          <House size={14} />
+          {m.colour_sets_view_3d()}
+        </Link>
+      ),
     },
     {
       id: "updatedAt",

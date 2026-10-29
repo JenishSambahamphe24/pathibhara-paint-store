@@ -175,6 +175,7 @@
   "colour_sets_section_shades_hint": "One shade for each part of the house. The same shade can be used for more than one part.",
   "colour_sets_title": "Colour sets",
   "colour_sets_using_shade": "Using {shade}",
+  "colour_sets_view_3d": "View in 3D",
   "common_active": "Active",
   "common_add_line": "Add line",
   "common_all_statuses": "All statuses",
@@ -423,6 +424,7 @@
   "sidebar_products": "Products",
   "sidebar_shades": "Shades",
   "sidebar_stock": "Stock",
+  "sidebar_visualizer": "Visualizer",
   "table_empty": "No data available",
   "translations_description": "Description",
   "translations_english": "English",
@@ -440,8 +442,15 @@
   "variant_picker_empty": "No matching sizes",
   "variant_picker_placeholder": "Search product or SKU…",
   "variant_picker_stock": "{count} in stock",
+  "visualizer_canvas_label": "3D house painted with the selected colour set",
   "visualizer_columns": "Columns",
+  "visualizer_controls_hint": "Drag to turn the house, scroll or pinch to zoom.",
+  "visualizer_description": "See a colour set on a 3D house before it goes on the website.",
   "visualizer_doors_windows": "Doors and windows",
   "visualizer_main_surface": "Walls",
-  "visualizer_roof_edge": "Roof edge"
+  "visualizer_no_sets": "No active colour sets yet.",
+  "visualizer_pick_set": "Colour set",
+  "visualizer_reference_colours": "Original colours",
+  "visualizer_roof_edge": "Roof edge",
+  "visualizer_title": "House visualizer"
 }

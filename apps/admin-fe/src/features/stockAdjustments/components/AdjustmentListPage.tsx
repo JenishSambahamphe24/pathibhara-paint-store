@@ -5,7 +5,6 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Link } from "@tanstack/react-router";
 import clsx from "clsx";
 import { Plus } from "lucide-react";
-import { useState } from "react";
 
 import { STOCK_ADJUSTMENT_REASONS, VolumeHelper } from "@repo/shared";
 
@@ -21,6 +20,8 @@ import { DateHelper } from "#/lib/helpers/date.helper";
 import { PaginationHelper } from "#/lib/helpers/pagination.helper";
 import { SortingHelper } from "#/lib/helpers/sorting.helper";
 import { m } from "#/paraglide/messages";
+
+import { useDrawerState } from "#/hooks/useDrawerState";
 
 import { AdjustmentReasonHelper } from "../helpers/adjustmentReason.helper";
 import { useStockAdjustments } from "../hooks/useStockAdjustments";
@@ -93,7 +94,7 @@ export function AdjustmentListPage({
   onSearchChange,
 }: AdjustmentListPageProps) {
   const { data, isLoading } = useStockAdjustments(search);
-  const [isCreating, setIsCreating] = useState(false);
+  const drawer = useDrawerState<true>();
 
   function filter(patch: Partial<StockAdjustmentListQuery>) {
     onSearchChange({ ...patch, page: 1 });
@@ -113,7 +114,7 @@ export function AdjustmentListPage({
         actions={
           <Button
             startIcon={<Plus size={16} />}
-            onClick={() => setIsCreating(true)}
+            onClick={() => drawer.open(true)}
           >
             {m.adjustments_new_title()}
           </Button>
@@ -177,8 +178,12 @@ export function AdjustmentListPage({
         }}
         emptyState={m.adjustments_empty()}
       />
-      {isCreating && (
-        <AdjustmentFormDrawer open onClose={() => setIsCreating(false)} />
+      {drawer.value && (
+        <AdjustmentFormDrawer
+          open={drawer.isOpen}
+          onClose={drawer.close}
+          onExitComplete={drawer.clear}
+        />
       )}
     </>
   );

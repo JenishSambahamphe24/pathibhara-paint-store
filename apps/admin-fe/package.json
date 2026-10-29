@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:house": "node scripts/build-house-model.ts",
     "dev": "vite dev --port 4005 --strictPort",
     "build": "vite build",
     "preview": "vite preview",
@@ -15,6 +16,8 @@
   },
   "dependencies": {
     "@ark-ui/react": "catalog:fe",
+    "@react-three/drei": "catalog:fe",
+    "@react-three/fiber": "catalog:fe",
     "@repo/shared": "workspace:*",
     "@t3-oss/env-core": "catalog:fe",
     "@tailwindcss/vite": "catalog:fe",
@@ -44,6 +47,7 @@
     "react-dom": "catalog:fe",
     "recharts": "catalog:fe",
     "tailwindcss": "catalog:fe",
+    "three": "catalog:fe",
     "zod": "catalog:generic"
   },
   "devDependencies": {
@@ -57,6 +61,7 @@
     "@types/node": "catalog:generic",
     "@types/react": "catalog:fe",
     "@types/react-dom": "catalog:fe",
+    "@types/three": "catalog:fe",
     "@vitejs/plugin-react": "catalog:fe",
     "babel-plugin-react-compiler": "catalog:fe",
     "eslint": "catalog:generic",

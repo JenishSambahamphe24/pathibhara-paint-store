@@ -13,6 +13,8 @@ import { SkeletonCell } from "#/components/Table/SkeletonCell";
 
 import { m } from "#/paraglide/messages";
 
+import { useDrawerState } from "#/hooks/useDrawerState";
+
 import { CategoryTreeHelper } from "../helpers/categoryTree.helper";
 import { useCategories } from "../hooks/useCategories";
 import { useCategoryActions } from "../hooks/useCategoryActions";
@@ -33,7 +35,7 @@ export function CategoryTreePage() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<"active" | "inactive" | null>(null);
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
-  const [drawer, setDrawer] = useState<IDrawerState | null>(null);
+  const drawer = useDrawerState<IDrawerState>();
   const [deleting, setDeleting] = useState<ICategory | null>(null);
 
   const isFiltering = search.trim() !== "" || status !== null;
@@ -75,7 +77,7 @@ export function CategoryTreePage() {
         actions={
           <Button
             startIcon={<Plus size={16} />}
-            onClick={() => setDrawer({ category: null, parentId: null })}
+            onClick={() => drawer.open({ category: null, parentId: null })}
           >
             {m.categories_add()}
           </Button>
@@ -126,10 +128,10 @@ export function CategoryTreePage() {
                 onToggle={() => toggle(category.id)}
                 onMove={(direction) => move(category, direction)}
                 onAddChild={() =>
-                  setDrawer({ category: null, parentId: category.id })
+                  drawer.open({ category: null, parentId: category.id })
                 }
                 onEdit={() =>
-                  setDrawer({ category, parentId: category.parentId })
+                  drawer.open({ category, parentId: category.parentId })
                 }
                 onDelete={() => setDeleting(category)}
               />
@@ -138,14 +140,18 @@ export function CategoryTreePage() {
         )}
       </div>
 
-      {drawer && (
+      {drawer.value && (
         <CategoryFormDrawer
-          key={drawer.category?.id ?? `new-${drawer.parentId ?? "root"}`}
-          open
-          category={drawer.category}
-          defaultParentId={drawer.parentId}
+          key={
+            drawer.value.category?.id ??
+            `new-${drawer.value.parentId ?? "root"}`
+          }
+          open={drawer.isOpen}
+          category={drawer.value.category}
+          defaultParentId={drawer.value.parentId}
           categories={categories}
-          onClose={() => setDrawer(null)}
+          onClose={drawer.close}
+          onExitComplete={drawer.clear}
         />
       )}
 

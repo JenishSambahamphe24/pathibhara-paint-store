@@ -19,11 +19,13 @@ import { AdjustmentQuantityField } from "./AdjustmentQuantityField";
 interface AdjustmentFormDrawerProps {
   open: boolean;
   onClose: () => void;
+  onExitComplete: () => void;
 }
 
 export function AdjustmentFormDrawer({
   open,
   onClose,
+  onExitComplete,
 }: AdjustmentFormDrawerProps) {
   const { form, handleSubmit } = useAdjustmentForm(onClose);
   const [variant, setVariant] = useState<IVariantSummary | null>(null);
@@ -32,6 +34,7 @@ export function AdjustmentFormDrawer({
     <Drawer
       open={open}
       onOpenChange={(next) => !next && onClose()}
+      onExitComplete={onExitComplete}
       title={m.adjustments_new_title()}
       description={m.adjustments_new_description()}
     >

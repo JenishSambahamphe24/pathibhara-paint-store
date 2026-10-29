@@ -37,6 +37,9 @@ catalogs:
   # Frontend (React / TanStack Start) workspaces.
   fe:
     "@ark-ui/react": ^5.36.0
+    # 3D house visualizer (three.js + React Three Fiber).
+    "@react-three/drei": ^10.7.9
+    "@react-three/fiber": ^9.8.2
     "@inlang/paraglide-js": ^2.13.1
     "@t3-oss/env-core": ^0.13.10
     "@tailwindcss/forms": ^0.5.11
@@ -58,6 +61,7 @@ catalogs:
     "@tanstack/store": ^0.9.1
     "@types/react": ^19.2.14
     "@types/react-dom": ^19.2.3
+    "@types/three": ^0.186.0
     "@vitejs/plugin-react": ^5.1.4
     babel-plugin-react-compiler: ^1.0.0
     clsx: ^2.1.1
@@ -68,6 +72,7 @@ catalogs:
     react-dom: ^19.2.4
     recharts: ^3.10.1
     tailwindcss: ^4.2.1
+    three: ^0.186.1
     vite: ^7.3.1
     vite-tsconfig-paths: ^5.1.4
 

@@ -1,7 +1,6 @@
 import type { ColourSetListQuery } from "@repo/shared";
 
 import { Plus, X } from "lucide-react";
-import { useState } from "react";
 
 import { BreadCrumb } from "#/components/Breadcrumb/Breadcrumb";
 import { Button } from "#/components/Button/Button";
@@ -15,6 +14,8 @@ import { useShade } from "#/features/shades/hooks/useShades";
 import { PaginationHelper } from "#/lib/helpers/pagination.helper";
 import { SortingHelper } from "#/lib/helpers/sorting.helper";
 import { m } from "#/paraglide/messages";
+
+import { useDrawerState } from "#/hooks/useDrawerState";
 
 import { useColourSetColumns } from "../hooks/useColourSetColumns";
 import { useColourSets } from "../hooks/useColourSets";
@@ -35,9 +36,9 @@ export function ColourSetListPage({
 }: ColourSetListPageProps) {
   const { data, isLoading } = useColourSets(search);
   const { data: filterShade } = useShade(search.shadeId ?? null);
-  const [drawer, setDrawer] = useState<IDrawerState | null>(null);
+  const drawer = useDrawerState<IDrawerState>();
   const columns = useColourSetColumns((colourSet) =>
-    setDrawer({ colourSetId: colourSet.id }),
+    drawer.open({ colourSetId: colourSet.id }),
   );
 
   function filter(patch: Partial<ColourSetListQuery>) {
@@ -58,7 +59,7 @@ export function ColourSetListPage({
         actions={
           <Button
             startIcon={<Plus size={16} />}
-            onClick={() => setDrawer({ colourSetId: null })}
+            onClick={() => drawer.open({ colourSetId: null })}
           >
             {m.colour_sets_add()}
           </Button>
@@ -135,11 +136,13 @@ export function ColourSetListPage({
         emptyState={m.colour_sets_empty()}
       />
 
-      {drawer && (
+      {drawer.value && (
         <ColourSetFormDrawer
-          key={drawer.colourSetId ?? "new"}
-          colourSetId={drawer.colourSetId}
-          onClose={() => setDrawer(null)}
+          key={drawer.value.colourSetId ?? "new"}
+          colourSetId={drawer.value.colourSetId}
+          open={drawer.isOpen}
+          onClose={drawer.close}
+          onExitComplete={drawer.clear}
         />
       )}
     </>
