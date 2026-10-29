@@ -1,7 +1,7 @@
 import { Combobox, createListCollection, Field } from "@ark-ui/react";
 import clsx from "clsx";
 import { Check, ChevronDown, X } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { ColorSwatch } from "#/components/ColorSwatch/ColorSwatch";
 
@@ -58,7 +58,18 @@ export function EntityPicker({
     }
     return base;
   }, [options, value, selectedLabel, selectedSwatch]);
-  const activeSwatch = items.find((item) => item.value === value)?.swatch;
+  const activeItem = items.find((item) => item.value === value);
+  const activeSwatch = activeItem?.swatch;
+  const activeLabel = activeItem?.label ?? "";
+
+  // Ark fills the input from the selected item only when it mounts, so a
+  // label that arrives later (a value restored from the URL, then fetched)
+  // would leave the box looking empty. Show the selection whenever the list
+  // isn't open for typing.
+  const [inputValue, setInputValue] = useState(activeLabel);
+  useEffect(() => {
+    if (!isOpen) setInputValue(activeLabel);
+  }, [activeLabel, isOpen]);
 
   const collection = useMemo(
     () =>
@@ -85,7 +96,9 @@ export function EntityPicker({
         collection={collection}
         value={value ? [value] : []}
         onValueChange={(details) => onChange(details.value[0] ?? "")}
+        inputValue={inputValue}
         onInputValueChange={(details) => {
+          setInputValue(details.inputValue);
           onSearchChange(details.inputValue);
           // The selected value and the input text are independent in Ark's
           // combobox — clearing the text (or the X trigger) must also drop the

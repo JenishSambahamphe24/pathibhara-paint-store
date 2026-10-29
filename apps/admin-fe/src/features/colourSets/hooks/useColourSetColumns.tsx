@@ -59,7 +59,12 @@ export function useColourSetColumns(
       cell: ({ row }) => (
         <Link
           to="/visualizer"
-          search={{ colourSetId: row.original.id }}
+          search={{
+            main_surface: row.original.shades.main_surface.id,
+            columns: row.original.shades.columns.id,
+            doors_windows: row.original.shades.doors_windows.id,
+            roof_edge: row.original.shades.roof_edge.id,
+          }}
           className="inline-flex items-center gap-1.5 text-sm text-info-strong hover:underline"
         >
           <House size={14} />
