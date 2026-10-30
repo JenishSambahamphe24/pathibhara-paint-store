@@ -10,7 +10,13 @@ interface RichTextEditorToolbarButtonProps {
   children: ReactNode;
 }
 
-export function RichTextEditorToolbarButton({ onClick, active, disabled, title, children }: RichTextEditorToolbarButtonProps) {
+export function RichTextEditorToolbarButton({
+  onClick,
+  active,
+  disabled,
+  title,
+  children,
+}: RichTextEditorToolbarButtonProps) {
   return (
     <button
       type="button"

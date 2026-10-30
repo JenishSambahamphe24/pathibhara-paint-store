@@ -48,11 +48,19 @@ export function PostPreviewPage({ postId }: PostPreviewPageProps) {
         )}
         <h1 className="text-3xl font-bold text-foreground">{post.title}</h1>
         <p className="mt-2 text-sm text-foreground-subtle">
-          {post.authorName} · {post.publishedAt ? DateHelper.formatDate(post.publishedAt) : m.blog_status_draft()}
+          {post.authorName} ·{" "}
+          {post.publishedAt
+            ? DateHelper.formatDate(post.publishedAt)
+            : m.blog_status_draft()}
         </p>
-        {post.excerpt && <p className="mt-4 text-lg text-foreground-muted">{post.excerpt}</p>}
+        {post.excerpt && (
+          <p className="mt-4 text-lg text-foreground-muted">{post.excerpt}</p>
+        )}
         {/* contentHtml was rendered and sanitized by the API when saved. */}
-        <div className="prose mt-6 max-w-none" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+        <div
+          className="prose mt-6 max-w-none"
+          dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+        />
       </article>
     </>
   );

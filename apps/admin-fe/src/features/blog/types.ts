@@ -1,6 +1,6 @@
-import type { IFile } from "#/types/content.types";
 import type { PostStatus } from "@repo/shared";
 import type { JSONContent } from "@tiptap/react";
+import type { IFile } from "#/types/content.types";
 
 export interface IPostListItem {
   id: string;

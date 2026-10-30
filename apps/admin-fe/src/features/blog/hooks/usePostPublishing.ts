@@ -23,7 +23,8 @@ export function usePostPublishing(postId: string) {
       toaster.success({ description: m.blog_published() });
       await settle(post);
     },
-    onError: (error) => toaster.error({ description: ApiErrorHelper.describe(error) }),
+    onError: (error) =>
+      toaster.error({ description: ApiErrorHelper.describe(error) }),
   });
 
   const unpublish = useMutation({
@@ -32,7 +33,8 @@ export function usePostPublishing(postId: string) {
       toaster.success({ description: m.blog_unpublished() });
       await settle(post);
     },
-    onError: (error) => toaster.error({ description: ApiErrorHelper.describe(error) }),
+    onError: (error) =>
+      toaster.error({ description: ApiErrorHelper.describe(error) }),
   });
 
   return { publish, unpublish };

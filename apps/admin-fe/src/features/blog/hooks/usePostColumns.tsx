@@ -15,8 +15,14 @@ export function usePostColumns(): Array<ColumnDef<IPostListItem>> {
       header: m.blog_column_title(),
       meta: { skipTruncate: true },
       cell: ({ row }) => (
-        <Link to="/blog/$postId" params={{ postId: row.original.id }} className="block max-w-md hover:underline">
-          <span className="block truncate font-medium text-foreground">{row.original.title}</span>
+        <Link
+          to="/blog/$postId"
+          params={{ postId: row.original.id }}
+          className="block max-w-md hover:underline"
+        >
+          <span className="block truncate font-medium text-foreground">
+            {row.original.title}
+          </span>
         </Link>
       ),
     },
@@ -31,8 +37,21 @@ export function usePostColumns(): Array<ColumnDef<IPostListItem>> {
           <Chip variant="neutral">{m.blog_status_draft()}</Chip>
         ),
     },
-    { id: "publishedAt", header: m.blog_column_published(), cell: ({ row }) => DateHelper.formatDate(row.original.publishedAt) },
-    { id: "author", header: m.blog_column_author(), enableSorting: false, cell: ({ row }) => row.original.authorName },
-    { id: "updatedAt", header: m.common_updated(), cell: ({ row }) => DateHelper.formatDateTime(row.original.updatedAt) },
+    {
+      id: "publishedAt",
+      header: m.blog_column_published(),
+      cell: ({ row }) => DateHelper.formatDate(row.original.publishedAt),
+    },
+    {
+      id: "author",
+      header: m.blog_column_author(),
+      enableSorting: false,
+      cell: ({ row }) => row.original.authorName,
+    },
+    {
+      id: "updatedAt",
+      header: m.common_updated(),
+      cell: ({ row }) => DateHelper.formatDateTime(row.original.updatedAt),
+    },
   ];
 }

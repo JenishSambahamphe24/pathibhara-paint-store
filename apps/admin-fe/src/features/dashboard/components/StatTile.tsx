@@ -11,7 +11,13 @@ interface StatTileProps {
   tone?: "default" | "warning";
 }
 
-export function StatTile({ label, value, delta, footer, tone = "default" }: StatTileProps) {
+export function StatTile({
+  label,
+  value,
+  delta,
+  footer,
+  tone = "default",
+}: StatTileProps) {
   return (
     <div
       className={clsx(
@@ -29,13 +35,19 @@ export function StatTile({ label, value, delta, footer, tone = "default" }: Stat
               delta.percent >= 0 ? "text-success-strong" : "text-danger-strong",
             )}
           >
-            {delta.percent >= 0 ? <ArrowUpRight size={14} aria-hidden /> : <ArrowDownRight size={14} aria-hidden />}
+            {delta.percent >= 0 ? (
+              <ArrowUpRight size={14} aria-hidden />
+            ) : (
+              <ArrowDownRight size={14} aria-hidden />
+            )}
             {Math.abs(delta.percent)}%
           </span>
           {delta.label}
         </p>
       )}
-      {footer && <div className="mt-2 text-xs text-foreground-subtle">{footer}</div>}
+      {footer && (
+        <div className="mt-2 text-xs text-foreground-subtle">{footer}</div>
+      )}
     </div>
   );
 }

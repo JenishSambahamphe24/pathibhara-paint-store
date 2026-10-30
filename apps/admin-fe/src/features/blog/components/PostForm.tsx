@@ -8,13 +8,14 @@ import { FormSection } from "#/components/FormSection/FormSection";
 import { PageHeader } from "#/components/PageHeader/PageHeader";
 import { UnsavedChangesDialog } from "#/components/UnsavedChangesDialog/UnsavedChangesDialog";
 
-import { useUnsavedChanges } from "#/hooks/useUnsavedChanges";
 import { FormHelper } from "#/lib/helpers/form.helper";
 import { m } from "#/paraglide/messages";
 
+import { useUnsavedChanges } from "#/hooks/useUnsavedChanges";
+
 import { usePostForm } from "../hooks/usePostForm";
-import { PostCoverField } from "./PostCoverField";
 import { PostContentFields } from "./PostContentFields";
+import { PostCoverField } from "./PostCoverField";
 import { PostPublishBar } from "./PostPublishBar";
 
 interface PostFormProps {
@@ -27,26 +28,51 @@ export function PostForm({ post }: PostFormProps) {
 
   return (
     <form.AppForm>
-      <BreadCrumb items={[{ title: m.sidebar_content() }, { title: m.sidebar_blog(), url: "/blog" }, { title }]} />
-      <form onSubmit={FormHelper.submitHandler(handleSubmit)} noValidate className="space-y-5">
-        <form.Subscribe selector={(state) => [state.isSubmitting, state.isDirty] as const}>
+      <BreadCrumb
+        items={[
+          { title: m.sidebar_content() },
+          { title: m.sidebar_blog(), url: "/blog" },
+          { title },
+        ]}
+      />
+      <form
+        onSubmit={FormHelper.submitHandler(handleSubmit)}
+        noValidate
+        className="space-y-5"
+      >
+        <form.Subscribe
+          selector={(state) => [state.isSubmitting, state.isDirty] as const}
+        >
           {([isSubmitting, isDirty]) => (
             <>
               <PageHeader
                 title={title}
-                description={post?.status === "published" ? m.blog_live_edit_hint() : m.blog_editor_description()}
+                description={
+                  post?.status === "published"
+                    ? m.blog_live_edit_hint()
+                    : m.blog_editor_description()
+                }
                 actions={
                   <>
-                    <Link to="/blog" className="text-sm text-foreground-subtle hover:text-foreground">
+                    <Link
+                      to="/blog"
+                      className="text-sm text-foreground-subtle hover:text-foreground"
+                    >
                       {m.common_back_to_list()}
                     </Link>
                     <Button type="submit" disabled={isSubmitting}>
-                      {isSubmitting ? m.common_saving() : post ? m.common_save() : m.blog_save_draft()}
+                      {isSubmitting
+                        ? m.common_saving()
+                        : post
+                          ? m.common_save()
+                          : m.blog_save_draft()}
                     </Button>
                   </>
                 }
               />
-              {post && <PostPublishBar post={post} hasUnsavedChanges={isDirty} />}
+              {post && (
+                <PostPublishBar post={post} hasUnsavedChanges={isDirty} />
+              )}
               <UnsavedGuard isDirty={isDirty && !isSubmitting} />
             </>
           )}
@@ -59,7 +85,11 @@ export function PostForm({ post }: PostFormProps) {
         <FormSection title={m.blog_section_cover()}>
           <form.Field name="coverImageFileId">
             {(field) => (
-              <PostCoverField value={field.state.value} initialFile={post?.coverImage ?? null} onChange={field.handleChange} />
+              <PostCoverField
+                value={field.state.value}
+                initialFile={post?.coverImage ?? null}
+                onChange={field.handleChange}
+              />
             )}
           </form.Field>
         </FormSection>
@@ -67,7 +97,11 @@ export function PostForm({ post }: PostFormProps) {
         <FormSection title={m.products_section_seo()}>
           <form.AppField name="slug">
             {(field) => (
-              <field.FormInput label={m.common_slug()} placeholder={m.common_slug_placeholder()} hint={m.common_slug_hint()} />
+              <field.FormInput
+                label={m.common_slug()}
+                placeholder={m.common_slug_placeholder()}
+                hint={m.common_slug_hint()}
+              />
             )}
           </form.AppField>
         </FormSection>
@@ -82,5 +116,11 @@ interface UnsavedGuardProps {
 
 function UnsavedGuard({ isDirty }: UnsavedGuardProps) {
   const { isBlocked, proceed, reset } = useUnsavedChanges({ isDirty });
-  return <UnsavedChangesDialog open={isBlocked} onDiscard={proceed} onCancel={reset} />;
+  return (
+    <UnsavedChangesDialog
+      open={isBlocked}
+      onDiscard={proceed}
+      onCancel={reset}
+    />
+  );
 }

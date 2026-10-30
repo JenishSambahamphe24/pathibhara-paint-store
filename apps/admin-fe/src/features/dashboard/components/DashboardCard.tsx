@@ -10,13 +10,28 @@ interface DashboardCardProps {
   children: ReactNode;
 }
 
-export function DashboardCard({ title, description, action, className, children }: DashboardCardProps) {
+export function DashboardCard({
+  title,
+  description,
+  action,
+  className,
+  children,
+}: DashboardCardProps) {
   return (
-    <section className={clsx("rounded-xl border border-border bg-surface p-5", className)}>
+    <section
+      className={clsx(
+        "rounded-xl border border-border bg-surface p-5",
+        className,
+      )}
+    >
       <header className="mb-4 flex items-start justify-between gap-3">
         <div>
           <h2 className="text-base font-semibold text-foreground">{title}</h2>
-          {description && <p className="mt-0.5 text-sm text-foreground-subtle">{description}</p>}
+          {description && (
+            <p className="mt-0.5 text-sm text-foreground-subtle">
+              {description}
+            </p>
+          )}
         </div>
         {action}
       </header>

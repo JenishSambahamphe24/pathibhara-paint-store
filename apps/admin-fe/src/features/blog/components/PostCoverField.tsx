@@ -16,7 +16,11 @@ interface PostCoverFieldProps {
   onChange: (fileId: string | null) => void;
 }
 
-export function PostCoverField({ value, initialFile, onChange }: PostCoverFieldProps) {
+export function PostCoverField({
+  value,
+  initialFile,
+  onChange,
+}: PostCoverFieldProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<IFile | null>(initialFile);
   const [isUploading, setIsUploading] = useState(false);
@@ -58,11 +62,24 @@ export function PostCoverField({ value, initialFile, onChange }: PostCoverFieldP
         }}
       />
       <div className="flex items-center gap-2">
-        <Button variant="outline" startIcon={<ImagePlus size={16} />} disabled={isUploading} onClick={() => inputRef.current?.click()}>
-          {isUploading ? m.products_images_uploading() : shown ? m.blog_cover_replace() : m.blog_cover_add()}
+        <Button
+          variant="outline"
+          startIcon={<ImagePlus size={16} />}
+          disabled={isUploading}
+          onClick={() => inputRef.current?.click()}
+        >
+          {isUploading
+            ? m.products_images_uploading()
+            : shown
+              ? m.blog_cover_replace()
+              : m.blog_cover_add()}
         </Button>
         {shown && (
-          <Button variant="outline" startIcon={<Trash2 size={16} />} onClick={() => onChange(null)}>
+          <Button
+            variant="outline"
+            startIcon={<Trash2 size={16} />}
+            onClick={() => onChange(null)}
+          >
             {m.blog_cover_remove()}
           </Button>
         )}

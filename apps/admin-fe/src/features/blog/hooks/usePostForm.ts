@@ -27,10 +27,13 @@ export function usePostForm(post: IPost | null) {
       return post ? PostApi.update(post.id, body) : PostApi.create(body);
     },
     onSuccess: async (saved) => {
-      toaster.success({ description: post ? m.blog_saved() : m.blog_created() });
+      toaster.success({
+        description: post ? m.blog_saved() : m.blog_created(),
+      });
       queryClient.setQueryData([POST_DETAIL_QUERY_KEY, saved.id], saved);
       await queryClient.invalidateQueries({ queryKey: [POST_LIST_QUERY_KEY] });
-      if (!post) await navigate({ to: "/blog/$postId", params: { postId: saved.id } });
+      if (!post)
+        await navigate({ to: "/blog/$postId", params: { postId: saved.id } });
     },
   });
 
@@ -38,7 +41,10 @@ export function usePostForm(post: IPost | null) {
     defaultValues: PostFormHelper.defaults(post),
     validators: {
       onSubmit: FormHelper.validator<TPostFormValues>(postInputSchema),
-      onChange: FormHelper.gatedSchema(FormHelper.validator<TPostFormValues>(postInputSchema), hasSubmittedRef),
+      onChange: FormHelper.gatedSchema(
+        FormHelper.validator<TPostFormValues>(postInputSchema),
+        hasSubmittedRef,
+      ),
     },
     onSubmit: async ({ value, formApi }) => {
       try {

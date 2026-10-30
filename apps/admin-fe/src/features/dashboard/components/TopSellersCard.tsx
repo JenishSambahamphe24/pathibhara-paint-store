@@ -1,7 +1,8 @@
 import type { IDashboardTopSeller } from "../types";
 
-import { VolumeHelper } from "@repo/shared";
 import { Link } from "@tanstack/react-router";
+
+import { VolumeHelper } from "@repo/shared";
 
 import { CurrencyHelper } from "#/lib/helpers/currency.helper";
 import { m } from "#/paraglide/messages";
@@ -16,9 +17,14 @@ export function TopSellersCard({ rows }: TopSellersCardProps) {
   const max = rows[0]?.revenuePaisa ?? 0;
 
   return (
-    <DashboardCard title={m.dashboard_top_sellers()} description={m.dashboard_top_sellers_description()}>
+    <DashboardCard
+      title={m.dashboard_top_sellers()}
+      description={m.dashboard_top_sellers_description()}
+    >
       {rows.length === 0 ? (
-        <p className="py-6 text-center text-sm text-foreground-subtle">{m.dashboard_no_sales()}</p>
+        <p className="py-6 text-center text-sm text-foreground-subtle">
+          {m.dashboard_no_sales()}
+        </p>
       ) : (
         <ol className="space-y-4">
           {rows.map((row) => (
@@ -29,7 +35,10 @@ export function TopSellersCard({ rows }: TopSellersCardProps) {
                   params={{ productId: row.productId }}
                   className="min-w-0 truncate text-foreground hover:underline"
                 >
-                  {row.productName} <span className="text-foreground-subtle">{VolumeHelper.label(row.volumeMl)}</span>
+                  {row.productName}{" "}
+                  <span className="text-foreground-subtle">
+                    {VolumeHelper.label(row.volumeMl)}
+                  </span>
                 </Link>
                 <span className="shrink-0 font-medium text-foreground tabular-nums">
                   {CurrencyHelper.formatNpr(row.revenuePaisa)}
@@ -40,7 +49,9 @@ export function TopSellersCard({ rows }: TopSellersCardProps) {
                   <div
                     className="h-2 rounded-full bg-chart-series"
                     // Share of the leader; a ratio for drawing, never shown as money.
-                    style={{ width: `${max > 0 ? Math.max((row.revenuePaisa / max) * 100, 2) : 0}%` }}
+                    style={{
+                      width: `${max > 0 ? Math.max((row.revenuePaisa / max) * 100, 2) : 0}%`,
+                    }}
                   />
                 </div>
                 <span className="w-16 shrink-0 text-right text-xs text-foreground-subtle tabular-nums">

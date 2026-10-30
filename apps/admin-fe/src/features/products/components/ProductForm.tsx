@@ -5,9 +5,9 @@ import { Plus } from "lucide-react";
 
 import { BreadCrumb } from "#/components/Breadcrumb/Breadcrumb";
 import { Button } from "#/components/Button/Button";
+import { ContentFields } from "#/components/ContentFields/ContentFields";
 import { FormSection } from "#/components/FormSection/FormSection";
 import { PageHeader } from "#/components/PageHeader/PageHeader";
-import { ContentFields } from "#/components/ContentFields/ContentFields";
 import { UnsavedChangesDialog } from "#/components/UnsavedChangesDialog/UnsavedChangesDialog";
 
 import { CategoryTreeHelper } from "#/features/categories/helpers/categoryTree.helper";

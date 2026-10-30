@@ -32,7 +32,9 @@ export function PostListPage({ search, onSearchChange }: PostListPageProps) {
 
   return (
     <>
-      <BreadCrumb items={[{ title: m.sidebar_content() }, { title: m.sidebar_blog() }]} />
+      <BreadCrumb
+        items={[{ title: m.sidebar_content() }, { title: m.sidebar_blog() }]}
+      />
       <PageHeader
         title={m.blog_title()}
         description={m.blog_description()}
@@ -45,7 +47,10 @@ export function PostListPage({ search, onSearchChange }: PostListPageProps) {
       <div className="mb-4 flex flex-wrap gap-3">
         <SearchInput
           initialValue={search.search ?? ""}
-          onSearch={(value) => value !== (search.search ?? "") && filter({ search: value || undefined })}
+          onSearch={(value) =>
+            value !== (search.search ?? "") &&
+            filter({ search: value || undefined })
+          }
           placeholder={m.blog_search()}
           className="w-full sm:w-72"
         />
@@ -53,7 +58,9 @@ export function PostListPage({ search, onSearchChange }: PostListPageProps) {
           label={m.common_status()}
           placeholder={m.common_all_statuses()}
           value={search.status ?? null}
-          onChange={(value) => filter({ status: (value as PostListQuery["status"]) ?? undefined })}
+          onChange={(value) =>
+            filter({ status: (value as PostListQuery["status"]) ?? undefined })
+          }
           options={[
             { label: m.blog_status_published(), value: "published" },
             { label: m.blog_status_draft(), value: "draft" },
@@ -69,9 +76,18 @@ export function PostListPage({ search, onSearchChange }: PostListPageProps) {
         onPerPageChange={(perPage) => filter({ perPage })}
         sorting={SortingHelper.toState(search.sortBy, search.sortOrder)}
         onSortingChange={(updater) => {
-          const current = SortingHelper.toState(search.sortBy, search.sortOrder);
-          const next = typeof updater === "function" ? updater(current) : updater;
-          filter(SortingHelper.fromState<PostListQuery["sortBy"]>(next, { sortBy: "updatedAt", sortOrder: "desc" }));
+          const current = SortingHelper.toState(
+            search.sortBy,
+            search.sortOrder,
+          );
+          const next =
+            typeof updater === "function" ? updater(current) : updater;
+          filter(
+            SortingHelper.fromState<PostListQuery["sortBy"]>(next, {
+              sortBy: "updatedAt",
+              sortOrder: "desc",
+            }),
+          );
         }}
         emptyState={m.blog_empty()}
       />

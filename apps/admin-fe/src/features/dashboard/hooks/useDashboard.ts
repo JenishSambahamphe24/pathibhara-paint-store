@@ -1,6 +1,10 @@
 import type { DashboardQuery } from "@repo/shared";
 
-import { keepPreviousData, queryOptions, useQuery } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  queryOptions,
+  useQuery,
+} from "@tanstack/react-query";
 
 import { DashboardApi } from "../api";
 

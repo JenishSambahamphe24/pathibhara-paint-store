@@ -18,7 +18,10 @@ interface PostPublishBarProps {
   hasUnsavedChanges: boolean;
 }
 
-export function PostPublishBar({ post, hasUnsavedChanges }: PostPublishBarProps) {
+export function PostPublishBar({
+  post,
+  hasUnsavedChanges,
+}: PostPublishBarProps) {
   const { publish, unpublish } = usePostPublishing(post.id);
   const [confirmingUnpublish, setConfirmingUnpublish] = useState(false);
   const isPublished = post.status === "published";
@@ -26,9 +29,17 @@ export function PostPublishBar({ post, hasUnsavedChanges }: PostPublishBarProps)
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-surface p-4">
       <div className="flex items-center gap-3 text-sm">
-        {isPublished ? <Chip variant="success">{m.blog_status_published()}</Chip> : <Chip variant="neutral">{m.blog_status_draft()}</Chip>}
+        {isPublished ? (
+          <Chip variant="success">{m.blog_status_published()}</Chip>
+        ) : (
+          <Chip variant="neutral">{m.blog_status_draft()}</Chip>
+        )}
         <span className="text-foreground-subtle">
-          {isPublished ? m.blog_published_on({ date: DateHelper.formatDateTime(post.publishedAt) }) : m.blog_draft_hint()}
+          {isPublished
+            ? m.blog_published_on({
+                date: DateHelper.formatDateTime(post.publishedAt),
+              })
+            : m.blog_draft_hint()}
         </span>
       </div>
       <div className="flex items-center gap-2">
@@ -38,7 +49,11 @@ export function PostPublishBar({ post, hasUnsavedChanges }: PostPublishBarProps)
           </Button>
         </Link>
         {isPublished ? (
-          <Button variant="outline" disabled={unpublish.isPending} onClick={() => setConfirmingUnpublish(true)}>
+          <Button
+            variant="outline"
+            disabled={unpublish.isPending}
+            onClick={() => setConfirmingUnpublish(true)}
+          >
             {m.blog_unpublish()}
           </Button>
         ) : (
@@ -58,7 +73,11 @@ export function PostPublishBar({ post, hasUnsavedChanges }: PostPublishBarProps)
         description={m.blog_unpublish_description()}
         confirmLabel={m.blog_unpublish()}
         isLoading={unpublish.isPending}
-        onConfirm={() => unpublish.mutate(undefined, { onSettled: () => setConfirmingUnpublish(false) })}
+        onConfirm={() =>
+          unpublish.mutate(undefined, {
+            onSettled: () => setConfirmingUnpublish(false),
+          })
+        }
       />
     </div>
   );

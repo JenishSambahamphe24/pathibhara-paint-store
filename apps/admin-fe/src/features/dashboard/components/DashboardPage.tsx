@@ -1,7 +1,8 @@
 import type { DashboardQuery } from "@repo/shared";
 
-import { DASHBOARD_RANGE_DAYS } from "@repo/shared";
 import { Link } from "@tanstack/react-router";
+
+import { DASHBOARD_RANGE_DAYS } from "@repo/shared";
 
 import { BreadCrumb } from "#/components/Breadcrumb/Breadcrumb";
 import { PageHeader } from "#/components/PageHeader/PageHeader";
@@ -48,7 +49,12 @@ export function DashboardPage({ search, onSearchChange }: DashboardPageProps) {
               })
             : undefined
         }
-        actions={<DashboardRangeToggle value={search.range} onChange={(range) => onSearchChange({ range })} />}
+        actions={
+          <DashboardRangeToggle
+            value={search.range}
+            onChange={(range) => onSearchChange({ range })}
+          />
+        }
       />
 
       {!data ? (
@@ -58,12 +64,20 @@ export function DashboardPage({ search, onSearchChange }: DashboardPageProps) {
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <StatTile
               label={m.dashboard_today()}
-              value={data.sales.todayRecorded ? CurrencyHelper.formatNpr(data.sales.todayRevenuePaisa) : m.dashboard_not_recorded()}
+              value={
+                data.sales.todayRecorded
+                  ? CurrencyHelper.formatNpr(data.sales.todayRevenuePaisa)
+                  : m.dashboard_not_recorded()
+              }
               footer={
                 data.sales.todayRecorded ? (
                   m.dashboard_units({ count: data.sales.todayUnits })
                 ) : (
-                  <Link to="/stock/sales/$date" params={{ date: data.today }} className="font-medium text-info-strong hover:underline">
+                  <Link
+                    to="/stock/sales/$date"
+                    params={{ date: data.today }}
+                    className="font-medium text-info-strong hover:underline"
+                  >
                     {m.dashboard_record_today()}
                   </Link>
                 )
@@ -72,8 +86,16 @@ export function DashboardPage({ search, onSearchChange }: DashboardPageProps) {
             <StatTile
               label={m.dashboard_revenue({ days })}
               value={CurrencyHelper.formatNpr(data.sales.revenuePaisa)}
-              delta={deltaOf(data.sales.revenuePaisa, data.sales.previousRevenuePaisa, days)}
-              footer={data.sales.previousRevenuePaisa === 0 ? m.dashboard_no_previous({ days }) : undefined}
+              delta={deltaOf(
+                data.sales.revenuePaisa,
+                data.sales.previousRevenuePaisa,
+                days,
+              )}
+              footer={
+                data.sales.previousRevenuePaisa === 0
+                  ? m.dashboard_no_previous({ days })
+                  : undefined
+              }
             />
             <StatTile
               label={m.dashboard_units_sold({ days })}
@@ -86,8 +108,14 @@ export function DashboardPage({ search, onSearchChange }: DashboardPageProps) {
               tone={data.stock.lowStockCount > 0 ? "warning" : "default"}
               footer={
                 <>
-                  {m.dashboard_out_of_stock_count({ count: data.stock.outOfStockCount })}
-                  <span className="block">{m.dashboard_stock_value({ value: CurrencyHelper.formatNpr(data.stock.valuePaisa) })}</span>
+                  {m.dashboard_out_of_stock_count({
+                    count: data.stock.outOfStockCount,
+                  })}
+                  <span className="block">
+                    {m.dashboard_stock_value({
+                      value: CurrencyHelper.formatNpr(data.stock.valuePaisa),
+                    })}
+                  </span>
                 </>
               }
             />
@@ -105,7 +133,10 @@ export function DashboardPage({ search, onSearchChange }: DashboardPageProps) {
           </div>
 
           <div className="grid gap-5 lg:grid-cols-2">
-            <LowStockCard rows={data.lowStock} total={data.stock.lowStockCount} />
+            <LowStockCard
+              rows={data.lowStock}
+              total={data.stock.lowStockCount}
+            />
             <SlowMoversCard rows={data.slowMovers} />
           </div>
         </div>
@@ -116,7 +147,9 @@ export function DashboardPage({ search, onSearchChange }: DashboardPageProps) {
 
 function deltaOf(current: number, previous: number, days: number) {
   const percent = percentChange(current, previous);
-  return percent === null ? null : { percent, label: m.dashboard_vs_previous({ days }) };
+  return percent === null
+    ? null
+    : { percent, label: m.dashboard_vs_previous({ days }) };
 }
 
 function DashboardSkeleton() {
@@ -124,7 +157,10 @@ function DashboardSkeleton() {
     <div className="space-y-5" aria-busy="true">
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {Array.from({ length: 4 }, (_, i) => (
-          <div key={i} className="h-28 animate-pulse rounded-xl bg-surface-subtle" />
+          <div
+            key={i}
+            className="h-28 animate-pulse rounded-xl bg-surface-subtle"
+          />
         ))}
       </div>
       <div className="h-80 animate-pulse rounded-xl bg-surface-subtle" />

@@ -29,7 +29,11 @@ interface RichTextEditorToolbarProps {
   isUploading?: boolean;
 }
 
-export function RichTextEditorToolbar({ editor, onPickImage, isUploading = false }: RichTextEditorToolbarProps) {
+export function RichTextEditorToolbar({
+  editor,
+  onPickImage,
+  isUploading = false,
+}: RichTextEditorToolbarProps) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [linkDraft, setLinkDraft] = useState<string | null>(null);
 
@@ -37,7 +41,11 @@ export function RichTextEditorToolbar({ editor, onPickImage, isUploading = false
   const state = useEditorState({
     editor,
     selector: ({ editor: e }) => ({
-      block: (e.isActive("heading", { level: 2 }) ? "h2" : e.isActive("heading", { level: 3 }) ? "h3" : "paragraph") as TBlockValue,
+      block: (e.isActive("heading", { level: 2 })
+        ? "h2"
+        : e.isActive("heading", { level: 3 })
+          ? "h3"
+          : "paragraph") as TBlockValue,
       bold: e.isActive("bold"),
       italic: e.isActive("italic"),
       bulletList: e.isActive("bulletList"),
@@ -54,12 +62,18 @@ export function RichTextEditorToolbar({ editor, onPickImage, isUploading = false
 
   function setBlock(value: TBlockValue) {
     if (value === "paragraph") editor.chain().focus().setParagraph().run();
-    else editor.chain().focus().setHeading({ level: value === "h2" ? 2 : 3 }).run();
+    else
+      editor
+        .chain()
+        .focus()
+        .setHeading({ level: value === "h2" ? 2 : 3 })
+        .run();
   }
 
   function applyLink() {
     const href = linkDraft?.trim();
-    if (href) editor.chain().focus().extendMarkRange("link").setLink({ href }).run();
+    if (href)
+      editor.chain().focus().extendMarkRange("link").setLink({ href }).run();
     setLinkDraft(null);
   }
 
@@ -77,30 +91,62 @@ export function RichTextEditorToolbar({ editor, onPickImage, isUploading = false
           <option value="h3">{m.rich_text_heading_3()}</option>
         </select>
         <span className="mx-1 h-5 w-px bg-border-muted" />
-        <RichTextEditorToolbarButton title={m.rich_text_bold()} active={state.bold} onClick={() => editor.chain().focus().toggleBold().run()}>
+        <RichTextEditorToolbarButton
+          title={m.rich_text_bold()}
+          active={state.bold}
+          onClick={() => editor.chain().focus().toggleBold().run()}
+        >
           <Bold size={15} />
         </RichTextEditorToolbarButton>
-        <RichTextEditorToolbarButton title={m.rich_text_italic()} active={state.italic} onClick={() => editor.chain().focus().toggleItalic().run()}>
+        <RichTextEditorToolbarButton
+          title={m.rich_text_italic()}
+          active={state.italic}
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+        >
           <Italic size={15} />
         </RichTextEditorToolbarButton>
         <span className="mx-1 h-5 w-px bg-border-muted" />
-        <RichTextEditorToolbarButton title={m.rich_text_align_left()} active={state.left} onClick={() => editor.chain().focus().setTextAlign("left").run()}>
+        <RichTextEditorToolbarButton
+          title={m.rich_text_align_left()}
+          active={state.left}
+          onClick={() => editor.chain().focus().setTextAlign("left").run()}
+        >
           <AlignLeft size={15} />
         </RichTextEditorToolbarButton>
-        <RichTextEditorToolbarButton title={m.rich_text_align_center()} active={state.center} onClick={() => editor.chain().focus().setTextAlign("center").run()}>
+        <RichTextEditorToolbarButton
+          title={m.rich_text_align_center()}
+          active={state.center}
+          onClick={() => editor.chain().focus().setTextAlign("center").run()}
+        >
           <AlignCenter size={15} />
         </RichTextEditorToolbarButton>
-        <RichTextEditorToolbarButton title={m.rich_text_align_right()} active={state.right} onClick={() => editor.chain().focus().setTextAlign("right").run()}>
+        <RichTextEditorToolbarButton
+          title={m.rich_text_align_right()}
+          active={state.right}
+          onClick={() => editor.chain().focus().setTextAlign("right").run()}
+        >
           <AlignRight size={15} />
         </RichTextEditorToolbarButton>
         <span className="mx-1 h-5 w-px bg-border-muted" />
-        <RichTextEditorToolbarButton title={m.rich_text_bullet_list()} active={state.bulletList} onClick={() => editor.chain().focus().toggleBulletList().run()}>
+        <RichTextEditorToolbarButton
+          title={m.rich_text_bullet_list()}
+          active={state.bulletList}
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+        >
           <List size={15} />
         </RichTextEditorToolbarButton>
-        <RichTextEditorToolbarButton title={m.rich_text_ordered_list()} active={state.orderedList} onClick={() => editor.chain().focus().toggleOrderedList().run()}>
+        <RichTextEditorToolbarButton
+          title={m.rich_text_ordered_list()}
+          active={state.orderedList}
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        >
           <ListOrdered size={15} />
         </RichTextEditorToolbarButton>
-        <RichTextEditorToolbarButton title={m.rich_text_quote()} active={state.blockquote} onClick={() => editor.chain().focus().toggleBlockquote().run()}>
+        <RichTextEditorToolbarButton
+          title={m.rich_text_quote()}
+          active={state.blockquote}
+          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        >
           <Quote size={15} />
         </RichTextEditorToolbarButton>
         <span className="mx-1 h-5 w-px bg-border-muted" />
@@ -116,7 +162,11 @@ export function RichTextEditorToolbar({ editor, onPickImage, isUploading = false
         </RichTextEditorToolbarButton>
         {onPickImage && (
           <>
-            <RichTextEditorToolbarButton title={m.rich_text_image()} disabled={isUploading} onClick={() => fileRef.current?.click()}>
+            <RichTextEditorToolbarButton
+              title={m.rich_text_image()}
+              disabled={isUploading}
+              onClick={() => fileRef.current?.click()}
+            >
               <ImagePlus size={15} />
             </RichTextEditorToolbarButton>
             <input
@@ -133,13 +183,25 @@ export function RichTextEditorToolbar({ editor, onPickImage, isUploading = false
           </>
         )}
         <span className="mx-1 h-5 w-px bg-border-muted" />
-        <RichTextEditorToolbarButton title={m.rich_text_undo()} disabled={!state.canUndo} onClick={() => editor.chain().focus().undo().run()}>
+        <RichTextEditorToolbarButton
+          title={m.rich_text_undo()}
+          disabled={!state.canUndo}
+          onClick={() => editor.chain().focus().undo().run()}
+        >
           <Undo2 size={15} />
         </RichTextEditorToolbarButton>
-        <RichTextEditorToolbarButton title={m.rich_text_redo()} disabled={!state.canRedo} onClick={() => editor.chain().focus().redo().run()}>
+        <RichTextEditorToolbarButton
+          title={m.rich_text_redo()}
+          disabled={!state.canRedo}
+          onClick={() => editor.chain().focus().redo().run()}
+        >
           <Redo2 size={15} />
         </RichTextEditorToolbarButton>
-        {isUploading && <span className="ml-2 text-xs text-foreground-subtle">{m.rich_text_uploading()}</span>}
+        {isUploading && (
+          <span className="ml-2 text-xs text-foreground-subtle">
+            {m.rich_text_uploading()}
+          </span>
+        )}
       </div>
       {linkDraft !== null && (
         <div className="flex items-center gap-2 border-t border-border-muted px-2 py-2">
@@ -158,10 +220,18 @@ export function RichTextEditorToolbar({ editor, onPickImage, isUploading = false
             aria-label={m.rich_text_link_url()}
             className="grow rounded-md border border-border-strong px-2 py-1 text-sm text-foreground focus:outline-none"
           />
-          <button type="button" onClick={applyLink} className="cursor-pointer rounded-md bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
+          <button
+            type="button"
+            onClick={applyLink}
+            className="cursor-pointer rounded-md bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground"
+          >
             {m.rich_text_link_apply()}
           </button>
-          <button type="button" onClick={() => setLinkDraft(null)} className="cursor-pointer text-xs text-foreground-subtle hover:text-foreground">
+          <button
+            type="button"
+            onClick={() => setLinkDraft(null)}
+            className="cursor-pointer text-xs text-foreground-subtle hover:text-foreground"
+          >
             {m.generic_cancel()}
           </button>
         </div>

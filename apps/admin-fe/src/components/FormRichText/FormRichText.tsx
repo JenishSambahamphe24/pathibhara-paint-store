@@ -1,5 +1,5 @@
-import type { IUploadedImage } from "#/components/RichTextEditor/RichTextEditor";
 import type { JSONContent } from "@tiptap/react";
+import type { IUploadedImage } from "#/components/RichTextEditor/RichTextEditor";
 
 import { RichTextEditor } from "#/components/RichTextEditor/RichTextEditor";
 
@@ -14,7 +14,13 @@ interface FormRichTextProps {
   onUploadImage?: (file: File) => Promise<IUploadedImage>;
 }
 
-export function FormRichText({ label, required = false, placeholder, hint, onUploadImage }: FormRichTextProps) {
+export function FormRichText({
+  label,
+  required = false,
+  placeholder,
+  hint,
+  onUploadImage,
+}: FormRichTextProps) {
   const field = useFieldContext<JSONContent>();
   const error = FormHelper.getFieldError(field.state.meta.errors);
 

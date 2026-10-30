@@ -26,7 +26,13 @@ interface RichTextEditorProps {
 // Same extensions as the API's PostHtmlRenderer: the server renders and
 // sanitizes this JSON, and rejects any node it doesn't know.
 // Only mounts with its initial value; remount (key) to load other content.
-export function RichTextEditor({ value, onChange, placeholder, invalid = false, onUploadImage }: RichTextEditorProps) {
+export function RichTextEditor({
+  value,
+  onChange,
+  placeholder,
+  invalid = false,
+  onUploadImage,
+}: RichTextEditorProps) {
   const [isUploading, setIsUploading] = useState(false);
 
   const editor = useEditor({
@@ -60,15 +66,25 @@ export function RichTextEditor({ value, onChange, placeholder, invalid = false, 
   return (
     // overflow-clip, not hidden: a hidden wrapper becomes the sticky
     // toolbar's scroll container and it would never stick.
-    <div className={clsx("rich-text overflow-clip rounded-lg border bg-surface", invalid ? "border-danger" : "border-border-strong")}>
+    <div
+      className={clsx(
+        "rich-text overflow-clip rounded-lg border bg-surface",
+        invalid ? "border-danger" : "border-border-strong",
+      )}
+    >
       <div className="sticky top-0 z-10">
         <RichTextEditorToolbar
           editor={editor}
           isUploading={isUploading}
-          onPickImage={onUploadImage ? (file) => void handleImage(file) : undefined}
+          onPickImage={
+            onUploadImage ? (file) => void handleImage(file) : undefined
+          }
         />
       </div>
-      <EditorContent editor={editor} className="prose prose-sm max-w-none p-4 text-foreground" />
+      <EditorContent
+        editor={editor}
+        className="prose prose-sm max-w-none p-4 text-foreground"
+      />
     </div>
   );
 }
