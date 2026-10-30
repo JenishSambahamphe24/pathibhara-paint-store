@@ -19,6 +19,7 @@
     "@tanstack/react-router": "catalog:fe",
     "@tanstack/react-start": "catalog:fe",
     "@tanstack/router-plugin": "catalog:fe",
+    "clsx": "catalog:fe",
     "nitro": "catalog:fe",
     "react": "catalog:fe",
     "react-dom": "catalog:fe",

@@ -16,6 +16,18 @@ export const Route = createRootRoute({
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Pathibhara Paints" },
     ],
+    links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Teko:wght@400..700&family=Mukta:wght@400;500;600;700&display=swap",
+      },
+    ],
   }),
   shellComponent: RootDocument,
   component: Outlet,
@@ -27,7 +39,7 @@ function RootDocument({ children }: PropsWithChildren) {
       <head>
         <HeadContent />
       </head>
-      <body className="font-sans antialiased">
+      <body className="antialiased">
         {children}
         <Scripts />
       </body>

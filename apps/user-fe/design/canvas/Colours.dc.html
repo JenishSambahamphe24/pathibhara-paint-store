@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>UI colour tokens, light and dark</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@400..700&amp;family=Mukta:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1E3A7B}a:hover{color:#132656}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1120px; box-sizing: border-box; padding: 48px 80px; background: #E9E3D6; color: #1E1B16; font-family: 'Mukta', system-ui, sans-serif; display: flex; flex-direction: column; gap: 24px">
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5E574B">UI colour · tokens</span>
+      <h2 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 64px; line-height: 0.85; text-transform: uppercase">Lime wash by day, night bazaar after dark</h2>
+    </div>
+    <p style="margin: 0; max-width: 480px; font-size: 15px; line-height: 1.5; color: #3B362D">Sign colours are fixed paint: a signboard looks the same in both themes. UI tokens switch per theme. Ratios are text contrast on the theme background.</p>
+  </div>
+
+  <section style="display: grid; grid-template-columns: 260px 1fr; gap: 24px; align-items: center; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 10px; padding: 18px 22px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 30px; line-height: 0.9; text-transform: uppercase">Sign colours</span>
+      <span style="font-size: 14px; line-height: 1.45; color: #3B362D">Signboards only: header, section signs, share images.</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; font-size: 13px">
+      <div style="display: flex; gap: 10px; align-items: center"><div style="width: 52px; height: 52px; border-radius: 6px; background: #A3192B"></div><div style="display: flex; flex-direction: column"><strong>sign-red</strong><span style="color: #5E574B">#A3192B · cream text 7.0:1</span></div></div>
+      <div style="display: flex; gap: 10px; align-items: center"><div style="width: 52px; height: 52px; border-radius: 6px; background: #1E3A7B"></div><div style="display: flex; flex-direction: column"><strong>sign-blue</strong><span style="color: #5E574B">#1E3A7B · cream 9.8:1</span></div></div>
+      <div style="display: flex; gap: 10px; align-items: center"><div style="width: 52px; height: 52px; border-radius: 6px; background: #F2C230"></div><div style="display: flex; flex-direction: column"><strong>pinstripe</strong><span style="color: #5E574B">#F2C230 · ink text 10.2:1</span></div></div>
+      <div style="display: flex; gap: 10px; align-items: center"><div style="width: 52px; height: 52px; border-radius: 6px; background: #FBF4E4; border: 1px solid #D8D0BF"></div><div style="display: flex; flex-direction: column"><strong>sign-cream</strong><span style="color: #5E574B">#FBF4E4 · letters on signs</span></div></div>
+    </div>
+  </section>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+    <section style="background: #F5F1E8; border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 32px; line-height: 1; text-transform: uppercase">Light · Lime wash</span>
+        <span style="font-size: 13px; color: #5E574B">when the phone is in light mode</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; font-size: 13px">
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #F5F1E8; border: 1px solid #D8D0BF"></div><div style="display: flex; flex-direction: column"><strong>bg</strong><span style="color: #5E574B">#F5F1E8</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #FFFDF8; border: 1px solid #D8D0BF"></div><div style="display: flex; flex-direction: column"><strong>surface</strong><span style="color: #5E574B">#FFFDF8</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #ECE5D6; border: 1px solid #D8D0BF"></div><div style="display: flex; flex-direction: column"><strong>surface-2</strong><span style="color: #5E574B">#ECE5D6</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #D8D0BF"></div><div style="display: flex; flex-direction: column"><strong>border</strong><span style="color: #5E574B">#D8D0BF</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #1E1B16"></div><div style="display: flex; flex-direction: column"><strong>text · ink</strong><span style="color: #5E574B">#1E1B16 · 15.2:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #5E574B"></div><div style="display: flex; flex-direction: column"><strong>text-muted</strong><span style="color: #5E574B">#5E574B · 6.3:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #1E3A7B"></div><div style="display: flex; flex-direction: column"><strong>accent · focus</strong><span style="color: #5E574B">#1E3A7B · 9.6:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #A3192B"></div><div style="display: flex; flex-direction: column"><strong>brand text</strong><span style="color: #5E574B">#A3192B · 6.8:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #1D6B3F"></div><div style="display: flex; flex-direction: column"><strong>success · WhatsApp</strong><span style="color: #5E574B">#1D6B3F · 5.8:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #8A5300"></div><div style="display: flex; flex-direction: column"><strong>warning</strong><span style="color: #5E574B">#8A5300 · 5.6:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #B3261E"></div><div style="display: flex; flex-direction: column"><strong>danger</strong><span style="color: #5E574B">#B3261E · 5.8:1 · always + icon</span></div></div>
+      </div>
+      <div style="background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline">
+          <span style="font-size: 16px; font-weight: 700">Exterior · 2 coats</span>
+          <span style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 36px; line-height: 1; font-variant-numeric: tabular-nums">Rs. 48,600</span>
+        </div>
+        <span style="font-size: 14px; color: #5E574B">1,180 sq ft net · 33.7 L · <span style="color: #1D6B3F; font-weight: 700">In stock</span> · <span style="color: #8A5300; font-weight: 700">Ask store for 0.5 L</span></span>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center">
+          <button type="button" style="min-height: 46px; padding: 4px 18px 0; border-radius: 6px; border: none; background: #1E1B16; color: #FBF4E4; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase">Estimate this look</button>
+          <button type="button" style="min-height: 46px; padding: 4px 18px 0; border-radius: 6px; border: 2px solid #1E1B16; background: transparent; color: #1E1B16; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; outline: 3px solid #1E3A7B; outline-offset: 2px">Focused</button>
+          <a href="#" style="min-height: 44px; display: inline-flex; align-items: center; font-weight: 700; font-size: 15px">View guide</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: #15130F; border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 16px; color: #F5EEDC">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 32px; line-height: 1; text-transform: uppercase">Dark · Night bazaar</span>
+        <span style="font-size: 13px; color: #ADA593">when the phone is in dark mode</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; font-size: 13px">
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #15130F; border: 1px solid #3D382F"></div><div style="display: flex; flex-direction: column"><strong>bg</strong><span style="color: #ADA593">#15130F</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #1F1C17; border: 1px solid #3D382F"></div><div style="display: flex; flex-direction: column"><strong>surface</strong><span style="color: #ADA593">#1F1C17</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #2A2620; border: 1px solid #3D382F"></div><div style="display: flex; flex-direction: column"><strong>surface-2</strong><span style="color: #ADA593">#2A2620</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #3D382F"></div><div style="display: flex; flex-direction: column"><strong>border</strong><span style="color: #ADA593">#3D382F</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #F5EEDC"></div><div style="display: flex; flex-direction: column"><strong>text · ink</strong><span style="color: #ADA593">#F5EEDC · 16.0:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #ADA593"></div><div style="display: flex; flex-direction: column"><strong>text-muted</strong><span style="color: #ADA593">#ADA593 · 7.6:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #9EB4F2"></div><div style="display: flex; flex-direction: column"><strong>accent · focus</strong><span style="color: #ADA593">#9EB4F2 · 9.1:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #E8606F"></div><div style="display: flex; flex-direction: column"><strong>brand text</strong><span style="color: #ADA593">#E8606F · 5.6:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #6FD39A"></div><div style="display: flex; flex-direction: column"><strong>success · WhatsApp</strong><span style="color: #ADA593">#6FD39A · 10.1:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #F0B65A"></div><div style="display: flex; flex-direction: column"><strong>warning</strong><span style="color: #ADA593">#F0B65A · 10.2:1</span></div></div>
+        <div style="display: flex; gap: 10px; align-items: center"><div style="width: 36px; height: 36px; border-radius: 6px; background: #F59088"></div><div style="display: flex; flex-direction: column"><strong>danger</strong><span style="color: #ADA593">#F59088 · 8.2:1 · always + icon</span></div></div>
+      </div>
+      <div style="background: #1F1C17; border: 1px solid #3D382F; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline">
+          <span style="font-size: 16px; font-weight: 700">Exterior · 2 coats</span>
+          <span style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 36px; line-height: 1; font-variant-numeric: tabular-nums">Rs. 48,600</span>
+        </div>
+        <span style="font-size: 14px; color: #ADA593">1,180 sq ft net · 33.7 L · <span style="color: #6FD39A; font-weight: 700">In stock</span> · <span style="color: #F0B65A; font-weight: 700">Ask store for 0.5 L</span></span>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center">
+          <button type="button" style="min-height: 46px; padding: 4px 18px 0; border-radius: 6px; border: none; background: #F5EEDC; color: #15130F; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase">Estimate this look</button>
+          <button type="button" style="min-height: 46px; padding: 4px 18px 0; border-radius: 6px; border: 2px solid #F5EEDC; background: transparent; color: #F5EEDC; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; outline: 3px solid #9EB4F2; outline-offset: 2px">Focused</button>
+          <a href="#" style="min-height: 44px; display: inline-flex; align-items: center; font-weight: 700; font-size: 15px; color: #9EB4F2">View guide</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section style="display: grid; grid-template-columns: 340px 1fr; gap: 28px; align-items: center; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 10px; padding: 18px 22px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 28px; line-height: 0.95; text-transform: uppercase">Paint never changes with the theme</span>
+      <span style="font-size: 14px; line-height: 1.45; color: #3B362D">Each swatch sits in a neutral frame: 1 px border plus a 3 px gap in the surface colour, so Rice White shows on light and Slate Night on dark.</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+      <div style="background: #F5F1E8; border-radius: 8px; padding: 14px; display: flex; gap: 12px">
+        <div style="padding: 3px; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 7px"><div style="width: 60px; height: 60px; border-radius: 4px; background: #F1ECDF"></div></div>
+        <div style="padding: 3px; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 7px"><div style="width: 60px; height: 60px; border-radius: 4px; background: #E3A23B"></div></div>
+        <div style="padding: 3px; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 7px"><div style="width: 60px; height: 60px; border-radius: 4px; background: #2E3A3F"></div></div>
+      </div>
+      <div style="background: #15130F; border-radius: 8px; padding: 14px; display: flex; gap: 12px">
+        <div style="padding: 3px; background: #1F1C17; border: 1px solid #4D473C; border-radius: 7px"><div style="width: 60px; height: 60px; border-radius: 4px; background: #F1ECDF"></div></div>
+        <div style="padding: 3px; background: #1F1C17; border: 1px solid #4D473C; border-radius: 7px"><div style="width: 60px; height: 60px; border-radius: 4px; background: #E3A23B"></div></div>
+        <div style="padding: 3px; background: #1F1C17; border: 1px solid #4D473C; border-radius: 7px"><div style="width: 60px; height: 60px; border-radius: 4px; background: #2E3A3F"></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1120}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

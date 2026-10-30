@@ -20,3 +20,6 @@ project.inlang/
 
 # Release changelog (generated — not hand-formatted)
 CHANGELOG.md
+
+# Mirror of the Claude Design canvas, synced verbatim
+design/canvas/

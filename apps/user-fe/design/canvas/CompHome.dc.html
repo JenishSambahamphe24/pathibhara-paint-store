@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Home, mobile, light theme</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@400..700&amp;family=Mukta:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1E3A7B}a:hover{color:#132656}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 1800px; overflow: hidden; background: #F5F1E8; color: #1E1B16; font-family: 'Mukta', system-ui, sans-serif">
+
+  <header style="background: #A3192B; padding: 5px">
+    <div style="border: 2px solid #F2C230; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 4px 12px; color: #FBF4E4">
+      <a href="#" style="display: flex; flex-direction: column; line-height: 0.88; text-decoration: none; color: #FBF4E4; min-height: 44px; justify-content: center">
+        <span style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 17px">पाथीभरा पेन्ट्स</span>
+        <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 26px; text-transform: uppercase; letter-spacing: 0.03em">Pathibhara Paints</span>
+      </a>
+      <div style="display: flex; gap: 2px">
+        <button type="button" aria-label="Switch to dark theme" style="width: 44px; height: 44px; border: none; background: transparent; color: #FBF4E4; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></button>
+        <button type="button" aria-label="Menu" style="width: 44px; height: 44px; border: none; background: transparent; color: #FBF4E4; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <section style="padding: 20px 16px 0; display: flex; flex-direction: column; gap: 10px">
+    <span style="font: 700 13px 'Mukta', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #A3192B">[CITY] · Paint &amp; waterproofing</span>
+    <h1 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 58px; line-height: 0.82; text-transform: uppercase">Paint the house here first.</h1>
+    <p style="margin: 0; font-size: 15px; line-height: 1.45; color: #3B362D">Tap a colour set to repaint it. Then get litres, cans and the cost in rupees.</p>
+  </section>
+
+  <section style="padding: 14px 16px 0">
+    <div style="position: relative; border-radius: 20px; background: #E7E0D1; overflow: hidden; height: 250px">
+      <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 56px; background: #DBD3C2"></div>
+      <svg viewBox="0 0 340 250" width="358" height="250" role="img" aria-label="House preview painted with the selected colour set" style="position: absolute; left: 0; top: 4px">
+        <rect x="0" y="236" width="340" height="4" fill="#BDB8AD"></rect>
+        <rect x="8" y="150" width="86" height="8" fill="{{c.roof}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="12" y="158" width="6" height="78" fill="{{c.columns}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="82" y="158" width="6" height="78" fill="{{c.columns}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="92" y="158" width="208" height="78" fill="{{c.walls}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="92" y="96" width="208" height="54" fill="{{c.walls}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="92" y="38" width="208" height="50" fill="{{c.walls}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="220" y="6" width="70" height="24" fill="{{c.walls}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="88" y="150" width="216" height="8" fill="{{c.columns}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="88" y="88" width="216" height="8" fill="{{c.columns}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="92" y="38" width="10" height="198" fill="{{c.columns}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="196" y="38" width="9" height="198" fill="{{c.columns}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="290" y="38" width="10" height="198" fill="{{c.columns}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="88" y="30" width="216" height="8" fill="{{c.roof}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <rect x="214" y="0" width="82" height="6" fill="{{c.roof}}" stroke="#1E1B16" stroke-opacity="0.15"></rect>
+        <g stroke="#6E6C66" stroke-width="1.5"><line x1="102" y1="14" x2="214" y2="14"></line><line x1="110" y1="14" x2="110" y2="30"></line><line x1="130" y1="14" x2="130" y2="30"></line><line x1="150" y1="14" x2="150" y2="30"></line><line x1="170" y1="14" x2="170" y2="30"></line><line x1="190" y1="14" x2="190" y2="30"></line><line x1="210" y1="14" x2="210" y2="30"></line></g>
+        <rect x="112" y="44" width="62" height="102" fill="#8A5A3B"></rect>
+        <g stroke="#6E4730" stroke-width="1"><line x1="112" y1="52" x2="174" y2="52"></line><line x1="112" y1="60" x2="174" y2="60"></line><line x1="112" y1="68" x2="174" y2="68"></line><line x1="112" y1="76" x2="174" y2="76"></line><line x1="112" y1="84" x2="174" y2="84"></line><line x1="112" y1="104" x2="174" y2="104"></line><line x1="112" y1="112" x2="174" y2="112"></line><line x1="112" y1="120" x2="174" y2="120"></line><line x1="112" y1="128" x2="174" y2="128"></line><line x1="112" y1="136" x2="174" y2="136"></line></g>
+        <rect x="216" y="48" width="64" height="32" fill="#BCD0D6" stroke="{{c.doors}}" stroke-width="4"></rect>
+        <line x1="248" y1="48" x2="248" y2="80" stroke="{{c.doors}}" stroke-width="3"></line>
+        <rect x="212" y="102" width="72" height="44" fill="#BCD0D6" stroke="{{c.doors}}" stroke-width="4"></rect>
+        <rect x="208" y="126" width="80" height="22" fill="#D9E6EA" fill-opacity="0.7" stroke="#6E6C66" stroke-width="1.5"></rect>
+        <rect x="112" y="174" width="62" height="40" fill="#BCD0D6" stroke="{{c.doors}}" stroke-width="4"></rect>
+        <line x1="143" y1="174" x2="143" y2="214" stroke="{{c.doors}}" stroke-width="3"></line>
+        <rect x="222" y="178" width="28" height="58" fill="{{c.doors}}" stroke="#1E1B16" stroke-opacity="0.25"></rect>
+        <rect x="258" y="178" width="26" height="36" fill="#BCD0D6" stroke="{{c.doors}}" stroke-width="4"></rect>
+      </svg>
+      <span style="position: absolute; left: 12px; top: 12px; font: 600 12px 'Mukta', sans-serif; background: rgba(245,241,232,0.92); padding: 5px 8px; border-radius: 6px; color: #3B362D">Drag to turn · 3D</span>
+      <button type="button" aria-label="Reset view" style="position: absolute; right: 8px; top: 8px; width: 44px; height: 44px; border-radius: 12px; border: 1px solid #D8D0BF; background: #FFFDF8; color: #1E1B16; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+    </div>
+    <p style="margin: 6px 2px 0; font: 600 12px 'Mukta', sans-serif; color: #5E574B">Stand-in drawing. The live site renders house.glb here.</p>
+  </section>
+
+  <section style="padding: 16px 0 0; display: flex; flex-direction: column; gap: 10px">
+    <h2 style="margin: 0; padding: 0 16px; font-size: 15px; font-weight: 600">Colour sets</h2>
+    <div style="display: flex; gap: 10px; overflow-x: auto; padding: 4px 16px 6px">
+      <sc-for list="{{sets}}" as="s" hint-placeholder-count="4">
+        <button type="button" aria-pressed="{{s.pressed}}" onClick="{{s.pick}}" style="{{s.cardStyle}}">
+          <span style="display: flex; gap: 3px; height: 40px">
+            <span style="{{s.wallsStyle}}"></span>
+            <span style="{{s.columnsStyle}}"></span>
+            <span style="{{s.doorsStyle}}"></span>
+            <span style="{{s.roofStyle}}"></span>
+          </span>
+          <span style="font-size: 13px; font-weight: 600; line-height: 1.25">{{s.name}}</span>
+        </button>
+      </sc-for>
+    </div>
+    <ul style="list-style: none; margin: 0 16px; padding: 4px 14px; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 14px">
+      <sc-for list="{{parts}}" as="p" hint-placeholder-count="4">
+        <li style="display: flex; align-items: center; gap: 12px; min-height: 48px; border-bottom: 1px solid #ECE5D6">
+          <span style="padding: 2px; border: 1px solid #D8D0BF; border-radius: 7px; display: flex"><span style="{{p.swStyle}}"></span></span>
+          <span style="flex: 1; font-size: 14px; font-weight: 600">{{p.part}}</span>
+          <span style="font: 600 13px 'Mukta', sans-serif; color: #5E574B; text-align: right">{{p.code}} · {{p.name}}</span>
+        </li>
+      </sc-for>
+    </ul>
+    <div style="display: flex; flex-direction: column; gap: 8px; padding: 6px 16px 0">
+      <a href="CompVisualizer.dc.html" style="min-height: 50px; border-radius: 6px; background: #1E1B16; color: #FFFDF8; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Change any part in the visualizer</a>
+      <a href="#" style="min-height: 50px; border-radius: 6px; border: 1.5px solid #1E1B16; color: #1E1B16; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Estimate this look</a>
+    </div>
+  </section>
+
+  <section style="padding: 32px 16px 0; display: flex; flex-direction: column; gap: 0">
+    <div style="background: #1E3A7B; border-radius: 6px; padding: 5px; margin-bottom: 10px">
+      <div style="border: 2px solid #FBF4E4; border-radius: 3px; padding: 8px 12px 4px; color: #FBF4E4">
+        <span style="display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #F2C230">Three tools</span>
+        <h2 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 34px; line-height: 0.9; text-transform: uppercase">Decide before you visit</h2>
+      </div>
+    </div>
+    <a href="CompVisualizer.dc.html" style="display: grid; grid-template-columns: 28px 1fr 64px; gap: 12px; align-items: center; padding: 14px 0; border-top: 1px solid #1E1B16; text-decoration: none; color: #1E1B16; min-height: 44px">
+      <span style="font: 600 13px 'Mukta', sans-serif; color: #5E574B">01</span>
+      <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 16px">Colour visualizer</span><span style="font-size: 13px; color: #5E574B">Pick a shade for each part</span></span>
+      <span aria-hidden="true" style="display: flex; gap: 2px; justify-content: flex-end"><span style="width: 12px; height: 30px; border-radius: 2px; background: #D9DDD8; border: 1px solid #D8D0BF"></span><span style="width: 12px; height: 30px; border-radius: 2px; background: #B5573A"></span><span style="width: 12px; height: 30px; border-radius: 2px; background: #2E3A3F"></span></span>
+    </a>
+    <a href="#" style="display: grid; grid-template-columns: 28px 1fr 64px; gap: 12px; align-items: center; padding: 14px 0; border-top: 1px solid #D8D0BF; text-decoration: none; color: #1E1B16; min-height: 44px">
+      <span style="font: 600 13px 'Mukta', sans-serif; color: #5E574B">02</span>
+      <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 16px">Cost calculator</span><span style="font-size: 13px; color: #5E574B">Walls in feet → litres, cans, NPR</span></span>
+      <span aria-hidden="true" style="display: flex; gap: 3px; justify-content: flex-end; align-items: flex-end; color: #1E1B16"><svg width="26" height="31" viewBox="0 0 48 58" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M8 16 Q24 0 40 16"/><path d="M6 16 L9.5 50 Q24 55 38.5 50 L42 16"/><ellipse cx="24" cy="16" rx="18" ry="4.5"/></svg><svg width="18" height="22" viewBox="0 0 40 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M4 8 V41 Q4 45 20 45 Q36 45 36 41 V8"/><ellipse cx="20" cy="8" rx="16" ry="4"/></svg></span>
+    </a>
+    <a href="#" style="display: grid; grid-template-columns: 28px 1fr 64px; gap: 12px; align-items: center; padding: 14px 0; border-top: 1px solid #D8D0BF; border-bottom: 1px solid #D8D0BF; text-decoration: none; color: #1E1B16; min-height: 44px">
+      <span style="font: 600 13px 'Mukta', sans-serif; color: #5E574B">03</span>
+      <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 16px">Products &amp; prices</span><span style="font-size: 13px; color: #5E574B">Every size, with price per litre</span></span>
+      <span style="font: 600 13px 'Mukta', sans-serif; text-align: right">Rs./L</span>
+    </a>
+  </section>
+
+  <section style="padding: 32px 16px 0; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline">
+      <h2 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 32px; text-transform: uppercase">Guides</h2>
+      <a href="#" style="font-size: 14px; font-weight: 600; min-height: 44px; display: flex; align-items: center">All guides</a>
+    </div>
+    <a href="#" style="display: grid; grid-template-columns: 112px 1fr; gap: 12px; text-decoration: none; color: #1E1B16">
+      <span style="aspect-ratio: 1 / 1; border-radius: 12px; background: #8F9A9C; display: block"></span>
+      <span style="display: flex; flex-direction: column; gap: 6px; justify-content: center">
+        <span style="font: 600 12px 'Mukta', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: #5E574B">Waterproofing</span>
+        <span style="font-size: 16px; font-weight: 600; line-height: 1.3">Damp-proof your walls before the monsoon</span>
+      </span>
+    </a>
+  </section>
+
+  <section style="padding: 32px 16px 0; display: flex; flex-direction: column; gap: 12px">
+    <div style="background: #F2C230; border-radius: 6px; padding: 5px">
+      <div style="border: 2px solid #1E1B16; border-radius: 3px; padding: 8px 12px 4px; color: #1E1B16">
+        <span style="display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase">Come see the shade cards</span>
+        <h2 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 34px; line-height: 0.9; text-transform: uppercase">Visit the store</h2>
+      </div>
+    </div>
+    <div style="height: 120px; border-radius: 14px; background: #E2DBCB; display: flex; align-items: center; justify-content: center; font: 600 13px 'Mukta', sans-serif; color: #5E574B">Map · [STORE LOCATION]</div>
+    <dl style="margin: 0; display: grid; grid-template-columns: 80px 1fr; gap: 8px 12px; font-size: 14px">
+      <dt style="color: #5E574B">Address</dt><dd style="margin: 0">[ADDRESS], [CITY]</dd>
+      <dt style="color: #5E574B">Open</dt><dd style="margin: 0">[DAYS] · [HOURS]</dd>
+      <dt style="color: #5E574B">Phone</dt><dd style="margin: 0; font-family: 'Mukta', sans-serif; font-weight: 600">[PHONE]</dd>
+    </dl>
+  </section>
+
+  <nav aria-label="Contact the store" style="position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 12px 14px; background: #FFFDF8; border-top: 1px solid #D8D0BF; display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 8px">
+    <a href="#" style="min-height: 48px; border-radius: 6px; border: 1px solid #D8D0BF; color: #1E1B16; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 20px; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call</a>
+    <a href="#" style="min-height: 48px; border-radius: 6px; background: #1D6B3F; color: #FFFDF8; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 20px; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg>WhatsApp</a>
+    <a href="#" style="min-height: 48px; border-radius: 6px; border: 1px solid #D8D0BF; color: #1E1B16; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 20px; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Map</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1800}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { set: 1 };
+  }
+  renderVals() {
+    const S = {
+      riceWhite: { hex: '#F1ECDF', code: 'S-0101', name: 'Rice White' },
+      mist: { hex: '#D9DDD8', code: 'S-0114', name: 'Himalayan Mist' },
+      limeWash: { hex: '#E8E2C8', code: 'S-0124', name: 'Lime Wash' },
+      sandstone: { hex: '#D8B98C', code: 'S-0207', name: 'Sandstone' },
+      marigold: { hex: '#E3A23B', code: 'S-0233', name: 'Marigold' },
+      ochre: { hex: '#C8873A', code: 'S-0256', name: 'Ochre' },
+      terracotta: { hex: '#B5573A', code: 'S-0318', name: 'Terracotta' },
+      brick: { hex: '#8C3B2C', code: 'S-0342', name: 'Brick Kiln' },
+      monsoon: { hex: '#4F5D63', code: 'S-0512', name: 'Monsoon Slate' },
+      slateNight: { hex: '#2E3A3F', code: 'S-0530', name: 'Slate Night' },
+      teak: { hex: '#6B4630', code: 'S-0611', name: 'Teak' },
+      charcoal: { hex: '#2B2A28', code: 'S-0702', name: 'Charcoal' }
+    };
+    const sets = [
+      { name: 'Himalayan Mist', walls: S.mist, columns: S.slateNight, doors: S.teak, roof: S.riceWhite },
+      { name: 'Terracotta Courtyard', walls: S.sandstone, columns: S.terracotta, doors: S.charcoal, roof: S.riceWhite },
+      { name: 'Monsoon Slate', walls: S.monsoon, columns: S.riceWhite, doors: S.charcoal, roof: S.ochre },
+      { name: 'Marigold Facade', walls: S.limeWash, columns: S.marigold, doors: S.brick, roof: S.slateNight }
+    ];
+    const cur = sets[this.state.set];
+    const bar = 'flex: 1; border-radius: 4px; border: 1px solid rgba(30,27,22,0.15); background: ';
+    const sw = 'width: 26px; height: 26px; border-radius: 5px; background: ';
+    const base = 'flex: 0 0 136px; padding: 10px; border-radius: 14px; background: #FFFDF8; font: inherit; color: #1E1B16; text-align: left; display: flex; flex-direction: column; gap: 8px; min-height: 92px; ';
+    return {
+      c: { walls: cur.walls.hex, columns: cur.columns.hex, doors: cur.doors.hex, roof: cur.roof.hex },
+      sets: sets.map((s, i) => ({
+        name: s.name,
+        wallsStyle: bar + s.walls.hex, columnsStyle: bar + s.columns.hex, doorsStyle: bar + s.doors.hex, roofStyle: bar + s.roof.hex,
+        pressed: i === this.state.set ? 'true' : 'false',
+        cardStyle: base + (i === this.state.set ? 'border: 2px solid #1E1B16; outline: 2px solid #1E1B16; outline-offset: 2px;' : 'border: 1px solid #D8D0BF;'),
+        pick: () => this.setState({ set: i })
+      })),
+      parts: [
+        { part: 'Walls', swStyle: sw + cur.walls.hex, code: cur.walls.code, name: cur.walls.name },
+        { part: 'Columns', swStyle: sw + cur.columns.hex, code: cur.columns.code, name: cur.columns.name },
+        { part: 'Doors & windows', swStyle: sw + cur.doors.hex, code: cur.doors.code, name: cur.doors.name },
+        { part: 'Roof edge', swStyle: sw + cur.roof.hex, code: cur.roof.code, name: cur.roof.name }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
