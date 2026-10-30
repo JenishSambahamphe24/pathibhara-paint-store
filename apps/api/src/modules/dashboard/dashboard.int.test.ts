@@ -78,7 +78,9 @@ describe.skipIf(!IntegrationContext.isConfigured())("dashboard analytics (Postgr
       { variantId: f.litre, quantity: 3 },
       { variantId: f.fourLitre, quantity: 1 },
     ]);
-    await ctx.db.execute(sql`UPDATE product_variants SET price_paisa = 1 WHERE id = ${f.fourLitre}`);
+    await ctx.db.execute(
+      sql`UPDATE product_variants SET price_paisa = 1 WHERE id = ${f.fourLitre}`,
+    );
 
     const { topSellers } = await ctx.dashboard.get({ range: "7d" }, NOW);
 
@@ -89,7 +91,9 @@ describe.skipIf(!IntegrationContext.isConfigured())("dashboard analytics (Postgr
   });
 
   it("lists low stock and slow movers among sellable sizes only", async () => {
-    await ctx.db.execute(sql`UPDATE product_variants SET reorder_level = 10 WHERE id = ${f.fourLitre}`);
+    await ctx.db.execute(
+      sql`UPDATE product_variants SET reorder_level = 10 WHERE id = ${f.fourLitre}`,
+    );
     await sell("2026-10-10", [{ variantId: f.fourLitre, quantity: 2 }]); // before the 7-day period
 
     const result = await ctx.dashboard.get({ range: "7d" }, NOW);

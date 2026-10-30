@@ -1,7 +1,13 @@
 import { and, asc, between, desc, eq, gt, lte, sql } from "drizzle-orm";
 import { injectable } from "tsyringe";
 
-import { dailySaleItems, dailySales, products, productVariants, TransactionManager } from "@repo/database";
+import {
+  dailySaleItems,
+  dailySales,
+  products,
+  productVariants,
+  TransactionManager,
+} from "@repo/database";
 
 import { variantProduct } from "../stock/stock-joins";
 
@@ -58,7 +64,11 @@ export class DashboardRepository {
   // One row per calendar day, including days with nothing recorded, so the
   // chart's gaps are real zeros rather than missing bars.
   async salesByDay(from: string, to: string) {
-    const result = await this.db.execute<{ date: string; revenue_paisa: number; units: number }>(sql`
+    const result = await this.db.execute<{
+      date: string;
+      revenue_paisa: number;
+      units: number;
+    }>(sql`
       SELECT day::date::text AS date,
         coalesce(sum(${lineRevenue}), 0)::bigint AS revenue_paisa,
         coalesce(sum(${dailySaleItems.quantity}), 0)::int AS units
@@ -67,7 +77,11 @@ export class DashboardRepository {
       LEFT JOIN ${dailySaleItems} ON ${dailySaleItems.dailySaleId} = ${dailySales.id}
       GROUP BY day
       ORDER BY day`);
-    return result.rows.map((row) => ({ date: row.date, revenuePaisa: row.revenue_paisa, units: row.units }));
+    return result.rows.map((row) => ({
+      date: row.date,
+      revenuePaisa: row.revenue_paisa,
+      units: row.units,
+    }));
   }
 
   async topSellers(from: string, to: string, limit: number) {
@@ -84,10 +98,7 @@ export class DashboardRepository {
       .from(dailySaleItems)
       .innerJoin(dailySales, eq(dailySales.id, dailySaleItems.dailySaleId))
       .innerJoin(productVariants, eq(productVariants.id, dailySaleItems.variantId))
-      .innerJoin(
-        variantProduct,
-        eq(variantProduct.id, productVariants.productId),
-      )
+      .innerJoin(variantProduct, eq(variantProduct.id, productVariants.productId))
       .where(between(dailySales.saleDate, from, to))
       .groupBy(productVariants.id, variantProduct.name)
       .orderBy(desc(revenuePaisa), asc(variantProduct.name), asc(productVariants.volumeMl))
@@ -120,11 +131,10 @@ export class DashboardRepository {
       })
       .from(productVariants)
       .innerJoin(products, eq(products.id, productVariants.productId))
-      .innerJoin(
-        variantProduct,
-        eq(variantProduct.id, productVariants.productId),
+      .innerJoin(variantProduct, eq(variantProduct.id, productVariants.productId))
+      .where(
+        and(this.sellableVariant, lte(productVariants.currentStock, productVariants.reorderLevel)),
       )
-      .where(and(this.sellableVariant, lte(productVariants.currentStock, productVariants.reorderLevel)))
       .orderBy(
         asc(productVariants.currentStock),
         desc(sql`${productVariants.reorderLevel} - ${productVariants.currentStock}`),
@@ -158,11 +168,10 @@ export class DashboardRepository {
       })
       .from(productVariants)
       .innerJoin(products, eq(products.id, productVariants.productId))
-      .innerJoin(
-        variantProduct,
-        eq(variantProduct.id, productVariants.productId),
+      .innerJoin(variantProduct, eq(variantProduct.id, productVariants.productId))
+      .where(
+        and(this.sellableVariant, gt(productVariants.currentStock, 0), sql`NOT ${soldInPeriod}`),
       )
-      .where(and(this.sellableVariant, gt(productVariants.currentStock, 0), sql`NOT ${soldInPeriod}`))
       .orderBy(desc(stockValuePaisa), asc(variantProduct.name))
       .limit(limit);
   }

@@ -24,7 +24,13 @@ import { tk } from "#i18n/tk";
 
 import { requireAdmin } from "../auth/auth.middleware";
 import { IdParamsDto } from "../common/id-params.dto";
-import { PostDetailDto, PostInputDto, PostListItemDto, PostListQueryDto, PostPublishDto } from "./post.dto";
+import {
+  PostDetailDto,
+  PostInputDto,
+  PostListItemDto,
+  PostListQueryDto,
+  PostPublishDto,
+} from "./post.dto";
 import { PostService } from "./post.service";
 
 @Controller("/admin/posts", ["Blog"])
@@ -58,14 +64,20 @@ export class PostController {
   @Put("/:id", { summary: "Save a post's content" })
   @OkResponse(PostDetailDto, "Saved")
   @Validate({ params: IdParamsDto, body: PostInputDto })
-  async update(@Params() params: DtoType<typeof IdParamsDto>, @Body() body: DtoType<typeof PostInputDto>) {
+  async update(
+    @Params() params: DtoType<typeof IdParamsDto>,
+    @Body() body: DtoType<typeof PostInputDto>,
+  ) {
     return ApiResponse.ok(await this.postService.update(params.id, body), tk("post.saved"));
   }
 
   @Post("/:id/publish", { summary: "Publish (optionally back-dated)" })
   @OkResponse(PostDetailDto, "Published")
   @Validate({ params: IdParamsDto, body: PostPublishDto })
-  async publish(@Params() params: DtoType<typeof IdParamsDto>, @Body() body: DtoType<typeof PostPublishDto>) {
+  async publish(
+    @Params() params: DtoType<typeof IdParamsDto>,
+    @Body() body: DtoType<typeof PostPublishDto>,
+  ) {
     return ApiResponse.ok(await this.postService.publish(params.id, body), tk("post.published"));
   }
 

@@ -20,12 +20,24 @@ describe("PostHtmlRenderer", () => {
   it("renders headings, marks, lists and alignment", () => {
     const html = renderer.render(
       doc(
-        { type: "heading", attrs: { level: 2, textAlign: "center" }, content: [{ type: "text", text: "Prep" }] },
+        {
+          type: "heading",
+          attrs: { level: 2, textAlign: "center" },
+          content: [{ type: "text", text: "Prep" }],
+        },
         {
           type: "paragraph",
           content: [{ type: "text", text: "Sand first", marks: [{ type: "bold" }] } as never],
         },
-        { type: "bulletList", content: [{ type: "listItem", content: [{ type: "paragraph", content: [{ type: "text", text: "Primer" }] }] }] },
+        {
+          type: "bulletList",
+          content: [
+            {
+              type: "listItem",
+              content: [{ type: "paragraph", content: [{ type: "text", text: "Primer" }] }],
+            },
+          ],
+        },
       ),
       "contentJson",
     );
@@ -51,8 +63,16 @@ describe("PostHtmlRenderer", () => {
       doc({
         type: "paragraph",
         content: [
-          { type: "text", text: "shop", marks: [{ type: "link", attrs: { href: "https://example.com", target: "_blank" } }] } as never,
-          { type: "text", text: " bad", marks: [{ type: "link", attrs: { href: "javascript:alert(1)" } }] } as never,
+          {
+            type: "text",
+            text: "shop",
+            marks: [{ type: "link", attrs: { href: "https://example.com", target: "_blank" } }],
+          } as never,
+          {
+            type: "text",
+            text: " bad",
+            marks: [{ type: "link", attrs: { href: "javascript:alert(1)" } }],
+          } as never,
         ],
       }),
       "contentJson",
@@ -63,8 +83,8 @@ describe("PostHtmlRenderer", () => {
   });
 
   it("rejects node types the editor can't produce", () => {
-    expect(() => renderer.render(doc({ type: "iframe", attrs: { src: "https://evil" } }), "contentJson")).toThrow(
-      ValidationException,
-    );
+    expect(() =>
+      renderer.render(doc({ type: "iframe", attrs: { src: "https://evil" } }), "contentJson"),
+    ).toThrow(ValidationException);
   });
 });

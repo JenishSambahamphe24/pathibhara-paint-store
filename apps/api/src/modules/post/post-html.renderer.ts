@@ -24,8 +24,23 @@ const EXTENSIONS = [
 ];
 
 const ALLOWED_TAGS = [
-  "p", "h2", "h3", "strong", "em", "u", "s", "code", "pre", "blockquote",
-  "ul", "ol", "li", "br", "hr", "a", "img",
+  "p",
+  "h2",
+  "h3",
+  "strong",
+  "em",
+  "u",
+  "s",
+  "code",
+  "pre",
+  "blockquote",
+  "ul",
+  "ol",
+  "li",
+  "br",
+  "hr",
+  "a",
+  "img",
 ];
 
 @injectable()

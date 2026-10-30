@@ -1,5 +1,5 @@
-import { dashboardQuerySchema, DASHBOARD_RANGES } from "@repo/shared";
 import { BaseDto, z } from "@repo/http-kit";
+import { DASHBOARD_RANGES, dashboardQuerySchema } from "@repo/shared";
 
 export class DashboardQueryDto extends BaseDto {
   static override readonly schema = dashboardQuerySchema;
@@ -32,8 +32,12 @@ export class DashboardDto extends BaseDto {
       outOfStockCount: z.number().int(),
       valuePaisa: z.number().int(),
     }),
-    salesByDay: z.array(z.object({ date: z.iso.date(), revenuePaisa: z.number().int(), units: z.number().int() })),
-    topSellers: z.array(z.object({ ...variantRefShape, units: z.number().int(), revenuePaisa: z.number().int() })),
+    salesByDay: z.array(
+      z.object({ date: z.iso.date(), revenuePaisa: z.number().int(), units: z.number().int() }),
+    ),
+    topSellers: z.array(
+      z.object({ ...variantRefShape, units: z.number().int(), revenuePaisa: z.number().int() }),
+    ),
     lowStock: z.array(
       z.object({
         ...variantRefShape,

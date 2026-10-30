@@ -1,6 +1,14 @@
 import type { DtoType } from "@repo/http-kit";
 
-import { ApiResponse, Controller, Get, OkResponse, Query, UseMiddleware, Validate } from "@repo/http-kit";
+import {
+  ApiResponse,
+  Controller,
+  Get,
+  OkResponse,
+  Query,
+  UseMiddleware,
+  Validate,
+} from "@repo/http-kit";
 
 import { requireAdmin } from "../auth/auth.middleware";
 import { DashboardDto, DashboardQueryDto } from "./dashboard.dto";

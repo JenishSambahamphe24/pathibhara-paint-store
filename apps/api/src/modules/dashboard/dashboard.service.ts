@@ -28,16 +28,20 @@ export class DashboardService {
   }
 
   async get(query: DashboardQuery, now: Date = new Date()) {
-    const period = DashboardService.period(DASHBOARD_RANGE_DAYS[query.range], StoreDateHelper.today(now));
-    const [sales, todayRecorded, stock, salesByDay, topSellers, lowStock, slowMovers] = await Promise.all([
-      this.repository.salesSummary(period),
-      this.repository.isDayRecorded(period.today),
-      this.repository.stockSummary(),
-      this.repository.salesByDay(period.from, period.to),
-      this.repository.topSellers(period.from, period.to, TOP_SELLER_LIMIT),
-      this.repository.lowStock(LOW_STOCK_LIMIT),
-      this.repository.slowMovers(period.from, period.to, SLOW_MOVER_LIMIT),
-    ]);
+    const period = DashboardService.period(
+      DASHBOARD_RANGE_DAYS[query.range],
+      StoreDateHelper.today(now),
+    );
+    const [sales, todayRecorded, stock, salesByDay, topSellers, lowStock, slowMovers] =
+      await Promise.all([
+        this.repository.salesSummary(period),
+        this.repository.isDayRecorded(period.today),
+        this.repository.stockSummary(),
+        this.repository.salesByDay(period.from, period.to),
+        this.repository.topSellers(period.from, period.to, TOP_SELLER_LIMIT),
+        this.repository.lowStock(LOW_STOCK_LIMIT),
+        this.repository.slowMovers(period.from, period.to, SLOW_MOVER_LIMIT),
+      ]);
 
     return DashboardDto.parse({
       range: query.range,
