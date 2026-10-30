@@ -6,6 +6,10 @@
  * a signboard looks the same in both themes.
  */
 
+/* ThemeHelper.initScript always sets data-theme, so dark: follows the
+   visitor's choice as well as the system setting. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   --color-sign-red: #a3192b;
   --color-sign-blue: #1e3a7b;

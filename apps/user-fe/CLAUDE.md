@@ -2,6 +2,14 @@
 
 Server-rendered customer site built with **TanStack Start**, **React 19**, **Tailwind CSS v4** and **Nitro**. It must stay SEO friendly (root `CLAUDE.md`, SEO section). Structure, export style and import rules follow `apps/admin-fe/.claude/structure.md` and `conventions.md`, apart from the Ark UI and i18n parts.
 
+## Site layout
+
+- `src/layouts/SiteLayout.tsx` wraps every page: header, footer and the mobile contact bar (`src/features/siteShell/`). Pages render only their own content.
+- Every route sets its `<head>` with `SeoHelper.page({ title, description, path })`. Pages not built yet use `PagePlaceholder` and `noIndex: true`; drop the flag when the real page lands.
+- Store contact details live in `Config.store` (placeholders until the client confirms). Build tel/WhatsApp/map links with `ContactHelper`, never by hand.
+- Theme: `ThemeHelper.initScript` sets `<html data-theme>` before paint; use the `dark:` variant for theme-dependent markup, never React state, so SSR can't mismatch.
+- Env: copy `.env.example` to `.env` (`VITE_SITE_URL`, `VITE_API_BASE_URL`).
+
 ## Design
 
 Before building or changing any UI, read `design/DESIGN.md`.
