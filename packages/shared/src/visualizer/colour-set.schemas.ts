@@ -9,6 +9,7 @@ import {
   searchQueryShape,
 } from "../list/list-query.schemas";
 import type { VisualizerComponent } from "./constants";
+import { shadeCodeParamSchema } from "./shade.schemas";
 
 const shadeIdSchema = z.uuid("Pick a shade");
 
@@ -41,3 +42,12 @@ export const colourSetListQuerySchema = z.object({
   shadeId: ListQuerySchema.optionalUuid(),
 });
 export type ColourSetListQuery = z.output<typeof colourSetListQuerySchema>;
+
+export const publicColourSetListQuerySchema = z.object({
+  ...paginationQueryShape,
+  ...searchQueryShape,
+  ...ListQuerySchema.sort(COLOUR_SET_SORT_KEYS, "name", "asc"),
+  // Sets using this shade code in any component.
+  shade: shadeCodeParamSchema.optional(),
+});
+export type PublicColourSetListQuery = z.output<typeof publicColourSetListQuerySchema>;

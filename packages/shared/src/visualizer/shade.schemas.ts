@@ -43,3 +43,13 @@ export const shadeListQuerySchema = z.object({
   status: ListQuerySchema.optionalEnum(ACTIVE_FILTERS),
 });
 export type ShadeListQuery = z.output<typeof shadeListQuerySchema>;
+
+// A shade code read from a URL or filter; normalised like the stored code.
+export const shadeCodeParamSchema = z.string().trim().toUpperCase().min(1).max(SHADE_CODE_MAX_LENGTH);
+
+export const publicShadeListQuerySchema = z.object({
+  ...paginationQueryShape,
+  ...searchQueryShape,
+  ...ListQuerySchema.sort(SHADE_SORT_KEYS, "code", "asc"),
+});
+export type PublicShadeListQuery = z.output<typeof publicShadeListQuerySchema>;

@@ -1,7 +1,11 @@
 import { BaseDto, z } from "@repo/http-kit";
-import { colourSetInputSchema, colourSetListQuerySchema } from "@repo/shared";
+import {
+  colourSetInputSchema,
+  colourSetListQuerySchema,
+  publicColourSetListQuerySchema,
+} from "@repo/shared";
 
-import { shadeSummarySchema } from "../shade/shade.dto";
+import { publicShadeSummarySchema, shadeSummarySchema } from "../shade/shade.dto";
 
 export class ColourSetInputDto extends BaseDto {
   static override readonly schema = colourSetInputSchema;
@@ -38,6 +42,26 @@ export class ColourSetResponseDto extends BaseDto {
     description: z.string().nullable(),
     shades: componentShadesSchema,
     createdAt: z.iso.datetime(),
+    updatedAt: z.iso.datetime(),
+  });
+}
+
+export class PublicColourSetListQueryDto extends BaseDto {
+  static override readonly schema = publicColourSetListQuerySchema;
+}
+
+export class PublicColourSetDto extends BaseDto {
+  static override readonly schema = z.object({
+    slug: z.string(),
+    name: z.string(),
+    description: z.string().nullable(),
+    // Keyed by visualizer component, as in the admin response.
+    shades: z.object({
+      main_surface: publicShadeSummarySchema,
+      columns: publicShadeSummarySchema,
+      doors_windows: publicShadeSummarySchema,
+      roof_edge: publicShadeSummarySchema,
+    }),
     updatedAt: z.iso.datetime(),
   });
 }

@@ -128,7 +128,7 @@ export class ColourSetService {
     if (Object.keys(errors).length > 0) throw new ValidationException(errors);
   }
 
-  private static shadeIds(row: ColourSetRow): Array<string> {
+  static shadeIds(row: ColourSetRow): Array<string> {
     return VISUALIZER_COMPONENTS.map((component) => row[COMPONENT_COLUMNS[component]]);
   }
 
@@ -141,7 +141,7 @@ export class ColourSetService {
     } satisfies Pick<ColourSetRow, (typeof COMPONENT_COLUMNS)[keyof typeof COMPONENT_COLUMNS]>;
   }
 
-  private static componentShades(row: ColourSetRow, shades: Array<TShadeSummary>) {
+  static componentShades(row: ColourSetRow, shades: Array<TShadeSummary>) {
     return Object.fromEntries(
       VISUALIZER_COMPONENTS.map((component) => [
         component,

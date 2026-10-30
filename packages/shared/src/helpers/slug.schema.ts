@@ -12,3 +12,7 @@ export const slugInputSchema = z
   .refine((value) => value === "" || SlugHelper.PATTERN.test(value), {
     message: "Use lowercase letters, numbers and hyphens only",
   });
+
+// A slug read from a URL. No pattern check: a malformed slug should reach the
+// lookup and come back 404 like any other unknown page, not 400.
+export const slugParamSchema = z.string().trim().min(1).max(SLUG_MAX_LENGTH);

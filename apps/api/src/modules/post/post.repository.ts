@@ -1,4 +1,4 @@
-import type { PostListQuery } from "@repo/shared";
+import type { PostListQuery, PublicPostListQuery } from "@repo/shared";
 import type { SQL } from "drizzle-orm";
 
 import { and, asc, desc, eq, ilike, ne, or, sql } from "drizzle-orm";
@@ -8,6 +8,7 @@ import { admins, files, posts, TransactionManager } from "@repo/database";
 import { PaginationHelper } from "@repo/http-kit";
 
 import { LikeHelper } from "#helpers/like.helper";
+import { PublicVisibilityHelper } from "#helpers/public-visibility.helper";
 
 export type PostRow = typeof posts.$inferSelect;
 
@@ -55,6 +56,49 @@ export class PostRepository {
       .from(posts)
       .where(where);
     return { rows, total };
+  }
+
+  async listPublished(query: PublicPostListQuery) {
+    const conditions: Array<SQL | undefined> = [PublicVisibilityHelper.post()];
+    if (query.search) {
+      const term = LikeHelper.contains(query.search);
+      conditions.push(or(ilike(posts.title, term), ilike(posts.excerpt, term)));
+    }
+    const where = and(...conditions);
+
+    const rows = await this.db
+      .select({
+        post: {
+          slug: posts.slug,
+          title: posts.title,
+          excerpt: posts.excerpt,
+          publishedAt: posts.publishedAt,
+          updatedAt: posts.updatedAt,
+        },
+        coverFile: files,
+      })
+      .from(posts)
+      .leftJoin(files, eq(files.id, posts.coverImageFileId))
+      .where(where)
+      .orderBy(desc(posts.publishedAt), desc(posts.id))
+      .limit(query.perPage)
+      .offset(PaginationHelper.offset(query.page, query.perPage));
+
+    const [{ total }] = await this.db
+      .select({ total: sql<number>`count(*)::int` })
+      .from(posts)
+      .where(where);
+    return { rows, total };
+  }
+
+  async findPublishedBySlug(slug: string) {
+    const [row] = await this.db
+      .select({ post: posts, coverFile: files })
+      .from(posts)
+      .leftJoin(files, eq(files.id, posts.coverImageFileId))
+      .where(and(eq(posts.slug, slug), PublicVisibilityHelper.post()))
+      .limit(1);
+    return row;
   }
 
   async findDetail(id: string) {

@@ -62,3 +62,10 @@ export const postListQuerySchema = z.object({
   status: ListQuerySchema.optionalEnum(POST_STATUSES),
 });
 export type PostListQuery = z.output<typeof postListQuerySchema>;
+
+// The public blog is always newest first, so it takes no sort parameters.
+export const publicPostListQuerySchema = z.object({
+  ...paginationQueryShape,
+  ...searchQueryShape,
+});
+export type PublicPostListQuery = z.output<typeof publicPostListQuerySchema>;

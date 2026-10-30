@@ -105,5 +105,8 @@
     "updated": "Colour set saved",
     "shadeNotFound": "That shade no longer exists.",
     "shadeInactive": "This shade is inactive. Pick an active shade, or save the set as inactive."
+  },
+  "redirect": {
+    "notFound": "Nothing lives at this address any more."
   }
 }

@@ -4,9 +4,10 @@ import {
   postInputSchema,
   postListQuerySchema,
   postPublishSchema,
+  publicPostListQuerySchema,
 } from "@repo/shared";
 
-import { FileResponseDto } from "../file/file.dto";
+import { FileResponseDto, PublicImageDto } from "../file/file.dto";
 
 export class PostInputDto extends BaseDto {
   static override readonly schema = postInputSchema;
@@ -50,5 +51,34 @@ export class PostDetailDto extends BaseDto {
     seoDescription: z.string().nullable(),
     createdAt: z.iso.datetime(),
     updatedAt: z.iso.datetime(),
+  });
+}
+
+export class PublicPostListQueryDto extends BaseDto {
+  static override readonly schema = publicPostListQuerySchema;
+}
+
+const publicPostShape = {
+  slug: z.string(),
+  title: z.string(),
+  excerpt: z.string().nullable(),
+  // Also the Open Graph image.
+  coverImage: PublicImageDto.schema.nullable(),
+  publishedAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
+};
+
+export class PublicPostListItemDto extends BaseDto {
+  static override readonly schema = z.object(publicPostShape);
+}
+
+export class PublicPostDto extends BaseDto {
+  static override readonly schema = z.object({
+    ...publicPostShape,
+    // Rendered by PostHtmlRenderer and sanitized at save time; safe to
+    // render as-is.
+    contentHtml: z.string(),
+    seoTitle: z.string().nullable(),
+    seoDescription: z.string().nullable(),
   });
 }

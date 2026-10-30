@@ -11,7 +11,7 @@ import { BlurHashHelper } from "#helpers/blur-hash.helper";
 import { tk } from "#i18n/tk";
 
 import { STORAGE_SERVICE } from "../storage/storage.service";
-import { FileResponseDto } from "./file.dto";
+import { FileResponseDto, PublicImageDto } from "./file.dto";
 import { FileRepository } from "./file.repository";
 
 export const ALLOWED_IMAGE_MIMES = ["image/jpeg", "image/png", "image/webp", "image/avif"] as const;
@@ -80,6 +80,16 @@ export class FileService {
       height: row.height,
       blurHash: row.blurHash,
       altText: row.altText,
+    });
+  }
+
+  toPublicImage(row: FileRow): DtoType<typeof PublicImageDto> {
+    return PublicImageDto.parse({
+      url: this.storage.getUrl(row.key),
+      width: row.width,
+      height: row.height,
+      alt: row.altText,
+      blurHash: row.blurHash,
     });
   }
 }
