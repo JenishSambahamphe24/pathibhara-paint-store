@@ -28,6 +28,7 @@ export class Config {
       openingHours: "[DAYS] · [HOURS]",
       phoneDisplay: "[PHONE]",
       phone: "[PHONE]",
+      whatsappDisplay: "[WHATSAPP NUMBER]",
       whatsappNumber: "[WHATSAPP]",
       mapUrl: "https://maps.google.com/?q=Pathibhara+Paints",
     };

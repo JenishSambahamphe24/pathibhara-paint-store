@@ -42,3 +42,16 @@ export interface IPublicProduct {
   shades: Array<{ code: string; name: string; hex: string }>;
   updatedAt: string;
 }
+
+export interface IPublicProductListItem {
+  id: string;
+  slug: string;
+  name: string;
+  category: ISlugRef;
+  coverImage: IPublicImage | null;
+  // Over sizes on sale; null when none are.
+  minPricePaisa: number | null;
+  maxPricePaisa: number | null;
+  variantCount: number;
+  updatedAt: string;
+}

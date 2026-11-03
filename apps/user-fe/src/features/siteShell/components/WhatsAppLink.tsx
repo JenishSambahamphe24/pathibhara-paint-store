@@ -14,7 +14,7 @@ export function WhatsAppLink({ className }: WhatsAppLinkProps) {
       target="_blank"
       rel="noopener noreferrer"
       className={clsx(
-        "flex min-h-tap items-center justify-center gap-2 rounded-control bg-success px-4 pt-[3px] font-display text-[22px] leading-none font-semibold tracking-[0.04em] text-surface uppercase",
+        "flex min-h-tap items-center justify-center gap-2 rounded-control bg-success px-4 pt-[3px] font-display text-[22px] leading-none font-semibold tracking-[0.04em] text-on-success uppercase",
         className,
       )}
     >

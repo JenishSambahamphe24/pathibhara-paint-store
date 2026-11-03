@@ -27,6 +27,8 @@ interface SignBoardProps {
   kicker?: string;
   title?: ReactNode;
   as?: "h1" | "h2" | "h3" | "span";
+  // "lg" grows the title on desktop, for a page's section signs.
+  size?: "md" | "lg";
   className?: string;
   children?: ReactNode;
 }
@@ -38,6 +40,7 @@ export function SignBoard({
   kicker,
   title,
   as: Heading = "h2",
+  size = "md",
   className,
   children,
 }: SignBoardProps) {
@@ -60,7 +63,12 @@ export function SignBoard({
           </span>
         )}
         {title && (
-          <Heading className="m-0 font-display text-[34px] leading-[0.9] font-semibold uppercase">
+          <Heading
+            className={clsx(
+              "m-0 font-display text-[34px] leading-[0.9] font-semibold uppercase",
+              size === "lg" && "lg:text-[44px]",
+            )}
+          >
             {title}
           </Heading>
         )}

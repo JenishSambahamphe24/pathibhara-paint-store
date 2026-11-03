@@ -16,6 +16,7 @@ export interface IStoreConfig {
   phoneDisplay: string;
   // E.164 without spaces, used in tel: links.
   phone: string;
+  whatsappDisplay: string;
   // Digits only, country code first, as wa.me expects.
   whatsappNumber: string;
   mapUrl: string;

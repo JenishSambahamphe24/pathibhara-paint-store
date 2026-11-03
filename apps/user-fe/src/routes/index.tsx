@@ -1,23 +1,38 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { PagePlaceholder } from "#/components/PagePlaceholder/PagePlaceholder";
-
+import { CatalogApi } from "#/features/catalog/api";
+import { ColourSetApi } from "#/features/colourSets/api";
+import { GuideApi } from "#/features/guides/api";
+import { HomePage } from "#/features/home/components/HomePage";
+import { Config } from "#/lib/config";
 import { SeoHelper } from "#/lib/helpers/seo.helper";
 
-const DESCRIPTION =
-  "Try exterior colours on a 3D house, work out how much paint you need, and find the right product for your walls.";
+const COLOUR_SET_COUNT = 4;
+const GUIDE_COUNT = 3;
+// More than the two shown, since only products with a photo are used.
+const PRODUCT_SAMPLE_COUNT = 6;
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    const [colourSets, guides, products] = await Promise.all([
+      ColourSetApi.list(COLOUR_SET_COUNT),
+      GuideApi.latest(GUIDE_COUNT),
+      CatalogApi.products(PRODUCT_SAMPLE_COUNT),
+    ]);
+    return { colourSets, guides, products };
+  },
   head: () =>
     SeoHelper.page({
-      title: "Pathibhara Paints",
-      description: DESCRIPTION,
+      title: Config.site.name,
+      description: Config.site.description,
       path: "/",
-      noIndex: true,
     }),
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <PagePlaceholder title="Home" description={DESCRIPTION} />;
+  const { colourSets, guides, products } = Route.useLoaderData();
+  return (
+    <HomePage colourSets={colourSets} guides={guides} products={products} />
+  );
 }

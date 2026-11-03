@@ -2,49 +2,18 @@ import { Link } from "@tanstack/react-router";
 
 import { Wordmark } from "#/components/Wordmark/Wordmark";
 
-import { Config } from "#/lib/config";
-import { ContactHelper } from "#/lib/helpers/contact.helper";
-
 import { NAV_ITEMS } from "../navItems";
 
+// The store's details live on the pages (Home, Visit), not here.
 export function SiteFooter() {
-  const { store } = Config;
-
   return (
-    <footer className="border-t border-line bg-surface">
-      <div className="mx-auto grid max-w-[1280px] gap-8 px-4 py-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr] lg:px-6">
-        <div className="flex flex-col items-start gap-3">
+    <footer className="border-t border-line bg-surface-2">
+      <div className="mx-auto flex max-w-[1280px] flex-col gap-3.5 px-4 py-7 text-sm lg:flex-row lg:flex-wrap lg:items-start lg:justify-between lg:gap-x-12 lg:gap-y-6 lg:px-6 lg:py-8 lg:text-[15px]">
+        <span className="hidden lg:block">
           <Wordmark />
-          <p className="m-0 text-sm text-muted">
-            Paint and waterproofing in {store.city}.
-          </p>
-        </div>
-
-        <section aria-labelledby="footer-visit">
-          <h2
-            id="footer-visit"
-            className="m-0 mb-3 font-display text-[28px] leading-none font-semibold uppercase"
-          >
-            Visit the store
-          </h2>
-          <dl className="m-0 grid grid-cols-[72px_1fr] gap-x-3 gap-y-2 text-sm">
-            <dt className="text-muted">Address</dt>
-            <dd className="m-0">
-              {store.address}, {store.city}
-            </dd>
-            <dt className="text-muted">Open</dt>
-            <dd className="m-0">{store.openingHours}</dd>
-            <dt className="text-muted">Phone</dt>
-            <dd className="m-0 font-semibold">
-              <a href={ContactHelper.phoneHref()} className="text-accent">
-                {store.phoneDisplay}
-              </a>
-            </dd>
-          </dl>
-        </section>
-
+        </span>
         <nav aria-label="Footer">
-          <ul className="m-0 grid list-none grid-cols-2 gap-x-4 p-0 text-[15px] font-semibold">
+          <ul className="m-0 grid list-none grid-cols-2 gap-x-3 p-0 font-semibold lg:flex lg:flex-wrap lg:gap-x-5">
             {NAV_ITEMS.map((item) => (
               <li key={item.to}>
                 <Link to={item.to} className="flex min-h-tap items-center">
@@ -54,6 +23,10 @@ export function SiteFooter() {
             ))}
           </ul>
         </nav>
+        <p className="m-0 max-w-[360px] leading-[1.45] text-muted">
+          Screen colours are close, not exact. Check the shade card in the store
+          before you buy.
+        </p>
       </div>
     </footer>
   );

@@ -22,15 +22,21 @@
   --color-surface-2: #ece5d6;
   --color-line: #d8d0bf;
   --color-ink: #1e1b16;
+  --color-ink-soft: #3b362d;
   --color-muted: #5e574b;
   --color-accent: #1e3a7b;
+  --color-accent-hover: #132656;
   --color-brand: #a3192b;
   --color-success: #1d6b3f;
+  --color-on-success: #fffffe;
   --color-warning: #8a5300;
   --color-danger: #b3261e;
   --color-on-ink: #fbf4e4;
   --color-swatch-frame: #fffdf8;
   --color-swatch-frame-line: #d8d0bf;
+  /* Behind the house: a solid tone where the banner photo will go. */
+  --color-stage: #cbbfa9;
+  --color-stage-ground: #b8ac95;
 
   --font-display: "Teko", "Arial Narrow", sans-serif;
   --font-body: "Mukta", system-ui, sans-serif;
@@ -56,15 +62,20 @@
       --color-surface-2: #2a2620;
       --color-line: #3d382f;
       --color-ink: #f5eedc;
+      --color-ink-soft: #cfc7b4;
       --color-muted: #ada593;
       --color-accent: #9eb4f2;
+      --color-accent-hover: #c6d2f7;
       --color-brand: #e8606f;
       --color-success: #6fd39a;
+      --color-on-success: #0f2a1a;
       --color-warning: #f0b65a;
       --color-danger: #f59088;
       --color-on-ink: #15130f;
       --color-swatch-frame: #1f1c17;
       --color-swatch-frame-line: #4d473c;
+      --color-stage: #3a3328;
+      --color-stage-ground: #2b261f;
       color-scheme: dark;
     }
   }
@@ -75,15 +86,20 @@
     --color-surface-2: #2a2620;
     --color-line: #3d382f;
     --color-ink: #f5eedc;
+    --color-ink-soft: #cfc7b4;
     --color-muted: #ada593;
     --color-accent: #9eb4f2;
+    --color-accent-hover: #c6d2f7;
     --color-brand: #e8606f;
     --color-success: #6fd39a;
+    --color-on-success: #0f2a1a;
     --color-warning: #f0b65a;
     --color-danger: #f59088;
     --color-on-ink: #15130f;
     --color-swatch-frame: #1f1c17;
     --color-swatch-frame-line: #4d473c;
+    --color-stage: #3a3328;
+    --color-stage-ground: #2b261f;
     color-scheme: dark;
   }
 

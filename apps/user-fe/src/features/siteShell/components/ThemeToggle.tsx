@@ -22,7 +22,7 @@ export function ThemeToggle({ tone }: ThemeToggleProps) {
         "flex size-tap items-center justify-center",
         tone === "sign"
           ? "text-sign-cream"
-          : "rounded-card border border-line bg-surface text-ink",
+          : "rounded-control border border-line bg-surface text-ink",
       )}
     >
       <Moon size={20} aria-hidden="true" className="dark:hidden" />

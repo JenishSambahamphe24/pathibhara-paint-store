@@ -77,24 +77,20 @@ export function SiteHeader() {
       )}
 
       <div className="hidden border-b border-line bg-bg lg:block">
-        <div className="mx-auto flex min-h-[68px] max-w-[1280px] items-center justify-between gap-3 px-6">
-          <Link
-            to="/"
-            aria-label="Pathibhara Paints, home"
-            className="my-2 block"
-          >
+        <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-3 px-6 py-2.5">
+          <Link to="/" aria-label="Pathibhara Paints, home" className="block">
             <Wordmark />
           </Link>
           <nav aria-label="Main">
-            <ul className="m-0 flex list-none flex-wrap gap-1 p-0 text-[15px] font-semibold">
+            <ul className="m-0 flex list-none flex-wrap gap-1 p-0 font-display text-[23px] font-medium uppercase">
               {NAV_ITEMS.map((item) => (
                 <li key={item.to}>
                   <Link
                     to={item.to}
-                    className="flex min-h-tap items-center px-3 text-ink"
+                    className="flex min-h-tap items-center px-3 pt-[3px] text-ink"
                     activeProps={{
                       className:
-                        "underline decoration-2 underline-offset-[6px]",
+                        "underline decoration-2 underline-offset-[5px]",
                     }}
                   >
                     {item.label}
