@@ -22,6 +22,12 @@ The canvas is the source of truth. Don't edit these files by hand; change the ca
 | HomeMobileDark.dc.html | Step 2 · Home, mobile, dark (same layout, dark tokens) |
 | HomeDesktopLight.dc.html | Step 2 · Home, desktop, light |
 | HomeDesktopDark.dc.html | Step 2 · Home, desktop, dark (same layout, dark tokens) |
+| VizMobileLight.dc.html | Step 3 · Visualizer, mobile, light (live 3D) |
+| VizMobileDark.dc.html | Step 3 · Visualizer, mobile, dark (live 3D) |
+| VizLandscapeLight.dc.html | Step 3 · Visualizer, phone landscape |
+| VizDesktopLight.dc.html | Step 3 · Visualizer, desktop, light, compare looks |
+| VizDesktopDark.dc.html | Step 3 · Visualizer, desktop, dark, compare looks |
+| VizStates.dc.html | Step 3 · Visualizer loading state, no-3D fallback, and how the 3D behaves |
 
 Reading them:
 
@@ -36,3 +42,6 @@ Reading them:
 |---|---|
 | 22f1192bf5c3eb5b9bc13d873999a06d | royale-18l.png |
 | cbeb017aa0ccef5b490b3be4ee33fcb7 | ultima-basecoat.png |
+| 0f7a7820a3bef81fa79a49442de822d6 | house-still.webp (the house picture shown while 3D loads) |
+| 1437ff76d322ba4d73b0df06f8dabec6 | not stored: a glTF re-export of `apps/admin-fe/public/models/house.glb` the canvas uses for its live demo |
+| 0b86421ec307a6667c197368ffc09d30 | not stored: the three.js library bundle the canvas loads; the app gets three from npm |

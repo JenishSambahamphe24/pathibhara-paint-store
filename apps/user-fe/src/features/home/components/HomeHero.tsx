@@ -3,12 +3,13 @@ import type { IPublicColourSet } from "#/features/colourSets/types";
 import { Link } from "@tanstack/react-router";
 
 import { BUTTON_CLASSES } from "#/components/Button/buttonClasses";
+import { HouseIllustration } from "#/components/HouseIllustration/HouseIllustration";
 
+import { ColourSetCard } from "#/features/colourSets/components/ColourSetCard";
 import { UNPAINTED_HOUSE } from "#/features/colourSets/paintParts";
+import { LookHelper } from "#/features/visualizer/helpers/look.helper";
 import { Config } from "#/lib/config";
 
-import { ColourSetCard } from "./ColourSetCard";
-import { HouseIllustration } from "./HouseIllustration";
 import { PaintedParts } from "./PaintedParts";
 
 interface HomeHeroProps {
@@ -92,6 +93,11 @@ export function HomeHero({ colourSets, selected, onSelect }: HomeHeroProps) {
       <div className="flex flex-col gap-2 px-4 [grid-area:actions] lg:flex-row lg:flex-wrap lg:gap-2.5 lg:px-0">
         <Link
           to="/visualizer"
+          search={
+            selected
+              ? LookHelper.toSearch(LookHelper.fromColourSet(selected))
+              : {}
+          }
           className={`${BUTTON_CLASSES.primary} min-h-[52px] text-[23px] lg:flex-[1_1_240px]`}
         >
           Change any part

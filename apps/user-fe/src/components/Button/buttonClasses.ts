@@ -6,4 +6,5 @@ const BASE =
 export const BUTTON_CLASSES = {
   primary: `${BASE} bg-ink text-on-ink`,
   secondary: `${BASE} border-2 border-ink text-ink`,
+  whatsapp: `${BASE} gap-1.5 bg-success text-on-success`,
 };

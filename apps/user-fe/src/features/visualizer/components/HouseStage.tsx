@@ -1,0 +1,168 @@
+import type { IHouseSceneApi, IPartFlash } from "./HouseScene";
+import type { VisualizerComponent } from "@repo/shared";
+import type { ReactNode, RefObject } from "react";
+
+import { clsx } from "clsx";
+import { Component, lazy, Suspense, useEffect, useRef, useState } from "react";
+
+import { HouseIllustration } from "#/components/HouseIllustration/HouseIllustration";
+
+import { UNPAINTED_HOUSE } from "#/features/colourSets/paintParts";
+
+// three.js and the model load only here, and only in the browser.
+const HouseScene = lazy(() =>
+  import("./HouseScene").then((module) => ({ default: module.HouseScene })),
+);
+
+export type TStageStatus = "loading" | "ready" | "failed";
+
+const POSTER_URL = "/images/house-still.webp";
+
+interface HouseStageProps {
+  colours: Partial<Record<VisualizerComponent, string>>;
+  label: string;
+  flash: IPartFlash | null;
+  autoRotate: boolean;
+  apiRef: RefObject<IHouseSceneApi | null>;
+  onStatusChange: (status: TStageStatus) => void;
+  caption?: string;
+  className?: string;
+}
+
+// Picture first, the 3D house once it loads, and the drawing when 3D can't
+// run (no WebGL, or the model failed). The drawing repaints the same way, so
+// no state is labelled an error.
+export function HouseStage({
+  colours,
+  label,
+  flash,
+  autoRotate,
+  apiRef,
+  onStatusChange,
+  caption,
+  className,
+}: HouseStageProps) {
+  const container = useRef<HTMLDivElement>(null);
+  const [status, setStatus] = useState<TStageStatus>("loading");
+  const [canRender3d, setCanRender3d] = useState(false);
+  const [isActive, setIsActive] = useState(true);
+
+  function changeStatus(next: TStageStatus) {
+    setStatus(next);
+    onStatusChange(next);
+  }
+
+  useEffect(() => {
+    if (supportsWebgl()) setCanRender3d(true);
+    else changeStatus("failed");
+  }, []);
+
+  useEffect(() => {
+    const element = container.current;
+    if (!element) return;
+    let isOnScreen = true;
+    const update = () => setIsActive(isOnScreen && !document.hidden);
+    const observer = new IntersectionObserver(([entry]) => {
+      isOnScreen = entry.isIntersecting;
+      update();
+    });
+    observer.observe(element);
+    document.addEventListener("visibilitychange", update);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", update);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={container}
+      role="img"
+      aria-label={label}
+      className={clsx("relative min-w-0 bg-surface-2", className)}
+    >
+      {status === "loading" && (
+        <img
+          src={POSTER_URL}
+          alt=""
+          className="absolute inset-0 size-full object-contain"
+        />
+      )}
+      {status === "failed" ? (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-4 pt-16 pb-24 wide:p-6">
+          <HouseIllustration
+            colours={{ ...UNPAINTED_HOUSE, ...colours }}
+            label={label}
+            className="w-full max-w-[480px]"
+          />
+          <p className="m-0 max-w-[460px] rounded-lg border border-line bg-surface px-3 py-2 text-[13px] leading-[1.4] wide:text-center wide:text-[15px]">
+            3D isn’t available on this device, so you’re seeing a drawing.
+            Shades still change here, and the estimate works the same.
+          </p>
+        </div>
+      ) : (
+        canRender3d && (
+          <SceneErrorBoundary onError={() => changeStatus("failed")}>
+            <Suspense fallback={null}>
+              <div
+                className={clsx(
+                  "absolute inset-0 transition-opacity duration-300",
+                  status === "ready" ? "opacity-100" : "opacity-0",
+                )}
+              >
+                <HouseScene
+                  colours={colours}
+                  flash={flash}
+                  active={isActive}
+                  autoRotate={autoRotate}
+                  apiRef={apiRef}
+                  onReady={() => changeStatus("ready")}
+                />
+              </div>
+            </Suspense>
+          </SceneErrorBoundary>
+        )
+      )}
+      {caption && (
+        <span className="absolute bottom-3 left-3 rounded-[4px] bg-surface px-2 py-0.5 text-[13px] font-bold">
+          {caption}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function supportsWebgl(): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(canvas.getContext("webgl2") ?? canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+
+interface SceneErrorBoundaryProps {
+  onError: () => void;
+  children: ReactNode;
+}
+
+// A model that fails to load throws from useGLTF; catch it here and show the
+// drawing instead of taking the page down.
+class SceneErrorBoundary extends Component<
+  SceneErrorBoundaryProps,
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch() {
+    this.props.onError();
+  }
+
+  render() {
+    return this.state.hasError ? null : this.props.children;
+  }
+}

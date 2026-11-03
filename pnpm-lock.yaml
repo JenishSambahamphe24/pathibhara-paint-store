@@ -628,6 +628,12 @@ importers:
 
   apps/user-fe:
     dependencies:
+      '@react-three/drei':
+        specifier: catalog:fe
+        version: 10.7.9(@react-three/fiber@9.8.2(@types/react@19.2.14)(immer@11.2.9)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.186.1))(@types/react@19.2.14)(@types/three@0.186.0)(immer@11.2.9)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.186.1)
+      '@react-three/fiber':
+        specifier: catalog:fe
+        version: 9.8.2(@types/react@19.2.14)(immer@11.2.9)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.186.1)
       '@repo/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -664,6 +670,9 @@ importers:
       tailwindcss:
         specifier: catalog:fe
         version: 4.2.1
+      three:
+        specifier: catalog:fe
+        version: 0.186.1
       zod:
         specifier: catalog:generic
         version: 4.3.6
@@ -686,6 +695,9 @@ importers:
       '@types/react-dom':
         specifier: catalog:fe
         version: 19.2.3(@types/react@19.2.14)
+      '@types/three':
+        specifier: catalog:fe
+        version: 0.186.0
       '@vitejs/plugin-react':
         specifier: catalog:fe
         version: 5.1.4(vite@7.3.1(@types/node@22.19.13)(jiti@2.7.0)(lightningcss@1.31.1)(terser@5.48.0)(tsx@4.21.0)(yaml@2.8.4))

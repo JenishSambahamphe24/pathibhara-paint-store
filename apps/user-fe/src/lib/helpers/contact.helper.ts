@@ -12,6 +12,13 @@ export class ContactHelper {
     return url.toString();
   }
 
+  // WhatsApp's own picker, so the visitor chooses who to send it to.
+  static whatsappShareHref(message: string): string {
+    const url = new URL("https://wa.me/");
+    url.searchParams.set("text", message);
+    return url.toString();
+  }
+
   static mapHref(): string {
     return Config.store.mapUrl;
   }

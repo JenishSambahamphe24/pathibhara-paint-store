@@ -10,6 +10,11 @@
    visitor's choice as well as the system setting. */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+/* Tablet and up, or a phone turned sideways: tools put their controls in a
+   side panel instead of a bottom sheet. Keep in step with WIDE_QUERY in
+   features/visualizer/hooks/useIsWide.ts. */
+@custom-variant wide (@media (min-width: 48rem), (orientation: landscape) and (min-width: 40rem));
+
 @theme {
   --color-sign-red: #a3192b;
   --color-sign-blue: #1e3a7b;

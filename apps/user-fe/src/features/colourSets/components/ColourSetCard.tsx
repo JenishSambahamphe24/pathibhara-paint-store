@@ -1,4 +1,4 @@
-import type { IPublicColourSet } from "#/features/colourSets/types";
+import type { IPublicColourSet } from "../types";
 
 import { clsx } from "clsx";
 

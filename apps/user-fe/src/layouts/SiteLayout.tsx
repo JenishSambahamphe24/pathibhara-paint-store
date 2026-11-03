@@ -1,10 +1,22 @@
-import { Outlet } from "@tanstack/react-router";
+import { Outlet, useMatches } from "@tanstack/react-router";
 
 import { ContactBar } from "#/features/siteShell/components/ContactBar";
 import { SiteFooter } from "#/features/siteShell/components/SiteFooter";
 import { SiteHeader } from "#/features/siteShell/components/SiteHeader";
 
 export function SiteLayout() {
+  const isFullScreen = useMatches({
+    select: (matches) => matches.some((match) => match.staticData.fullScreen),
+  });
+
+  if (isFullScreen) {
+    return (
+      <main id="main">
+        <Outlet />
+      </main>
+    );
+  }
+
   return (
     // The bottom padding below lg is the mobile ContactBar's height.
     <div className="flex min-h-dvh flex-col pb-[calc(84px+env(safe-area-inset-bottom))] lg:pb-0">
