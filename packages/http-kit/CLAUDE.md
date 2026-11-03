@@ -162,3 +162,5 @@ i18nService.t("key");  // translate
 ## Zod Re-export
 
 Import `z` from `@repo/http-kit` — it's the standard Zod re-exported with OpenAPI schema registration support.
+
+A recursive `z.lazy` schema must be named, or spec generation overflows the stack and `/openapi.json` returns 500: `OpenApiRefHelper.name(schema, "Name")`. Use the helper rather than `.openapi("Name")` for schemas from `@repo/shared`; zod v4 attaches `.openapi` only to schemas created after this package loads.

@@ -1,6 +1,7 @@
-import { BaseDto, z } from "@repo/http-kit";
+import { BaseDto, OpenApiRefHelper, z } from "@repo/http-kit";
 import {
   POST_STATUSES,
+  postContentNodeSchema,
   postInputSchema,
   postListQuerySchema,
   postPublishSchema,
@@ -8,6 +9,10 @@ import {
 } from "@repo/shared";
 
 import { FileResponseDto, PublicImageDto } from "../file/file.dto";
+
+// The TipTap node is recursive; naming it gives the recursion a $ref to point
+// at instead of overflowing the stack and taking down /openapi.json.
+OpenApiRefHelper.name(postContentNodeSchema, "PostContentNode");
 
 export class PostInputDto extends BaseDto {
   static override readonly schema = postInputSchema;

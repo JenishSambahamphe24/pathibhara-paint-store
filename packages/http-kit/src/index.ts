@@ -53,6 +53,7 @@ export { DocsAuthHelper, type DocsAuthConfig } from "./app/docs-auth.helper";
 
 export { ControllerLoader } from "./loader/controller-loader";
 
+export { OpenApiRefHelper } from "./openapi/openapi-ref.helper";
 export { OpenApiRegistryService } from "./openapi/openapi-registry.service";
 export {
   OpenApiGeneratorService,
