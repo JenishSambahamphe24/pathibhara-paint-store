@@ -18,6 +18,10 @@ The canvas is the source of truth. Don't edit these files by hand; change the ca
 | OptionA-Signboard.dc.html | Direction option A, Bazaar Signboard (the chosen one) |
 | OptionB-Newa.dc.html | Direction option B, Newa Timber & Brick (rejected, kept for reference) |
 | OptionC-Dhaka.dc.html | Direction option C, Dhaka Weave (rejected, kept for reference) |
+| HomeMobileLight.dc.html | Step 2 · Home, mobile, light (interactive colour sets) |
+| HomeMobileDark.dc.html | Step 2 · Home, mobile, dark (same layout, dark tokens) |
+| HomeDesktopLight.dc.html | Step 2 · Home, desktop, light |
+| HomeDesktopDark.dc.html | Step 2 · Home, desktop, dark (same layout, dark tokens) |
 
 Reading them:
 
