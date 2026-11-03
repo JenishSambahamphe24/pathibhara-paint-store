@@ -10,6 +10,13 @@ Server-rendered customer site built with **TanStack Start**, **React 19**, **Tai
 - Theme: `ThemeHelper.initScript` sets `<html data-theme>` before paint; use the `dark:` variant for theme-dependent markup, never React state, so SSR can't mismatch.
 - Env: copy `.env.example` to `.env` (`VITE_SITE_URL`, `VITE_API_BASE_URL`).
 
+## Data and URLs
+
+- Data comes from the API's `/public/*` routes through `ApiClient` (`src/lib/api.ts`), with one `<Feature>Api` class per feature (`features/<feature>/api.ts`). Load page data in the route `loader` so it is in the server-rendered HTML.
+- Slugged pages load through `SlugRedirectHelper.loadBySlug(type, slug, load)`: an old slug gets a 301 to the current one, otherwise a 404.
+- Record URLs come only from `SiteUrlHelper.entityPath(kind, slug)`: `/categories/`, `/products/`, `/guides/`, `/colour-sets/`. Changing a prefix needs a redirect from the old one.
+- `sitemap.xml` lists only what's in `features/seo/indexing.ts`. When a page's real design ships, add it there and drop `noIndex` from its route in the same change.
+
 ## Design
 
 Before building or changing any UI, read `design/DESIGN.md`.

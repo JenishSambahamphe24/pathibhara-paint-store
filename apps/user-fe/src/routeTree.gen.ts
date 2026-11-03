@@ -11,10 +11,16 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VisualizerRouteImport } from './routes/visualizer'
 import { Route as VisitRouteImport } from './routes/visit'
-import { Route as ProductsRouteImport } from './routes/products'
-import { Route as GuidesRouteImport } from './routes/guides'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProductsIndexRouteImport } from './routes/products/index'
+import { Route as GuidesIndexRouteImport } from './routes/guides/index'
+import { Route as ProductsSlugRouteImport } from './routes/products/$slug'
+import { Route as GuidesSlugRouteImport } from './routes/guides/$slug'
+import { Route as ColourSetsSlugRouteImport } from './routes/colour-sets/$slug'
+import { Route as CategoriesSlugRouteImport } from './routes/categories/$slug'
 
 const VisualizerRoute = VisualizerRouteImport.update({
   id: '/visualizer',
@@ -26,14 +32,14 @@ const VisitRoute = VisitRouteImport.update({
   path: '/visit',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProductsRoute = ProductsRouteImport.update({
-  id: '/products',
-  path: '/products',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GuidesRoute = GuidesRouteImport.update({
-  id: '/guides',
-  path: '/guides',
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalculatorRoute = CalculatorRouteImport.update({
@@ -46,60 +52,138 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsIndexRoute = ProductsIndexRouteImport.update({
+  id: '/products/',
+  path: '/products/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesIndexRoute = GuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsSlugRoute = ProductsSlugRouteImport.update({
+  id: '/products/$slug',
+  path: '/products/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesSlugRoute = GuidesSlugRouteImport.update({
+  id: '/guides/$slug',
+  path: '/guides/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ColourSetsSlugRoute = ColourSetsSlugRouteImport.update({
+  id: '/colour-sets/$slug',
+  path: '/colour-sets/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriesSlugRoute = CategoriesSlugRouteImport.update({
+  id: '/categories/$slug',
+  path: '/categories/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
-  '/guides': typeof GuidesRoute
-  '/products': typeof ProductsRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/visit': typeof VisitRoute
   '/visualizer': typeof VisualizerRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
+  '/colour-sets/$slug': typeof ColourSetsSlugRoute
+  '/guides/$slug': typeof GuidesSlugRoute
+  '/products/$slug': typeof ProductsSlugRoute
+  '/guides/': typeof GuidesIndexRoute
+  '/products/': typeof ProductsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
-  '/guides': typeof GuidesRoute
-  '/products': typeof ProductsRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/visit': typeof VisitRoute
   '/visualizer': typeof VisualizerRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
+  '/colour-sets/$slug': typeof ColourSetsSlugRoute
+  '/guides/$slug': typeof GuidesSlugRoute
+  '/products/$slug': typeof ProductsSlugRoute
+  '/guides': typeof GuidesIndexRoute
+  '/products': typeof ProductsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
-  '/guides': typeof GuidesRoute
-  '/products': typeof ProductsRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/visit': typeof VisitRoute
   '/visualizer': typeof VisualizerRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
+  '/colour-sets/$slug': typeof ColourSetsSlugRoute
+  '/guides/$slug': typeof GuidesSlugRoute
+  '/products/$slug': typeof ProductsSlugRoute
+  '/guides/': typeof GuidesIndexRoute
+  '/products/': typeof ProductsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/calculator'
-    | '/guides'
-    | '/products'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/visit'
     | '/visualizer'
+    | '/categories/$slug'
+    | '/colour-sets/$slug'
+    | '/guides/$slug'
+    | '/products/$slug'
+    | '/guides/'
+    | '/products/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calculator' | '/guides' | '/products' | '/visit' | '/visualizer'
+  to:
+    | '/'
+    | '/calculator'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/visit'
+    | '/visualizer'
+    | '/categories/$slug'
+    | '/colour-sets/$slug'
+    | '/guides/$slug'
+    | '/products/$slug'
+    | '/guides'
+    | '/products'
   id:
     | '__root__'
     | '/'
     | '/calculator'
-    | '/guides'
-    | '/products'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/visit'
     | '/visualizer'
+    | '/categories/$slug'
+    | '/colour-sets/$slug'
+    | '/guides/$slug'
+    | '/products/$slug'
+    | '/guides/'
+    | '/products/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalculatorRoute: typeof CalculatorRoute
-  GuidesRoute: typeof GuidesRoute
-  ProductsRoute: typeof ProductsRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   VisitRoute: typeof VisitRoute
   VisualizerRoute: typeof VisualizerRoute
+  CategoriesSlugRoute: typeof CategoriesSlugRoute
+  ColourSetsSlugRoute: typeof ColourSetsSlugRoute
+  GuidesSlugRoute: typeof GuidesSlugRoute
+  ProductsSlugRoute: typeof ProductsSlugRoute
+  GuidesIndexRoute: typeof GuidesIndexRoute
+  ProductsIndexRoute: typeof ProductsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -118,18 +202,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VisitRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/products': {
-      id: '/products'
-      path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof ProductsRouteImport
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/guides': {
-      id: '/guides'
-      path: '/guides'
-      fullPath: '/guides'
-      preLoaderRoute: typeof GuidesRouteImport
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calculator': {
@@ -146,16 +230,64 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products/': {
+      id: '/products/'
+      path: '/products'
+      fullPath: '/products/'
+      preLoaderRoute: typeof ProductsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/': {
+      id: '/guides/'
+      path: '/guides'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof GuidesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/$slug': {
+      id: '/products/$slug'
+      path: '/products/$slug'
+      fullPath: '/products/$slug'
+      preLoaderRoute: typeof ProductsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/$slug': {
+      id: '/guides/$slug'
+      path: '/guides/$slug'
+      fullPath: '/guides/$slug'
+      preLoaderRoute: typeof GuidesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/colour-sets/$slug': {
+      id: '/colour-sets/$slug'
+      path: '/colour-sets/$slug'
+      fullPath: '/colour-sets/$slug'
+      preLoaderRoute: typeof ColourSetsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categories/$slug': {
+      id: '/categories/$slug'
+      path: '/categories/$slug'
+      fullPath: '/categories/$slug'
+      preLoaderRoute: typeof CategoriesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalculatorRoute: CalculatorRoute,
-  GuidesRoute: GuidesRoute,
-  ProductsRoute: ProductsRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   VisitRoute: VisitRoute,
   VisualizerRoute: VisualizerRoute,
+  CategoriesSlugRoute: CategoriesSlugRoute,
+  ColourSetsSlugRoute: ColourSetsSlugRoute,
+  GuidesSlugRoute: GuidesSlugRoute,
+  ProductsSlugRoute: ProductsSlugRoute,
+  GuidesIndexRoute: GuidesIndexRoute,
+  ProductsIndexRoute: ProductsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

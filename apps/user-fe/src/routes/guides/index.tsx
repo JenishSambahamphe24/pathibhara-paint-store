@@ -7,7 +7,7 @@ import { SeoHelper } from "#/lib/helpers/seo.helper";
 const DESCRIPTION =
   "Practical guides on waterproofing, primers and choosing exterior colours.";
 
-export const Route = createFileRoute("/guides")({
+export const Route = createFileRoute("/guides/")({
   head: () =>
     SeoHelper.page({
       title: "Guides",

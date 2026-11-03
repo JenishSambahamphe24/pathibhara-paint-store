@@ -710,6 +710,9 @@ importers:
       vite-tsconfig-paths:
         specifier: catalog:fe
         version: 5.1.4(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.13)(jiti@2.7.0)(lightningcss@1.31.1)(terser@5.48.0)(tsx@4.21.0)(yaml@2.8.4))
+      vitest:
+        specifier: catalog:generic
+        version: 3.2.4(@types/debug@4.1.13)(@types/node@22.19.13)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.7.0)(jsdom@27.4.0(@noble/hashes@2.2.0)(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.31.1)(terser@5.48.0)(tsx@4.21.0)(yaml@2.8.4)
 
   packages/config:
     dependencies:
