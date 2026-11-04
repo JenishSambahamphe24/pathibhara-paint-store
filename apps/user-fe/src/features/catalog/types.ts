@@ -53,6 +53,8 @@ export interface IPublicProductListItem {
   minPricePaisa: number | null;
   maxPricePaisa: number | null;
   variantCount: number;
+  // The sizes on sale, smallest first.
+  volumesMl: Array<number>;
   defaultCoats: number;
   updatedAt: string;
 }

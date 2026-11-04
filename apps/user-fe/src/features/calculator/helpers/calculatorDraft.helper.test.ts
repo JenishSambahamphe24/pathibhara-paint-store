@@ -19,6 +19,7 @@ function product(
     minPricePaisa: 100000,
     maxPricePaisa: 200000,
     variantCount: 2,
+    volumesMl: [1000, 4000],
     defaultCoats,
     updatedAt: "2026-11-01T00:00:00.000Z",
   };

@@ -38,6 +38,7 @@ export class PublicProductService {
         minPricePaisa: row.minPricePaisa,
         maxPricePaisa: row.maxPricePaisa,
         variantCount: row.variantCount,
+        volumesMl: row.volumesMl ?? [],
         defaultCoats: row.product.defaultCoats,
         updatedAt: row.product.updatedAt.toISOString(),
       }),

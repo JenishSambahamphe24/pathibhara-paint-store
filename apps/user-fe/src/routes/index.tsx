@@ -17,9 +17,9 @@ export const Route = createFileRoute("/")({
     const [colourSets, guides, products] = await Promise.all([
       ColourSetApi.list(COLOUR_SET_COUNT),
       GuideApi.latest(GUIDE_COUNT),
-      CatalogApi.products(PRODUCT_SAMPLE_COUNT),
+      CatalogApi.products({ perPage: PRODUCT_SAMPLE_COUNT }),
     ]);
-    return { colourSets, guides, products };
+    return { colourSets, guides, products: products.items };
   },
   head: () =>
     SeoHelper.page({

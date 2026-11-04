@@ -106,6 +106,8 @@ export class PublicProductListItemDto extends BaseDto {
     minPricePaisa: z.number().int().nullable(),
     maxPricePaisa: z.number().int().nullable(),
     variantCount: z.number().int(),
+    // The sizes on sale, smallest first, for "1 · 4 · 10 L" on a card.
+    volumesMl: z.array(z.number().int()),
     // Starts the coats when the calculator adds this product.
     defaultCoats: z.number().int(),
     updatedAt: z.iso.datetime(),

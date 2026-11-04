@@ -7,6 +7,10 @@ export const INDEXED_STATIC_PATHS: ReadonlyArray<string> = [
   "/",
   "/visualizer",
   "/calculator",
+  "/products",
 ];
 
-export const INDEXED_ENTITY_KINDS: ReadonlyArray<SlugEntityType> = [];
+export const INDEXED_ENTITY_KINDS: ReadonlyArray<SlugEntityType> = [
+  "category",
+  "product",
+];

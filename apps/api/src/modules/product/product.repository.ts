@@ -152,6 +152,11 @@ export class ProductRepository {
         variantCount: sql<number>`count(*)::int`.as("variant_count"),
         minPricePaisa: sql<number>`min(${productVariants.pricePaisa})`.as("min_price_paisa"),
         maxPricePaisa: sql<number>`max(${productVariants.pricePaisa})`.as("max_price_paisa"),
+        volumesMl: sql<
+          Array<number>
+        >`array_agg(${productVariants.volumeMl} ORDER BY ${productVariants.volumeMl})`.as(
+          "volumes_ml",
+        ),
       })
       .from(productVariants)
       .where(eq(productVariants.isActive, true))
@@ -189,6 +194,7 @@ export class ProductRepository {
         variantCount: sql<number>`coalesce(${prices.variantCount}, 0)`,
         minPricePaisa: prices.minPricePaisa,
         maxPricePaisa: prices.maxPricePaisa,
+        volumesMl: prices.volumesMl,
         coverFile: files,
       })
       .from(products)

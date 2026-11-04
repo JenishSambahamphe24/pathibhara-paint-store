@@ -3,19 +3,36 @@ import type {
   IPublicProduct,
   IPublicProductListItem,
 } from "./types";
-import type { IApiResponse, IPaginatedApiResponse } from "#/types/api.types";
+import type {
+  IApiResponse,
+  IPage,
+  IPaginatedApiResponse,
+} from "#/types/api.types";
 
 import { MAX_PER_PAGE } from "@repo/shared";
 
 import { ApiClient } from "#/lib/api";
 
 export class CatalogApi {
-  static async products(
-    perPage: number,
-  ): Promise<Array<IPublicProductListItem>> {
+  static async products(query: {
+    perPage: number;
+    page?: number;
+    category?: string;
+  }): Promise<IPage<IPublicProductListItem>> {
+    const search = new URLSearchParams({ perPage: String(query.perPage) });
+    if (query.page) search.set("page", String(query.page));
+    if (query.category) search.set("category", query.category);
+    const response = await ApiClient.get<
+      IPaginatedApiResponse<IPublicProductListItem>
+    >(`/public/products?${search}`);
+    return { items: response.data, pagination: response.pagination };
+  }
+
+  // The whole visible tree, depth-first.
+  static async categories(): Promise<Array<IPublicCategory>> {
     return (
-      await ApiClient.get<IPaginatedApiResponse<IPublicProductListItem>>(
-        `/public/products?perPage=${perPage}`,
+      await ApiClient.get<IApiResponse<Array<IPublicCategory>>>(
+        "/public/categories",
       )
     ).data;
   }
