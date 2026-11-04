@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guides list, mobile, light theme</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@400..700&amp;family=Mukta:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1E3A7C}a:hover{color:#132656}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; min-height: 844px; background: #F5F1E8; color: #1E1B16; font-family: 'Mukta', system-ui, sans-serif; padding-bottom: 92px; box-sizing: border-box">
+  <header style="background: #A3192B; padding: 5px">
+    <div style="border: 2px solid #F2C230; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 4px 12px; color: #FBF4E4">
+      <a href="HomeMobileLight.dc.html" style="display: flex; flex-direction: column; line-height: 0.88; text-decoration: none; color: #FBF4E4; min-height: 44px; justify-content: center">
+        <span lang="ne" style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 17px">पाथीभरा पेन्ट्स</span>
+        <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 26px; text-transform: uppercase; letter-spacing: 0.03em">Pathibhara Paints</span>
+      </a>
+      <button type="button" aria-label="Menu" style="width: 44px; height: 44px; border: none; background: transparent; color: #FBF4E4; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </header>
+
+  <section style="padding: 18px 16px 0; display: flex; flex-direction: column; gap: 12px">
+    <div style="align-self: flex-start; background: #1E3A7B; border-radius: 6px; padding: 5px">
+      <div style="border: 2px solid #FBF4E4; border-radius: 3px; padding: 6px 14px 2px; color: #FBF4E4">
+        <span style="display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #F2C230">From the shop counter</span>
+        <h1 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 40px; line-height: 0.9; text-transform: uppercase">Painting guides</h1>
+      </div>
+    </div>
+    <div role="group" aria-label="Filter guides" style="display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 4px">
+      <sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+        <button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+      </sc-for>
+    </div>
+    <span style="font-size: 14px; color: #5E574B">{{count}}</span>
+  </section>
+
+  <sc-if value="{{hasFeatured}}" hint-placeholder-val="{{ true }}">
+    <a href="{{featured.href}}" style="margin: 4px 16px 0; display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: #1E1B16">
+      <span style="position: relative; aspect-ratio: 16 / 10; border-radius: 12px; overflow: hidden; display: block">
+        <sc-if value="{{featured.hasCover}}" hint-placeholder-val="{{ true }}"><span style="{{featured.coverStyle}}"><span style="font-size: 11px; font-weight: 600; color: #1E1B17; background: rgba(251,244,228,0.85); padding: 2px 6px; border-radius: 4px">{{featured.coverLabel}}</span></span></sc-if>
+        <sc-if value="{{featured.noCover}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; inset: 0; background: #F2C230; padding: 6px; box-sizing: border-box; display: block"><span style="height: 100%; border: 2px solid #1E1B17; border-radius: 5px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 48px; text-transform: uppercase; color: #1E1B17">{{featured.coverWord}}</span></span></sc-if>
+      </span>
+      <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #A3192C">{{featured.cat}} · {{featured.date}}</span>
+      <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 34px; line-height: 0.92; text-transform: uppercase">{{featured.title}}</span>
+      <span style="font-size: 15px; line-height: 1.45; color: #3B362D">{{featured.excerpt}}</span>
+    </a>
+  </sc-if>
+
+  <ul style="list-style: none; margin: 16px 16px 0; padding: 0; display: flex; flex-direction: column">
+    <sc-for list="{{rest}}" as="p" hint-placeholder-count="4">
+      <li style="border-top: 1px solid #D8D0BF">
+        <a href="{{p.href}}" style="display: grid; grid-template-columns: 104px 1fr; gap: 12px; padding: 14px 0; text-decoration: none; color: #1E1B16">
+          <span style="position: relative; aspect-ratio: 1 / 1; border-radius: 8px; overflow: hidden; display: block">
+            <sc-if value="{{p.hasCover}}" hint-placeholder-val="{{ true }}"><span style="{{p.coverStyle}}"></span></sc-if>
+            <sc-if value="{{p.noCover}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; inset: 0; background: #F2C230; padding: 4px; box-sizing: border-box; display: block"><span style="height: 100%; border: 2px solid #1E1B17; border-radius: 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 24px; text-transform: uppercase; color: #1E1B17">{{p.coverWord}}</span></span></sc-if>
+          </span>
+          <span style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+            <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #A3192C">{{p.cat}}</span>
+            <span style="font-size: 17px; font-weight: 700; line-height: 1.25">{{p.title}}</span>
+            <span style="font-size: 13px; color: #5E574B">{{p.date}}</span>
+          </span>
+        </a>
+      </li>
+    </sc-for>
+  </ul>
+
+  <nav aria-label="Contact the store" style="position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 12px 14px; background: #FFFDF8; border-top: 1px solid #D8D0BF; display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 8px">
+    <a href="#" style="min-height: 48px; border-radius: 6px; border: 1px solid #D8D0BF; color: #1E1B16; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 21px; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Call</a>
+    <a href="#" style="min-height: 48px; border-radius: 6px; background: #1D6B3F; color: #FFFFFE; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 21px; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">WhatsApp</a>
+    <a href="#" style="min-height: 48px; border-radius: 6px; border: 1px solid #D8D0BF; color: #1E1B16; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 21px; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Map</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { cat: 'All' };
+  }
+  renderVals() {
+    const posts = [
+      { title: 'Damp-proof your walls before the monsoon', cat: 'Waterproofing', excerpt: 'Find where the water gets in, fix that first, then seal the wall. A step-by-step order of work for a dry house in Asar.', cover: '#8F9A9C', coverLabel: 'Cover photo · monsoon', href: 'ArticleMobileLight.dc.html' },
+      { title: 'Choosing exterior colours for a Nepali house', cat: 'Colour', excerpt: 'Light walls stay cooler, dark trims hide dust from the road. How to pick a set that still looks good in five years.', cover: '#C9BBA5', coverLabel: 'Cover photo · exterior' },
+      { title: 'Primer basics: why the first coat matters', cat: 'Basics', excerpt: 'Primer is what makes the paint stick and the colour even. When you can skip it, and when you never should.', cover: null, coverWord: 'Primer' },
+      { title: 'How much paint for a 2-storey house?', cat: 'Basics', excerpt: 'A worked example with real wall sizes, so you can check a contractor’s quote in two minutes.', cover: '#D3C08E', coverLabel: 'Cover photo · painting in progress' },
+      { title: 'Roof terrace leaks: patch or full coating?', cat: 'Waterproofing', excerpt: 'Hairline cracks, ponding water and old tar: what each one needs before the rains.', cover: null, coverWord: 'Roof' },
+      { title: 'Easy-clean paint for kitchens and kids’ rooms', cat: 'Interior', excerpt: 'Washable finishes, sheen levels and what actually survives turmeric and crayons.', cover: '#CFC6B6', coverLabel: 'Cover photo · interior' }
+    ];
+    const cats = ['All', 'Waterproofing', 'Colour', 'Basics', 'Interior'];
+    const list = posts.filter((p) => this.state.cat === 'All' || p.cat === this.state.cat);
+    const mk = (p) => ({
+      title: p.title, cat: p.cat, excerpt: p.excerpt, date: '[DATE]', href: p.href || '#',
+      hasCover: !!p.cover, noCover: !p.cover, coverLabel: p.coverLabel || '', coverWord: p.coverWord || p.cat,
+      coverStyle: 'position: absolute; inset: 0; background: ' + (p.cover || '#F2C230') + '; display: flex; align-items: flex-end; padding: 8px; box-sizing: border-box'
+    });
+    return {
+      cats: cats.map((c) => ({
+        label: c, pressed: this.state.cat === c ? 'true' : 'false', pick: () => this.setState({ cat: c }),
+        style: 'min-height: 44px; padding: 0 14px; border-radius: 22px; white-space: nowrap; font: 600 14px \'Mukta\', sans-serif; ' + (this.state.cat === c ? 'background: #1E1B16; color: #FFFDF8; border: 1px solid #1E1B16;' : 'background: #FFFDF8; color: #1E1B16; border: 1px solid #D8D0BF;')
+      })),
+      featured: mk(list[0] || posts[0]),
+      hasFeatured: list.length > 0,
+      rest: list.slice(1).map(mk),
+      all: list.map(mk),
+      count: list.length + (list.length === 1 ? ' guide' : ' guides')
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -28,6 +28,34 @@ The canvas is the source of truth. Don't edit these files by hand; change the ca
 | VizDesktopLight.dc.html | Step 3 · Visualizer, desktop, light, compare looks |
 | VizDesktopDark.dc.html | Step 3 · Visualizer, desktop, dark, compare looks |
 | VizStates.dc.html | Step 3 · Visualizer loading state, no-3D fallback, and how the 3D behaves |
+| CalcMobileEmpty.dc.html | Step 4 · Calculator, mobile, empty (start blank) |
+| CalcMobileLight.dc.html | Step 4 · Calculator, mobile, light |
+| CalcMobileDark.dc.html | Step 4 · Calculator, mobile, dark |
+| CalcMobileLong.dc.html | Step 4 · Calculator, a long estimate (16 surfaces) |
+| CalcDesktopLight.dc.html | Step 4 · Calculator, desktop, light |
+| CalcDesktopDark.dc.html | Step 4 · Calculator, desktop, dark |
+| CatalogMobileLight.dc.html | Step 5 · Catalog, mobile, top level |
+| CatalogMobileDeep.dc.html | Step 5 · Catalog, mobile, three levels deep |
+| CatalogMobileDark.dc.html | Step 5 · Catalog, mobile, dark |
+| ProductMobileLight.dc.html | Step 5 · Product page, mobile, light (desktop is CompProduct) |
+| ProductMobileDark.dc.html | Step 5 · Product page, mobile, dark |
+| CatalogDesktopLight.dc.html | Step 5 · Catalog, desktop, four levels deep |
+| CatalogDesktopDark.dc.html | Step 5 · Catalog, desktop, dark |
+| BlogListMobileLight.dc.html | Step 6 · Guides list, mobile, light |
+| BlogListMobileDark.dc.html | Step 6 · Guides list, mobile, dark |
+| BlogListDesktopLight.dc.html | Step 6 · Guides list, desktop, light |
+| BlogListDesktopDark.dc.html | Step 6 · Guides list, desktop, dark |
+| ArticleMobileLight.dc.html | Step 6 · Guide article, mobile, light |
+| ArticleMobileDark.dc.html | Step 6 · Guide article, mobile, dark |
+| ArticleDesktopLight.dc.html | Step 6 · Guide article, desktop, light |
+| ArticleDesktopDark.dc.html | Step 6 · Guide article, desktop, dark |
+| VisitMobileLight.dc.html | Step 7 · Visit, mobile, light |
+| VisitMobileDark.dc.html | Step 7 · Visit, mobile, dark |
+| VisitDesktopLight.dc.html | Step 7 · Visit, desktop, light |
+| VisitDesktopDark.dc.html | Step 7 · Visit, desktop, dark |
+| StickyBar.dc.html | Step 7 · Sticky contact bar rules |
+| StatesLight.dc.html | Step 8 · Loading, empty, error, offline, reduced motion, light |
+| StatesDark.dc.html | Step 8 · The same states, dark |
 
 Reading them:
 

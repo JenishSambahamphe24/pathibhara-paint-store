@@ -3,12 +3,14 @@ import type { IHouseSceneApi, IPartFlash } from "./HouseScene";
 import type { TStageStatus } from "./HouseStage";
 import type { VisualizerComponent } from "@repo/shared";
 import type { IPublicColourSet } from "#/features/colourSets/types";
-import type { IShade } from "#/types/shade";
+import type { IPublicShadeListItem } from "#/features/shades/types";
 
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { ArrowLeft, MessageCircle, RotateCcw, Share2 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
+
+import { VISUALIZER_COMPONENTS } from "@repo/shared";
 
 import { BUTTON_CLASSES } from "#/components/Button/buttonClasses";
 import { SignBoard } from "#/components/SignBoard/SignBoard";
@@ -30,7 +32,7 @@ import { ShadePicker } from "./ShadePicker";
 import { ShareSheet } from "./ShareSheet";
 
 interface VisualizerPageProps {
-  shades: ReadonlyArray<IShade>;
+  shades: ReadonlyArray<IPublicShadeListItem>;
   colourSets: ReadonlyArray<IPublicColourSet>;
   initialLook: TLook;
 }
@@ -78,6 +80,20 @@ export function VisualizerPage({
   const shareUrl = SeoHelper.absoluteUrl(
     `/visualizer?${new URLSearchParams(LookHelper.toSearch(look))}`,
   );
+  // The calculator starts with the products the picked shades are mixed in.
+  const estimateProducts = [
+    ...new Set(
+      VISUALIZER_COMPONENTS.flatMap((part) => {
+        const code = look[part];
+        const shade = code
+          ? shades.find(
+              (item) => item.code.toUpperCase() === code.toUpperCase(),
+            )
+          : undefined;
+        return shade?.product ? [shade.product.slug] : [];
+      }),
+    ),
+  ];
   const storeHref = ContactHelper.whatsappHref(
     LookHelper.message(look, index, shareUrl),
   );
@@ -331,6 +347,11 @@ export function VisualizerPage({
           <div className="grid grid-cols-2 gap-2">
             <Link
               to="/calculator"
+              search={
+                estimateProducts.length > 0
+                  ? { products: estimateProducts.join(",") }
+                  : {}
+              }
               className={`${BUTTON_CLASSES.primary} min-h-[50px] px-2 text-[22px]`}
             >
               Estimate this look

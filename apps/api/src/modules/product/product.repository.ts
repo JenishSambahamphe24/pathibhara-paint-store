@@ -181,6 +181,7 @@ export class ProductRepository {
           id: products.id,
           slug: products.slug,
           name: products.name,
+          defaultCoats: products.defaultCoats,
           updatedAt: products.updatedAt,
         },
         categorySlug: productCategory.slug,

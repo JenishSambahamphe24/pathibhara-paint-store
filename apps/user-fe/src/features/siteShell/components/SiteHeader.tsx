@@ -18,7 +18,7 @@ export function SiteHeader() {
   }
 
   return (
-    <header>
+    <header className="print:hidden">
       <div className="bg-sign-red p-[5px] lg:hidden">
         <div className="flex items-center justify-between rounded-sign-inner border-2 border-pinstripe py-1 pr-1 pl-3">
           <Link

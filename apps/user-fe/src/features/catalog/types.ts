@@ -53,5 +53,6 @@ export interface IPublicProductListItem {
   minPricePaisa: number | null;
   maxPricePaisa: number | null;
   variantCount: number;
+  defaultCoats: number;
   updatedAt: string;
 }

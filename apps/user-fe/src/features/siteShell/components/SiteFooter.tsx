@@ -7,7 +7,7 @@ import { NAV_ITEMS } from "../navItems";
 // The store's details live on the pages (Home, Visit), not here.
 export function SiteFooter() {
   return (
-    <footer className="border-t border-line bg-surface-2">
+    <footer className="border-t border-line bg-surface-2 print:hidden">
       <div className="mx-auto flex max-w-[1280px] flex-col gap-3.5 px-4 py-7 text-sm lg:flex-row lg:flex-wrap lg:items-start lg:justify-between lg:gap-x-12 lg:gap-y-6 lg:px-6 lg:py-8 lg:text-[15px]">
         <span className="hidden lg:block">
           <Wordmark />

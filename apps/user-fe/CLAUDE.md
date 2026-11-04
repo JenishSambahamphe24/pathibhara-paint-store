@@ -9,7 +9,8 @@ Server-rendered customer site built with **TanStack Start**, **React 19**, **Tai
 - Store contact details live in `Config.store` (placeholders until the client confirms). Build tel/WhatsApp/map links with `ContactHelper`, never by hand.
 - Theme: `ThemeHelper.initScript` sets `<html data-theme>` before paint; use the `dark:` variant for theme-dependent markup, never React state, so SSR can't mismatch.
 - Env: copy `.env.example` to `.env` (`VITE_SITE_URL`, `VITE_API_BASE_URL`).
-- A route with `staticData: { fullScreen: true }` gets no header, footer or contact bar; it draws its own (the visualizer).
+- A route with `staticData: { fullScreen: true }` gets no header, footer or contact bar; it draws its own (the visualizer). `hideContactBar: true` drops only the contact bar, for a page with its own bottom bar (the calculator's running total).
+- Fixed bottom bars hide while a field is focused (`useIsTyping`), so they never sit over the phone keyboard.
 - `wide:` (tablet and up, or a phone in landscape) switches tools from a bottom sheet to a side panel. JS that must know the same thing uses `useIsWide`.
 
 ## 3D house

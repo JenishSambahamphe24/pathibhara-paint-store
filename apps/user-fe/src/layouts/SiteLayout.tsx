@@ -8,6 +8,10 @@ export function SiteLayout() {
   const isFullScreen = useMatches({
     select: (matches) => matches.some((match) => match.staticData.fullScreen),
   });
+  const hidesContactBar = useMatches({
+    select: (matches) =>
+      matches.some((match) => match.staticData.hideContactBar),
+  });
 
   if (isFullScreen) {
     return (
@@ -18,7 +22,8 @@ export function SiteLayout() {
   }
 
   return (
-    // The bottom padding below lg is the mobile ContactBar's height.
+    // The bottom padding below lg is the height of the mobile bottom bar (the
+    // ContactBar, or the page's own that replaces it).
     <div className="flex min-h-dvh flex-col pb-[calc(84px+env(safe-area-inset-bottom))] lg:pb-0">
       <a
         href="#main"
@@ -31,7 +36,7 @@ export function SiteLayout() {
         <Outlet />
       </main>
       <SiteFooter />
-      <ContactBar />
+      {!hidesContactBar && <ContactBar />}
     </div>
   );
 }

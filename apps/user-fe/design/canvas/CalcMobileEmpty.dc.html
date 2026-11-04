@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cost calculator, empty state, mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@400..700&amp;family=Mukta:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1E3A7C}a:hover{color:#132656}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; min-height: 844px; background: #F5F1E8; color: #1E1B16; font-family: 'Mukta', system-ui, sans-serif; padding-bottom: 96px; box-sizing: border-box">
+
+  <header style="background: #A3192B; padding: 5px">
+    <div style="border: 2px solid #F2C230; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 4px 12px; color: #FBF4E4">
+      <a href="HomeMobileLight.dc.html" style="display: flex; flex-direction: column; line-height: 0.88; text-decoration: none; color: #FBF4E4; min-height: 44px; justify-content: center">
+        <span lang="ne" style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 17px">पाथीभरा पेन्ट्स</span>
+        <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 26px; text-transform: uppercase; letter-spacing: 0.03em">Pathibhara Paints</span>
+      </a>
+      <button type="button" aria-label="Menu" style="width: 44px; height: 44px; border: none; background: transparent; color: #FBF4E4; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </header>
+
+  <section style="padding: 18px 16px 0; display: flex; flex-direction: column; gap: 12px">
+    <div style="align-self: flex-start; background: #1E3A7B; border-radius: 6px; padding: 5px">
+      <div style="border: 2px solid #FBF4E4; border-radius: 3px; padding: 6px 14px 2px; color: #FBF4E4">
+        <span style="display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #F2C230">Litres · cans · rupees</span>
+        <h1 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 40px; line-height: 0.9; text-transform: uppercase">Cost calculator</h1>
+      </div>
+    </div>
+    <p style="margin: 0; font-size: 16px; line-height: 1.45; color: #3B362D">Add each wall in feet. We work out the paint, the cans to buy and the total.</p>
+    <div style="display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 4px">
+      <sc-for list="{{presets}}" as="b" hint-placeholder-count="3">
+        <button type="button" aria-pressed="{{b.pressed}}" onClick="{{b.pick}}" style="{{b.style}}">{{b.label}}</button>
+      </sc-for>
+    </div>
+    <div role="group" aria-label="What are you painting" style="display: flex; gap: 8px">
+      <sc-for list="{{sections}}" as="s" hint-placeholder-count="2">
+        <button type="button" aria-pressed="{{s.pressed}}" onClick="{{s.toggle}}" style="{{s.toggleStyle}}">{{s.toggleLabel}}</button>
+      </sc-for>
+    </div>
+  </section>
+
+  <sc-if value="{{nothingOn}}" hint-placeholder-val="{{ false }}">
+    <p style="margin: 16px; padding: 14px; background: #FFFDF8; border: 1px dashed #D8D0BF; border-radius: 10px; font-size: 15px">Pick Interior, Exterior or both to start.</p>
+  </sc-if>
+
+  <sc-for list="{{activeSections}}" as="s" hint-placeholder-count="1">
+    <section style="margin: 16px 16px 0; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 12px; overflow: hidden">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 12px 14px; border-bottom: 2px solid #1E1B16">
+        <h2 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 34px; line-height: 0.9; text-transform: uppercase">{{s.name}}</h2>
+        <span style="text-align: right; line-height: 1"><span style="display: block; font-size: 12px; font-weight: 600; color: #5E574B">Net area</span><span style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 32px; font-variant-numeric: tabular-nums" aria-live="polite">{{s.netLabel}}</span></span>
+      </div>
+
+      <sc-if value="{{s.empty}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 20px 14px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+          <div aria-hidden="true" style="display: flex; gap: 6px; align-items: flex-end"><span style="width: 44px; height: 38px; border: 2px dashed #5E574B; border-radius: 2px"></span><span style="width: 30px; height: 38px; border: 2px dashed #5E574B; border-radius: 2px"></span><span style="width: 52px; height: 22px; border: 2px dashed #5E574B; border-radius: 2px"></span></div>
+          <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 28px; line-height: 0.95; text-transform: uppercase">No walls yet</span>
+          <span style="font-size: 14px; color: #5E574B; max-width: 260px">Add a wall and type its width and height. Use quantity for walls of the same size.</span>
+        </div>
+      </sc-if>
+
+      <ul style="list-style: none; margin: 0; padding: 0">
+        <sc-for list="{{s.surfaces}}" as="x" hint-placeholder-count="3">
+          <li style="padding: 12px 14px; border-bottom: 1px solid #ECE5D6; display: flex; flex-direction: column; gap: 8px">
+            <div style="display: flex; gap: 12px; align-items: center">
+              <span aria-hidden="true" style="flex: 0 0 60px; height: 60px; display: flex; align-items: flex-end; justify-content: center"><span style="{{x.rectStyle}}"></span></span>
+              <input type="text" value="{{x.label}}" onInput="{{x.setLabel}}" aria-label="Wall name" style="flex: 1; min-width: 0; min-height: 44px; border: 1px solid transparent; border-bottom-color: #D8D0BF; background: transparent; font: 600 16px 'Mukta', sans-serif; color: #1E1B16; padding: 0 4px">
+              <button type="button" aria-label="Remove this wall" onClick="{{x.remove}}" style="flex: 0 0 44px; height: 44px; border: none; background: transparent; color: #5E574B; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            </div>
+            <div style="display: flex; gap: 6px; align-items: center">
+              <label style="flex: 0 0 82px; display: flex; align-items: center; min-height: 46px; border: 1px solid #D8D0BF; border-radius: 10px; padding: 0 8px; background: #FFFDF8"><input type="number" inputmode="decimal" min="0" value="{{x.w}}" onInput="{{x.setW}}" aria-label="{{x.ariaW}}" style="width: 100%; min-width: 0; border: none; outline: none; background: transparent; font-family: 'Teko', sans-serif; font-size: 26px; color: #1E1B16; padding-top: 4px"><span style="font-size: 13px; color: #5E574B">ft</span></label>
+              <span aria-hidden="true" style="font-size: 16px; color: #5E574B">×</span>
+              <label style="flex: 0 0 82px; display: flex; align-items: center; min-height: 46px; border: 1px solid #D8D0BF; border-radius: 10px; padding: 0 8px; background: #FFFDF8"><input type="number" inputmode="decimal" min="0" value="{{x.h}}" onInput="{{x.setH}}" aria-label="{{x.ariaH}}" style="width: 100%; min-width: 0; border: none; outline: none; background: transparent; font-family: 'Teko', sans-serif; font-size: 26px; color: #1E1B16; padding-top: 4px"><span style="font-size: 13px; color: #5E574B">ft</span></label>
+              <span aria-hidden="true" style="font-size: 16px; color: #5E574B">×</span>
+              <span style="display: flex; align-items: center; border: 1px solid #D8D0BF; border-radius: 10px; background: #FFFDF8">
+                <button type="button" aria-label="One less" onClick="{{x.qMinus}}" style="width: 36px; height: 46px; border: none; background: transparent; font-size: 20px; color: #1E1B16">−</button>
+                <span style="min-width: 22px; text-align: center; font-family: 'Teko', sans-serif; font-size: 26px; padding-top: 4px">{{x.q}}</span>
+                <button type="button" aria-label="One more" onClick="{{x.qPlus}}" style="width: 36px; height: 46px; border: none; background: transparent; font-size: 20px; color: #1E1B16">+</button>
+              </span>
+            </div>
+            <sc-if value="{{x.bad}}" hint-placeholder-val="{{ false }}">
+              <span style="font-size: 13px; font-weight: 600; color: #B3261E; display: flex; gap: 6px; align-items: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>Enter a width and height above 0 ft</span>
+            </sc-if>
+          </li>
+        </sc-for>
+      </ul>
+      <div style="padding: 10px 14px">
+        <button type="button" onClick="{{s.addSurface}}" style="width: 100%; min-height: 48px; border-radius: 8px; border: 2px dashed #1E1B16; background: transparent; color: #1E1B16; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; text-transform: uppercase; padding-top: 3px">+ Add wall</button>
+      </div>
+
+      <div style="padding: 4px 14px 12px; display: flex; flex-direction: column; gap: 6px; border-top: 1px solid #ECE5D6">
+        <span style="font-size: 14px; font-weight: 700; padding-top: 8px">Doors &amp; windows <span style="font-weight: 500; color: #5E574B">(not painted, taken off)</span></span>
+        <sc-for list="{{s.deductions}}" as="x" hint-placeholder-count="2">
+          <div style="display: flex; gap: 6px; align-items: center">
+            <span aria-hidden="true" style="flex: 0 0 32px; height: 32px; display: flex; align-items: flex-end; justify-content: center"><span style="{{x.rectStyle}}"></span></span>
+            <input type="text" value="{{x.label}}" onInput="{{x.setLabel}}" aria-label="Opening name" style="flex: 1; min-width: 0; min-height: 44px; border: none; border-bottom: 1px solid #D8D0BF; background: transparent; font: 500 15px 'Mukta', sans-serif; color: #1E1B16">
+            <input type="number" inputmode="decimal" value="{{x.w}}" onInput="{{x.setW}}" aria-label="{{x.ariaW}}" style="width: 44px; min-height: 44px; border: 1px solid #D8D0BF; border-radius: 8px; text-align: center; font-family: 'Teko', sans-serif; font-size: 22px; background: #FFFDF8; color: #1E1B16">
+            <span aria-hidden="true" style="color: #5E574B">×</span>
+            <input type="number" inputmode="decimal" value="{{x.h}}" onInput="{{x.setH}}" aria-label="{{x.ariaH}}" style="width: 44px; min-height: 44px; border: 1px solid #D8D0BF; border-radius: 8px; text-align: center; font-family: 'Teko', sans-serif; font-size: 22px; background: #FFFDF8; color: #1E1B16">
+            <button type="button" aria-label="One more" onClick="{{x.qPlus}}" style="min-width: 44px; height: 44px; border: 1px solid #D8D0BF; border-radius: 8px; background: #FFFDF8; font-family: 'Teko', sans-serif; font-size: 22px; color: #1E1B16; padding-top: 3px">×{{x.q}}</button>
+          </div>
+        </sc-for>
+        <button type="button" onClick="{{s.addDeduction}}" style="align-self: flex-start; min-height: 44px; border: none; background: transparent; color: #1E3A7C; font: 700 15px 'Mukta', sans-serif; padding: 0">+ Add door or window</button>
+      </div>
+
+      <div style="padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 10px; background: #ECE5D6">
+        <span style="font-size: 14px; font-weight: 700">Products and coats</span>
+        <sc-for list="{{s.prods}}" as="p" hint-placeholder-count="2">
+          <div style="display: flex; flex-direction: column; gap: 6px; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 10px; padding: 8px">
+            <label for="{{p.selectId}}" style="font-size: 12px; font-weight: 700; color: #5E574B">{{p.kind}}</label>
+            <div style="display: flex; gap: 6px; align-items: center">
+              <select id="{{p.selectId}}" value="{{p.pid}}" onChange="{{p.setPid}}" style="flex: 1; min-width: 0; min-height: 44px; border: 1px solid #D8D0BF; border-radius: 8px; background: #FFFDF8; font: 600 15px 'Mukta', sans-serif; color: #1E1B16; padding: 0 8px">
+                <sc-for list="{{p.options}}" as="o" hint-placeholder-count="4"><option value="{{o.value}}">{{o.label}}</option></sc-for>
+              </select>
+              <span style="display: flex; align-items: center; border: 1px solid #D8D0BF; border-radius: 8px">
+                <button type="button" aria-label="One coat less" onClick="{{p.cMinus}}" style="width: 34px; height: 44px; border: none; background: transparent; font-size: 18px; color: #1E1B16">−</button>
+                <span style="font-size: 13px; font-weight: 700; min-width: 50px; text-align: center">{{p.coatLabel}}</span>
+                <button type="button" aria-label="One coat more" onClick="{{p.cPlus}}" style="width: 34px; height: 44px; border: none; background: transparent; font-size: 18px; color: #1E1B16">+</button>
+              </span>
+            </div>
+          </div>
+        </sc-for>
+        <button type="button" onClick="{{s.addProduct}}" style="align-self: flex-start; min-height: 44px; border: none; background: transparent; color: #1E3A7C; font: 700 15px 'Mukta', sans-serif; padding: 0">+ Add product</button>
+      </div>
+    </section>
+  </sc-for>
+
+  <section id="estimate" style="margin: 24px 16px 0; display: flex; flex-direction: column; gap: 12px">
+    <div style="align-self: flex-start; background: #F2C230; border-radius: 6px; padding: 5px">
+      <div style="border: 2px solid #1E1B17; border-radius: 3px; padding: 6px 14px 2px; color: #1E1B17">
+        <span style="display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase">Sample prices · ask the store to confirm</span>
+        <h2 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 36px; line-height: 0.9; text-transform: uppercase">Your estimate</h2>
+      </div>
+    </div>
+    <sc-if value="{{noResult}}" hint-placeholder-val="{{ false }}">
+      <p style="margin: 0; font-size: 15px; color: #5E574B">Your litres, cans and total appear here as soon as one wall has a size.</p>
+    </sc-if>
+    <sc-for list="{{activeSections}}" as="s" hint-placeholder-count="1">
+      <div style="background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 12px; overflow: hidden">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 10px 14px; background: #ECE5D6">
+          <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 26px; text-transform: uppercase; padding-top: 3px">{{s.name}}</span>
+          <span style="font-size: 13px; color: #5E574B">{{s.gross}} − {{s.ded}} = <strong style="color: #1E1B16">{{s.netLabel}}</strong></span>
+        </div>
+        <sc-for list="{{s.prods}}" as="p" hint-placeholder-count="2">
+          <div style="padding: 12px 14px; border-bottom: 1px solid #ECE5D6; display: flex; flex-direction: column; gap: 8px">
+            <div style="display: flex; justify-content: space-between; gap: 10px; align-items: baseline">
+              <span style="display: flex; flex-direction: column; min-width: 0"><strong style="font-size: 15px">{{p.name}}</strong><span style="font-size: 12px; color: #5E574B">{{p.maths}}</span></span>
+              <span style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 28px; line-height: 1; white-space: nowrap">{{p.litres}}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 10px">
+              <ul aria-label="Cans to buy" style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end">
+                <sc-for list="{{p.cans}}" as="c" hint-placeholder-count="3">
+                  <li style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #1E1B16">
+                    <span style="display: flex; gap: 2px; align-items: flex-end">
+                      <sc-for list="{{c.icons}}" as="k" hint-placeholder-count="1">
+                        <sc-if value="{{c.pail}}" hint-placeholder-val="{{ true }}">
+                          <svg width="{{c.w}}" height="{{c.h}}" viewBox="0 0 48 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M8 16 Q24 0 40 16"></path><path d="M6 16 L9.5 50 Q24 55 38.5 50 L42 16"></path><path d="M8.4 30 H39.6 L38.6 41 H9.4 Z" fill="{{c.band}}" stroke="none"></path><ellipse cx="24" cy="16" rx="18" ry="4.5"></ellipse></svg>
+                        </sc-if>
+                        <sc-if value="{{c.tin}}" hint-placeholder-val="{{ false }}">
+                          <svg width="{{c.w}}" height="{{c.h}}" viewBox="0 0 40 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true"><path d="M4 8 V41 Q4 45 20 45 Q36 45 36 41 V8"></path><rect x="5" y="19" width="30" height="13" fill="{{c.band}}" stroke="none"></rect><ellipse cx="20" cy="8" rx="16" ry="4"></ellipse></svg>
+                        </sc-if>
+                      </sc-for>
+                    </span>
+                    <span style="font-size: 12px; font-weight: 700; white-space: nowrap">{{c.label}}</span>
+                  </li>
+                </sc-for>
+              </ul>
+              <span style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 26px; line-height: 1; white-space: nowrap">{{p.cost}}</span>
+            </div>
+          </div>
+        </sc-for>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 10px 14px">
+          <span style="font-size: 14px; font-weight: 700">{{s.name}} subtotal · {{s.subLitres}}</span>
+          <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 30px; line-height: 1">{{s.subtotal}}</span>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{hasResult}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 3px solid #1E1B16; padding-top: 10px">
+          <span style="display: flex; flex-direction: column"><span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 28px; line-height: 1; text-transform: uppercase">Total</span><span style="font-size: 13px; color: #5E574B">{{grandLitres}} of paint</span></span>
+          <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 52px; line-height: 0.85; font-variant-numeric: tabular-nums">{{grand}}</span>
+        </div>
+        <a href="#" style="min-height: 52px; border-radius: 6px; background: #1D6B3F; color: #FFFFFE; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 23px; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: -3px"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg>Share estimate on WhatsApp</a>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+          <a href="#" style="min-height: 48px; border-radius: 6px; border: 2px solid #1E1B16; color: #1E1B16; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 20px; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Save image / PDF</a>
+          <a href="#" style="min-height: 48px; border-radius: 6px; background: #1E1B16; color: #FFFDF8; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 20px; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Send to store</a>
+        </div>
+        <p style="margin: 0; font-size: 13px; line-height: 1.45; color: #5E574B">Coverage changes with wall texture and absorbency. Buying the next can up is usually cheaper per litre; the store can confirm before you pay.</p>
+      </div>
+    </sc-if>
+  </section>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 12px 14px; background: #FFFDF8; border-top: 1px solid #D8D0BF; display: flex; align-items: center; justify-content: space-between; gap: 10px">
+    <span style="display: flex; flex-direction: column; line-height: 1"><span style="font-size: 12px; font-weight: 600; color: #5E574B">Total so far</span><span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 34px; font-variant-numeric: tabular-nums" aria-live="polite">{{grand}}</span></span>
+    <a href="#estimate" style="min-height: 48px; padding: 3px 18px 0; border-radius: 6px; background: #1E1B16; color: #FFFDF8; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; text-transform: uppercase; display: flex; align-items: center; text-decoration: none">See estimate</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1240}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = this.presetState(this.props.start || 'blank');
+  }
+  products() {
+    return {
+      royale: { name: 'Royale Luxury Finish', kind: 'Interior emulsion', cov: 35, coats: 2, band: '#D8B98C', sizes: [[18, 22950], [10, 13200], [4, 5480], [1, 1450]] },
+      intPrimer: { name: '[Interior primer]', kind: 'Interior primer', cov: 90, coats: 1, band: '#ECE7DA', sizes: [[20, 9600], [10, 5100], [4, 2150], [1, 580]] },
+      ultima: { name: 'Ultima Basecoat', kind: 'Exterior primer', cov: 100, coats: 1, band: '#ECE7DA', sizes: [[20, 14800], [10, 7600], [4, 3150], [1, 850]] },
+      extEm: { name: '[Exterior emulsion]', kind: 'Exterior emulsion', cov: 60, coats: 2, band: '#B5573A', sizes: [[20, 19800], [10, 10200], [4, 4250], [1, 1150]] },
+      enamel: { name: '[Enamel]', kind: 'Doors & grills', cov: 120, coats: 2, band: '#2B2A28', sizes: [[4, 3900], [1, 1050], [0.5, 560]] }
+    };
+  }
+  presetState(id) {
+    let n = 0;
+    const s = (label, w, h, q) => ({ id: 's' + (n++), label, w: String(w), h: String(h), q });
+    const room = {
+      key: 'int', name: 'Interior', on: true,
+      surfaces: [s('Long walls', 12, 10, 2), s('Short walls', 10, 10, 2), s('Ceiling', 12, 10, 1)],
+      deductions: [s('Door', 3, 7, 1), s('Windows', 4, 4, 2)],
+      products: [{ id: 'p' + (n++), pid: 'intPrimer', coats: 1 }, { id: 'p' + (n++), pid: 'royale', coats: 2 }]
+    };
+    const ext = {
+      key: 'ext', name: 'Exterior', on: true,
+      surfaces: [s('Front & back', 30, 11, 2), s('Sides', 25, 11, 2), s('Parapet', 110, 3, 1)],
+      deductions: [s('Doors', 3.5, 7, 2), s('Windows', 4, 4, 6)],
+      products: [{ id: 'p' + (n++), pid: 'ultima', coats: 1 }, { id: 'p' + (n++), pid: 'extEm', coats: 2 }]
+    };
+    const off = (sec) => Object.assign({}, sec, { on: false });
+    if (id === 'room') return { preset: 'room', n, sections: [room, off(ext)] };
+    if (id === 'ext') return { preset: 'ext', n, sections: [off(room), ext] };
+    if (id === 'long') {
+      const longInt = Object.assign({}, room, {
+        surfaces: [s('Living room · long walls', 16, 10, 2), s('Living room · short walls', 13, 10, 2), s('Bedroom 1 walls', 12, 10, 4), s('Bedroom 2 walls', 11, 10, 4), s('Kitchen walls', 10, 9, 4), s('Staircase wall', 9, 22, 1), s('Ceilings', 12, 12, 4), s('Puja room walls', 6, 9, 4)],
+        deductions: [s('Doors', 3, 7, 7), s('Windows', 4, 4, 9), s('Kitchen tiles', 10, 3, 2)],
+        products: [{ id: 'p' + (n++), pid: 'intPrimer', coats: 1 }, { id: 'p' + (n++), pid: 'royale', coats: 2 }]
+      });
+      const longExt = Object.assign({}, ext, {
+        surfaces: [s('Front · ground floor', 32, 11, 1), s('Front · first floor', 32, 10, 1), s('Front · second floor', 26, 10, 1), s('Back · all floors', 32, 31, 1), s('Sides · all floors', 38, 31, 2), s('Parapet', 140, 3.5, 1), s('Stair cover', 12, 9, 4), s('Boundary wall', 120, 5, 1)],
+        deductions: [s('Doors', 3.5, 7, 3), s('Windows', 4, 4, 14), s('Balcony glass', 10, 3.5, 2)],
+        products: [{ id: 'p' + (n++), pid: 'ultima', coats: 1 }, { id: 'p' + (n++), pid: 'extEm', coats: 2 }]
+      });
+      return { preset: 'long', n, sections: [longInt, longExt] };
+    }
+    return { preset: 'blank', n, sections: [Object.assign({}, room, { surfaces: [], deductions: [], products: [{ id: 'p' + (n++), pid: 'royale', coats: 2 }] }), off(ext)] };
+  }
+  npr(x) {
+    const d = String(Math.round(x));
+    if (d.length <= 3) return 'Rs. ' + d;
+    return 'Rs. ' + d.slice(0, -3).replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + d.slice(-3);
+  }
+  group(x) {
+    const d = String(Math.round(x));
+    if (d.length <= 3) return d;
+    return d.slice(0, -3).replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + d.slice(-3);
+  }
+  cans(litres, sizes) {
+    let rem = Math.round(litres * 10) / 10;
+    const out = [];
+    const desc = sizes.slice().sort((a, b) => b[0] - a[0]);
+    desc.forEach((sz, i) => {
+      if (i === desc.length - 1) return;
+      const c = Math.floor(rem / sz[0] + 1e-9);
+      if (c > 0) { out.push({ l: sz[0], n: c, price: sz[1] }); rem = Math.round((rem - c * sz[0]) * 10) / 10; }
+    });
+    const small = desc[desc.length - 1];
+    if (rem > 0) out.push({ l: small[0], n: Math.ceil(rem / small[0] - 1e-9), price: small[1] });
+    return out;
+  }
+  update(secKey, fn) {
+    this.setState({ sections: this.state.sections.map((s) => (s.key === secKey ? fn(Object.assign({}, s)) : s)) });
+  }
+  renderVals() {
+    const P = this.products();
+    const st = this.state;
+    const num = (v) => { const x = parseFloat(v); return isFinite(x) && x > 0 ? x : 0; };
+    const presetBtn = (id, label) => ({
+      label, pressed: st.preset === id ? 'true' : 'false',
+      pick: () => this.setState(this.presetState(id)),
+      style: 'min-height: 44px; padding: 0 14px; border-radius: 22px; font: 600 14px \'Mukta\', sans-serif; white-space: nowrap; ' + (st.preset === id ? 'background: #1E1B16; color: #FFFDF8; border: 1px solid #1E1B16;' : 'background: #FFFDF8; color: #1E1B16; border: 1px solid #D8D0BF;')
+    });
+    let grand = 0, grandLitres = 0;
+    const secs = st.sections.map((sec) => {
+      const maxDim = Math.max(1, ...sec.surfaces.map((x) => Math.max(num(x.w), num(x.h))));
+      const scale = 52 / maxDim;
+      const row = (list, kind) => list.map((x) => {
+        const w = num(x.w), h = num(x.h), area = w * h * x.q;
+        const set = (field) => (e) => {
+          const v = e.target.value;
+          this.update(sec.key, (s) => { s[kind] = s[kind].map((y) => (y.id === x.id ? Object.assign({}, y, { [field]: v }) : y)); return s; });
+        };
+        const q = (d) => () => this.update(sec.key, (s) => { s[kind] = s[kind].map((y) => (y.id === x.id ? Object.assign({}, y, { q: Math.max(1, y.q + d) }) : y)); return s; });
+        return {
+          id: x.id, label: x.label, w: x.w, h: x.h, q: x.q,
+          setLabel: set('label'), setW: set('w'), setH: set('h'), qMinus: q(-1), qPlus: q(1),
+          remove: () => this.update(sec.key, (s) => { s[kind] = s[kind].filter((y) => y.id !== x.id); return s; }),
+          area: this.group(area) + ' sq ft',
+          bad: !(w > 0 && h > 0),
+          rectStyle: 'width: ' + Math.max(4, Math.round(w * scale)) + 'px; height: ' + Math.max(4, Math.round(h * scale)) + 'px; background: ' + (kind === 'surfaces' ? '#ECE5D6' : '#FFFDF8') + '; border: 2px ' + (kind === 'surfaces' ? 'solid' : 'dashed') + ' #1E1B16; box-sizing: border-box; transition: width .15s, height .15s',
+          ariaW: 'Width of ' + x.label + ' in feet', ariaH: 'Height of ' + x.label + ' in feet'
+        };
+      });
+      const surfaces = row(sec.surfaces, 'surfaces');
+      const deductions = row(sec.deductions, 'deductions');
+      const gross = sec.surfaces.reduce((a, x) => a + num(x.w) * num(x.h) * x.q, 0);
+      const ded = sec.deductions.reduce((a, x) => a + num(x.w) * num(x.h) * x.q, 0);
+      const net = Math.max(0, gross - ded);
+      let subtotal = 0, subLitres = 0;
+      const prods = sec.products.map((p) => {
+        const pr = P[p.pid];
+        const litres = Math.ceil((net * p.coats / pr.cov) * 10) / 10;
+        const cs = litres > 0 ? this.cans(litres, pr.sizes) : [];
+        const cost = cs.reduce((a, c) => a + c.n * c.price, 0);
+        subtotal += cost; subLitres += litres;
+        const opts = Object.keys(P).map((k) => ({ value: k, label: P[k].name + ' · ' + P[k].kind, selected: k === p.pid }));
+        return {
+          id: p.id, pid: p.pid, name: pr.name, kind: pr.kind, coats: p.coats, options: opts,
+          selectId: 'prod-' + p.id,
+          coatLabel: p.coats + (p.coats === 1 ? ' coat' : ' coats'),
+          setPid: (e) => { const v = e.target.value; this.update(sec.key, (s) => { s.products = s.products.map((y) => (y.id === p.id ? { id: y.id, pid: v, coats: P[v].coats } : y)); return s; }); },
+          cMinus: () => this.update(sec.key, (s) => { s.products = s.products.map((y) => (y.id === p.id ? Object.assign({}, y, { coats: Math.max(1, y.coats - 1) }) : y)); return s; }),
+          cPlus: () => this.update(sec.key, (s) => { s.products = s.products.map((y) => (y.id === p.id ? Object.assign({}, y, { coats: Math.min(4, y.coats + 1) }) : y)); return s; }),
+          remove: () => this.update(sec.key, (s) => { s.products = s.products.filter((y) => y.id !== p.id); return s; }),
+          maths: this.group(net) + ' sq ft × ' + p.coats + ' ÷ ' + pr.cov + ' sq ft/L',
+          litres: litres.toFixed(1) + ' L',
+          cost: this.npr(cost),
+          cans: cs.map((c) => {
+            const pail = c.l >= 10;
+            const hgt = c.l >= 18 ? 54 : c.l >= 10 ? 46 : c.l >= 4 ? 38 : c.l >= 1 ? 28 : 22;
+            return { key: c.l, pail, tin: !pail, w: Math.round(hgt * (pail ? 0.83 : 0.83)), h: hgt, band: pr.band, label: c.n + ' × ' + c.l + ' L', icons: Array.from({ length: Math.min(c.n, 3) }, (_, i) => ({ i })) };
+          }),
+          canSummary: cs.map((c) => c.n + '×' + c.l + 'L').join(' + ')
+        };
+      });
+      if (sec.on) { grand += subtotal; grandLitres += subLitres; }
+      const add = (kind, label, w, h) => () => this.update(sec.key, (s) => {
+        const n = this.state.n + 1;
+        this.setState({ n });
+        s[kind] = s[kind].concat([{ id: 'x' + n + kind, label, w: String(w), h: String(h), q: 1 }]);
+        return s;
+      });
+      return {
+        key: sec.key, name: sec.name, on: sec.on,
+        toggleStyle: 'flex: 1; min-height: 48px; border-radius: 6px; font-family: \'Teko\', sans-serif; font-weight: 600; font-size: 22px; text-transform: uppercase; padding-top: 3px; ' + (sec.on ? 'background: #1E1B16; color: #FFFDF8; border: 2px solid #1E1B16;' : 'background: #FFFDF8; color: #1E1B16; border: 2px solid #D8D0BF;'),
+        toggleLabel: (sec.on ? '✓ ' : '+ ') + sec.name,
+        pressed: sec.on ? 'true' : 'false',
+        toggle: () => this.update(sec.key, (s) => { s.on = !s.on; return s; }),
+        surfaces, deductions, prods,
+        empty: sec.surfaces.length === 0,
+        hasDed: sec.deductions.length > 0,
+        gross: this.group(gross) + ' sq ft', ded: this.group(ded) + ' sq ft', net: this.group(net), netLabel: this.group(net) + ' sq ft',
+        subtotal: this.npr(subtotal), subLitres: (Math.round(subLitres * 10) / 10).toFixed(1) + ' L',
+        addSurface: add('surfaces', sec.key === 'int' ? 'Wall' : 'Outer wall', 12, 10),
+        addDeduction: add('deductions', 'Window', 4, 4),
+        addProduct: () => this.update(sec.key, (s) => { const n = this.state.n + 1; this.setState({ n }); s.products = s.products.concat([{ id: 'np' + n, pid: sec.key === 'int' ? 'royale' : 'extEm', coats: 2 }]); return s; })
+      };
+    });
+    const active = secs.filter((s) => s.on);
+    return {
+      presets: [presetBtn('room', 'Standard 12 × 10 room'), presetBtn('ext', 'Single-storey exterior'), presetBtn('blank', 'Start blank')],
+      sections: secs,
+      activeSections: active,
+      nothingOn: active.length === 0,
+      hasResult: grand > 0,
+      noResult: !(grand > 0),
+      grand: this.npr(grand),
+      grandLitres: (Math.round(grandLitres * 10) / 10).toFixed(1) + ' L',
+      surfaceCount: active.reduce((a, s) => a + s.surfaces.length, 0)
+    };
+  }
+}
+
+</script>
+</body>
+</html>
