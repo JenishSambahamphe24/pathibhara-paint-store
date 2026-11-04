@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { z } from "zod";
 
 import { CatalogApi } from "#/features/catalog/api";
@@ -16,6 +16,10 @@ export const Route = createFileRoute("/products/")({
       CatalogApi.categories(),
       CatalogApi.products({ perPage: CATALOG_PAGE_SIZE, page: deps.page }),
     ]);
+    // A page past the end is a 404, not a blank page search engines keep.
+    if (deps.page > Math.max(1, products.pagination.totalPages)) {
+      throw notFound();
+    }
     return { categories, products };
   },
   head: ({ loaderData }) =>

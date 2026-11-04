@@ -3,7 +3,7 @@ import type { IPublicPostListItem } from "#/features/guides/types";
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
 
-import { BsDateHelper } from "@repo/shared";
+import { DateHelper } from "#/lib/helpers/date.helper";
 
 interface LatestGuidesProps {
   guides: Array<IPublicPostListItem>;
@@ -63,10 +63,7 @@ export function LatestGuides({ guides }: LatestGuidesProps) {
             </span>
             <span className="flex flex-col gap-1 lg:gap-2.5">
               <span className="text-xs font-bold tracking-[0.12em] text-brand uppercase lg:text-[13px]">
-                {BsDateHelper.format(
-                  BsDateHelper.fromInstant(new Date(guide.publishedAt)),
-                  "long",
-                )}
+                {DateHelper.bsLong(guide.publishedAt)}
               </span>
               <span
                 className={clsx(
