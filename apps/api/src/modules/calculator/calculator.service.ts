@@ -12,6 +12,7 @@ import {
   CalculatorDefaultsDto,
   CostEstimateInputDto,
   CostEstimateResultDto,
+  PublicCostEstimateResultDto,
 } from "./calculator.dto";
 import { CalculatorRepository } from "./calculator.repository";
 
@@ -32,11 +33,34 @@ export class CalculatorService {
   async estimate(
     input: DtoType<typeof CostEstimateInputDto>,
   ): Promise<DtoType<typeof CostEstimateResultDto>> {
-    const ids = [
+    const rows = await this.calculatorRepository.findProducts(CalculatorService.productIds(input));
+    return CostEstimateResultDto.parse(this.run(input, rows, true));
+  }
+
+  // The customer's estimate never sees stock: without currentStock the
+  // calculator flags nothing as short, and the DTO drops those fields.
+  async estimatePublic(
+    input: DtoType<typeof CostEstimateInputDto>,
+  ): Promise<DtoType<typeof PublicCostEstimateResultDto>> {
+    const rows = await this.calculatorRepository.findProducts(CalculatorService.productIds(input), {
+      publicOnly: true,
+    });
+    return PublicCostEstimateResultDto.parse(this.run(input, rows, false));
+  }
+
+  private static productIds(input: DtoType<typeof CostEstimateInputDto>): Array<string> {
+    return [
       ...new Set(input.sections.flatMap((section) => section.products.map((p) => p.productId))),
     ];
+  }
+
+  private run(
+    input: DtoType<typeof CostEstimateInputDto>,
+    rows: Awaited<ReturnType<CalculatorRepository["findProducts"]>>,
+    withStock: boolean,
+  ) {
     const catalogue = new Map<string, ICalculatorProduct>();
-    for (const row of await this.calculatorRepository.findProducts(ids)) {
+    for (const row of rows) {
       const product = catalogue.get(row.id) ?? {
         id: row.id,
         name: row.name,
@@ -51,7 +75,7 @@ export class CalculatorService {
             volumeMl: row.volumeMl,
             pricePaisa: row.pricePaisa,
             isActive: row.isActive ?? false,
-            currentStock: row.currentStock ?? 0,
+            ...(withStock && { currentStock: row.currentStock ?? 0 }),
           },
         ];
       }
@@ -59,7 +83,7 @@ export class CalculatorService {
     }
 
     try {
-      return CostEstimateResultDto.parse(CostCalculator.estimate(input, catalogue));
+      return CostCalculator.estimate(input, catalogue);
     } catch (err) {
       if (err instanceof CalculatorError)
         throw new ValidationException({ [err.path]: ERROR_KEYS[err.code] });

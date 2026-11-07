@@ -628,9 +628,18 @@ importers:
 
   apps/user-fe:
     dependencies:
+      '@react-three/drei':
+        specifier: catalog:fe
+        version: 10.7.9(@react-three/fiber@9.8.2(@types/react@19.2.14)(immer@11.2.9)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.186.1))(@types/react@19.2.14)(@types/three@0.186.0)(immer@11.2.9)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.186.1)
+      '@react-three/fiber':
+        specifier: catalog:fe
+        version: 9.8.2(@types/react@19.2.14)(immer@11.2.9)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(three@0.186.1)
       '@repo/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+      '@t3-oss/env-core':
+        specifier: catalog:fe
+        version: 0.13.10(typescript@5.9.3)(zod@4.3.6)
       '@tailwindcss/vite':
         specifier: catalog:fe
         version: 4.2.1(vite@7.3.1(@types/node@22.19.13)(jiti@2.7.0)(lightningcss@1.31.1)(terser@5.48.0)(tsx@4.21.0)(yaml@2.8.4))
@@ -643,6 +652,12 @@ importers:
       '@tanstack/router-plugin':
         specifier: catalog:fe
         version: 1.164.0(@tanstack/react-router@1.163.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(vite@7.3.1(@types/node@22.19.13)(jiti@2.7.0)(lightningcss@1.31.1)(terser@5.48.0)(tsx@4.21.0)(yaml@2.8.4))(webpack@5.108.4(lightningcss@1.31.1))
+      clsx:
+        specifier: catalog:fe
+        version: 2.1.1
+      lucide-react:
+        specifier: catalog:fe
+        version: 0.545.0(react@19.2.4)
       nitro:
         specifier: catalog:fe
         version: nitro-nightly@3.0.1-20260227-181935-bfbb207c(chokidar@4.0.3)(dotenv@17.4.2)(drizzle-orm@0.44.7(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(knex@3.0.1(pg@8.20.0))(kysely@0.27.6)(pg@8.20.0))(ioredis@5.10.1)(jiti@2.7.0)(lru-cache@11.2.6)(rollup@4.59.0)(vite@7.3.1(@types/node@22.19.13)(jiti@2.7.0)(lightningcss@1.31.1)(terser@5.48.0)(tsx@4.21.0)(yaml@2.8.4))
@@ -655,6 +670,9 @@ importers:
       tailwindcss:
         specifier: catalog:fe
         version: 4.2.1
+      three:
+        specifier: catalog:fe
+        version: 0.186.1
       zod:
         specifier: catalog:generic
         version: 4.3.6
@@ -677,6 +695,9 @@ importers:
       '@types/react-dom':
         specifier: catalog:fe
         version: 19.2.3(@types/react@19.2.14)
+      '@types/three':
+        specifier: catalog:fe
+        version: 0.186.0
       '@vitejs/plugin-react':
         specifier: catalog:fe
         version: 5.1.4(vite@7.3.1(@types/node@22.19.13)(jiti@2.7.0)(lightningcss@1.31.1)(terser@5.48.0)(tsx@4.21.0)(yaml@2.8.4))
@@ -701,6 +722,9 @@ importers:
       vite-tsconfig-paths:
         specifier: catalog:fe
         version: 5.1.4(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.13)(jiti@2.7.0)(lightningcss@1.31.1)(terser@5.48.0)(tsx@4.21.0)(yaml@2.8.4))
+      vitest:
+        specifier: catalog:generic
+        version: 3.2.4(@types/debug@4.1.13)(@types/node@22.19.13)(happy-dom@20.14.6(bufferutil@4.1.0)(utf-8-validate@6.0.6))(jiti@2.7.0)(jsdom@27.4.0(@noble/hashes@2.2.0)(bufferutil@4.1.0)(utf-8-validate@6.0.6))(lightningcss@1.31.1)(terser@5.48.0)(tsx@4.21.0)(yaml@2.8.4)
 
   packages/config:
     dependencies:

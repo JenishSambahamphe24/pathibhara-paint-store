@@ -78,7 +78,8 @@
   "calculator": {
     "productNotFound": "That product no longer exists.",
     "noActiveSizes": "This product has no active sizes to sell.",
-    "noPaintableArea": "Doors and windows can't cover the whole wall area."
+    "noPaintableArea": "Doors and windows can't cover the whole wall area.",
+    "tooManyEstimates": "Too many estimates in a short time. Wait a minute and try again."
   },
   "post": {
     "notFound": "Post not found",
@@ -105,5 +106,8 @@
     "updated": "Colour set saved",
     "shadeNotFound": "That shade no longer exists.",
     "shadeInactive": "This shade is inactive. Pick an active shade, or save the set as inactive."
+  },
+  "redirect": {
+    "notFound": "Nothing lives at this address any more."
   }
 }

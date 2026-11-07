@@ -1,7 +1,9 @@
-import { eq, inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { injectable } from "tsyringe";
 
 import { products, productVariants, storeSettings, TransactionManager } from "@repo/database";
+
+import { PublicVisibilityHelper } from "#helpers/public-visibility.helper";
 
 @injectable()
 export class CalculatorRepository {
@@ -11,7 +13,9 @@ export class CalculatorRepository {
     return this.txManager.current();
   }
 
-  async findProducts(ids: Array<string>) {
+  // `publicOnly` limits the catalogue to products the customer site shows, so
+  // a hidden product reads as not found rather than being priced.
+  async findProducts(ids: Array<string>, options: { publicOnly?: boolean } = {}) {
     if (ids.length === 0) return [];
     return this.db
       .select({
@@ -26,7 +30,12 @@ export class CalculatorRepository {
       })
       .from(products)
       .leftJoin(productVariants, eq(productVariants.productId, products.id))
-      .where(inArray(products.id, ids));
+      .where(
+        and(
+          inArray(products.id, ids),
+          options.publicOnly ? PublicVisibilityHelper.product() : undefined,
+        ),
+      );
   }
 
   async defaultWastageBps(): Promise<number> {

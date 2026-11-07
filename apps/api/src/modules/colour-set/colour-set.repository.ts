@@ -8,6 +8,7 @@ import { colourSets, TransactionManager } from "@repo/database";
 import { PaginationHelper } from "@repo/http-kit";
 
 import { LikeHelper } from "#helpers/like.helper";
+import { PublicVisibilityHelper } from "#helpers/public-visibility.helper";
 
 export type ColourSetRow = typeof colourSets.$inferSelect;
 
@@ -64,6 +65,15 @@ export class ColourSetRepository {
 
   async findById(id: string): Promise<ColourSetRow | undefined> {
     const [row] = await this.db.select().from(colourSets).where(eq(colourSets.id, id)).limit(1);
+    return row;
+  }
+
+  async findPublicBySlug(slug: string): Promise<ColourSetRow | undefined> {
+    const [row] = await this.db
+      .select()
+      .from(colourSets)
+      .where(and(eq(colourSets.slug, slug), PublicVisibilityHelper.colourSet()))
+      .limit(1);
     return row;
   }
 

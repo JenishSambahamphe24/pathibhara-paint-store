@@ -1,12 +1,18 @@
-import { BaseDto, z } from "@repo/http-kit";
+import { BaseDto, OpenApiRefHelper, z } from "@repo/http-kit";
 import {
   POST_STATUSES,
+  postContentNodeSchema,
   postInputSchema,
   postListQuerySchema,
   postPublishSchema,
+  publicPostListQuerySchema,
 } from "@repo/shared";
 
-import { FileResponseDto } from "../file/file.dto";
+import { FileResponseDto, PublicImageDto } from "../file/file.dto";
+
+// The TipTap node is recursive; naming it gives the recursion a $ref to point
+// at instead of overflowing the stack and taking down /openapi.json.
+OpenApiRefHelper.name(postContentNodeSchema, "PostContentNode");
 
 export class PostInputDto extends BaseDto {
   static override readonly schema = postInputSchema;
@@ -50,5 +56,34 @@ export class PostDetailDto extends BaseDto {
     seoDescription: z.string().nullable(),
     createdAt: z.iso.datetime(),
     updatedAt: z.iso.datetime(),
+  });
+}
+
+export class PublicPostListQueryDto extends BaseDto {
+  static override readonly schema = publicPostListQuerySchema;
+}
+
+const publicPostShape = {
+  slug: z.string(),
+  title: z.string(),
+  excerpt: z.string().nullable(),
+  // Also the Open Graph image.
+  coverImage: PublicImageDto.schema.nullable(),
+  publishedAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
+};
+
+export class PublicPostListItemDto extends BaseDto {
+  static override readonly schema = z.object(publicPostShape);
+}
+
+export class PublicPostDto extends BaseDto {
+  static override readonly schema = z.object({
+    ...publicPostShape,
+    // Rendered by PostHtmlRenderer and sanitized at save time; safe to
+    // render as-is.
+    contentHtml: z.string(),
+    seoTitle: z.string().nullable(),
+    seoDescription: z.string().nullable(),
   });
 }

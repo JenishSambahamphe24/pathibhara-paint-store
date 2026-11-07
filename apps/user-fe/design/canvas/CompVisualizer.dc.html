@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Visualizer, mobile, dark theme</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@400..700&amp;family=Mukta:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#9EB4F2}a:hover{color:#C6D2F7}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; background: #15130F; color: #F5EEDC; font-family: 'Mukta', system-ui, sans-serif">
+
+  <div style="position: absolute; left: 0; right: 0; top: 0; height: 470px; background: #1A1814">
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: #221F19"></div>
+    <svg viewBox="0 0 340 250" width="370" height="272" role="img" aria-label="{{houseLabel}}" style="position: absolute; left: 10px; top: 112px">
+      <ellipse cx="170" cy="240" rx="170" ry="8" fill="#0E0E0D"></ellipse>
+      <rect x="8" y="150" width="86" height="8" fill="{{c.roof}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="12" y="158" width="6" height="78" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="82" y="158" width="6" height="78" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="92" y="158" width="208" height="78" fill="{{c.walls}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="92" y="96" width="208" height="54" fill="{{c.walls}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="92" y="38" width="208" height="50" fill="{{c.walls}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="220" y="6" width="70" height="24" fill="{{c.walls}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="88" y="150" width="216" height="8" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="88" y="88" width="216" height="8" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="92" y="38" width="10" height="198" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="196" y="38" width="9" height="198" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="290" y="38" width="10" height="198" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="88" y="30" width="216" height="8" fill="{{c.roof}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="214" y="0" width="82" height="6" fill="{{c.roof}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <g stroke="#8A8882" stroke-width="1.5"><line x1="102" y1="14" x2="214" y2="14"></line><line x1="110" y1="14" x2="110" y2="30"></line><line x1="130" y1="14" x2="130" y2="30"></line><line x1="150" y1="14" x2="150" y2="30"></line><line x1="170" y1="14" x2="170" y2="30"></line><line x1="190" y1="14" x2="190" y2="30"></line><line x1="210" y1="14" x2="210" y2="30"></line></g>
+      <rect x="112" y="44" width="62" height="102" fill="#8A5A3B"></rect>
+      <g stroke="#6E4730" stroke-width="1"><line x1="112" y1="52" x2="174" y2="52"></line><line x1="112" y1="60" x2="174" y2="60"></line><line x1="112" y1="68" x2="174" y2="68"></line><line x1="112" y1="76" x2="174" y2="76"></line><line x1="112" y1="84" x2="174" y2="84"></line><line x1="112" y1="104" x2="174" y2="104"></line><line x1="112" y1="112" x2="174" y2="112"></line><line x1="112" y1="120" x2="174" y2="120"></line><line x1="112" y1="128" x2="174" y2="128"></line><line x1="112" y1="136" x2="174" y2="136"></line></g>
+      <rect x="216" y="48" width="64" height="32" fill="#9DB2B9" stroke="{{c.doors}}" stroke-width="4"></rect>
+      <line x1="248" y1="48" x2="248" y2="80" stroke="{{c.doors}}" stroke-width="3"></line>
+      <rect x="212" y="102" width="72" height="44" fill="#9DB2B9" stroke="{{c.doors}}" stroke-width="4"></rect>
+      <rect x="208" y="126" width="80" height="22" fill="#C5D6DB" fill-opacity="0.55" stroke="#8A8882" stroke-width="1.5"></rect>
+      <rect x="112" y="174" width="62" height="40" fill="#9DB2B9" stroke="{{c.doors}}" stroke-width="4"></rect>
+      <line x1="143" y1="174" x2="143" y2="214" stroke="{{c.doors}}" stroke-width="3"></line>
+      <rect x="222" y="178" width="28" height="58" fill="{{c.doors}}" stroke="#000000" stroke-opacity="0.3"></rect>
+      <rect x="258" y="178" width="26" height="36" fill="#9DB2B9" stroke="{{c.doors}}" stroke-width="4"></rect>
+    </svg>
+
+    <div style="position: absolute; left: 8px; right: 8px; top: 8px; display: flex; align-items: center; justify-content: space-between">
+      <a href="CompHome.dc.html" aria-label="Back to home" style="width: 44px; height: 44px; border-radius: 12px; background: #2A2620; color: #F5EEDC; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></a>
+      <span style="background: #A3192B; border-radius: 5px; padding: 3px; display: block"><span style="display: block; border: 2px solid #F2C230; border-radius: 3px; padding: 4px 14px 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 26px; line-height: 1; text-transform: uppercase; letter-spacing: 0.04em; color: #FBF4E4">Colour visualizer</span></span>
+      <button type="button" aria-label="Save or share this look" style="width: 44px; height: 44px; border-radius: 12px; border: none; background: #2A2620; color: #F5EEDC; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></button>
+    </div>
+
+    <div style="position: absolute; left: 12px; top: 64px; font: 600 13px 'Mukta', sans-serif; background: #2A2620; border: 1px solid #3D382F; padding: 6px 10px; border-radius: 8px; color: #F5EEDC">Repainting: {{activeLabel}}</div>
+
+    <div style="position: absolute; left: 8px; right: 8px; bottom: 44px; display: flex; justify-content: space-between; align-items: center">
+      <div role="group" aria-label="Compare looks" style="display: flex; background: #2A2620; border: 1px solid #3D382F; border-radius: 12px; padding: 3px; gap: 3px">
+        <button type="button" aria-pressed="{{lookA.pressed}}" onClick="{{lookA.pick}}" style="{{lookA.style}}">Look A</button>
+        <button type="button" aria-pressed="{{lookB.pressed}}" onClick="{{lookB.pick}}" style="{{lookB.style}}">Look B</button>
+      </div>
+      <button type="button" aria-label="Reset view" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #3D382F; background: #2A2620; color: #F5EEDC; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+    </div>
+  </div>
+
+  <section aria-label="Choose colours" style="position: absolute; left: 0; right: 0; top: 432px; bottom: 0; background: #1F1C17; border-top: 1px solid #3D382F; border-radius: 20px 20px 0 0; display: flex; flex-direction: column; gap: 12px; padding: 8px 0 14px">
+    <div aria-hidden="true" style="align-self: center; width: 40px; height: 4px; border-radius: 2px; background: #4D473C"></div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 0 12px">
+      <sc-for list="{{parts}}" as="p" hint-placeholder-count="4">
+        <button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.tabStyle}}">
+          <span style="padding: 2px; border: 1px solid #4D473C; border-radius: 7px; background: #2A2620; display: flex"><span style="{{p.swStyle}}"></span></span>
+          <span style="font-size: 12px; font-weight: 600; line-height: 1.15; text-align: center">{{p.label}}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 12px 0 16px">
+      <span style="font-size: 13px; color: #ADA593"><span style="color: #F5EEDC; font-weight: 600">{{activeLabel}}</span> · <span style="font-family: 'Mukta', sans-serif; font-weight: 600">{{activeShade}}</span></span>
+      <button type="button" aria-label="Search shades by code or name" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #3D382F; background: transparent; color: #F5EEDC; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+    </div>
+
+    <div style="display: flex; gap: 8px; overflow-x: auto; padding: 8px 16px 4px">
+      <sc-for list="{{shades}}" as="s" hint-placeholder-count="10">
+        <button type="button" aria-pressed="{{s.pressed}}" aria-label="{{s.aria}}" onClick="{{s.pick}}" style="{{s.chipStyle}}">
+          <span style="{{s.colorStyle}}"></span>
+          <span style="padding: 5px 6px; font: 600 12px 'Mukta', sans-serif; color: #F5EEDC; text-align: left">{{s.short}}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 2px 12px 0">
+      <a href="#" style="min-height: 50px; border-radius: 6px; background: #F5EEDC; color: #15130F; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 21px; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Estimate this look</a>
+      <a href="#" style="min-height: 50px; border-radius: 6px; background: #6FD39A; color: #0F2A1A; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 21px; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg>Send to store</a>
+    </div>
+    <p style="margin: 0; padding: 0 16px; font-size: 12px; line-height: 1.4; color: #ADA593">Screen colours are close, not exact. Check the shade card at the store before you buy.</p>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      look: 0,
+      active: 'walls',
+      looks: [
+        { walls: 'S-0114', columns: 'S-0530', doors: 'S-0611', roof: 'S-0101' },
+        { walls: 'S-0207', columns: 'S-0318', doors: 'S-0702', roof: null }
+      ]
+    };
+  }
+  renderVals() {
+    const shades = [
+      ['S-0101', 'Rice White', '#F1ECDF'], ['S-0124', 'Lime Wash', '#E8E2C8'], ['S-0114', 'Himalayan Mist', '#D9DDD8'],
+      ['S-0207', 'Sandstone', '#D8B98C'], ['S-0233', 'Marigold', '#E3A23B'], ['S-0256', 'Ochre', '#C8873A'],
+      ['S-0318', 'Terracotta', '#B5573A'], ['S-0342', 'Brick Kiln', '#8C3B2C'], ['S-0427', 'Rhododendron', '#B8324A'],
+      ['S-0405', 'Sage Field', '#9DAE8C'], ['S-0512', 'Monsoon Slate', '#4F5D63'], ['S-0530', 'Slate Night', '#2E3A3F'],
+      ['S-0611', 'Teak', '#6B4630'], ['S-0702', 'Charcoal', '#2B2A28']
+    ];
+    const byCode = {};
+    shades.forEach((s) => { byCode[s[0]] = s; });
+    const original = { walls: '#EDEAE2', columns: '#CFCBC2', doors: '#5A4A3E', roof: '#EDEAE2' };
+    const look = this.state.looks[this.state.look];
+    const hex = (k) => (look[k] ? byCode[look[k]][2] : original[k]);
+    const labels = { walls: 'Walls', columns: 'Columns', doors: 'Doors & windows', roof: 'Roof edge' };
+    const shortLabels = { walls: 'Walls', columns: 'Columns', doors: 'Doors & win.', roof: 'Roof edge' };
+    const active = this.state.active;
+    const cur = look[active];
+    const setShade = (code) => {
+      const looks = this.state.looks.map((l, i) => (i === this.state.look ? Object.assign({}, l, { [active]: code }) : l));
+      this.setState({ looks });
+    };
+    const segBase = 'min-height: 38px; padding: 0 14px; border-radius: 9px; border: none; font-family: \'Teko\', sans-serif; font-weight: 600; font-size: 19px; text-transform: uppercase; padding-top: 3px; ';
+    const mkLook = (i) => ({
+      pressed: this.state.look === i ? 'true' : 'false',
+      pick: () => this.setState({ look: i }),
+      style: segBase + (this.state.look === i ? 'background: #F5EEDC; color: #15130F;' : 'background: transparent; color: #F5EEDC;')
+    });
+    return {
+      c: { walls: hex('walls'), columns: hex('columns'), doors: hex('doors'), roof: hex('roof') },
+      houseLabel: 'House painted with ' + Object.keys(labels).map((k) => labels[k] + ' ' + (look[k] ? look[k] + ' ' + byCode[look[k]][1] : 'original')).join(', '),
+      activeLabel: labels[active],
+      activeShade: cur ? cur + ' ' + byCode[cur][1] : 'Original colour',
+      lookA: mkLook(0),
+      lookB: mkLook(1),
+      parts: ['walls', 'columns', 'doors', 'roof'].map((k) => ({
+        label: shortLabels[k],
+        pressed: k === active ? 'true' : 'false',
+        pick: () => this.setState({ active: k }),
+        tabStyle: 'min-height: 72px; padding: 8px 4px; border-radius: 12px; background: ' + (k === active ? '#2A2620' : 'transparent') + '; border: ' + (k === active ? '2px solid #9EB4F2' : '1px solid #3D382F') + '; color: #F5EEDC; font: inherit; display: flex; flex-direction: column; align-items: center; gap: 6px',
+        swStyle: 'width: 26px; height: 26px; border-radius: 5px; ' + (look[k] ? 'background: ' + byCode[look[k]][2] : 'background: repeating-linear-gradient(45deg, #3D382F 0 4px, #2A2620 4px 8px)')
+      })),
+      shades: shades.map((s) => {
+        const on = s[0] === cur;
+        return {
+          short: (on ? '✓ ' : '') + s[0].slice(2),
+          aria: s[0] + ' ' + s[1],
+          pressed: on ? 'true' : 'false',
+          pick: () => setShade(s[0]),
+          chipStyle: 'flex: 0 0 56px; padding: 0; border-radius: 10px; overflow: hidden; background: #2A2620; font: inherit; display: flex; flex-direction: column; ' + (on ? 'border: 2px solid #F5EEDC; outline: 2px solid #F5EEDC; outline-offset: 2px; transform: translateY(-6px);' : 'border: 1px solid #4D473C;'),
+          colorStyle: 'display: block; height: 58px; background: ' + s[2]
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

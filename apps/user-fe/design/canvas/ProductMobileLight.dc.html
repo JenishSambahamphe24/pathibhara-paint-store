@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Product page, mobile, light theme</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@400..700&amp;family=Mukta:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1E3A7C}a:hover{color:#132656}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; min-height: 844px; background: #F5F1E8; color: #1E1B16; font-family: 'Mukta', system-ui, sans-serif; padding-bottom: 92px; box-sizing: border-box">
+  <header style="background: #A3192B; padding: 5px">
+    <div style="border: 2px solid #F2C230; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 4px 12px; color: #FBF4E4">
+      <a href="HomeMobileLight.dc.html" style="display: flex; flex-direction: column; line-height: 0.88; text-decoration: none; color: #FBF4E4; min-height: 44px; justify-content: center">
+        <span lang="ne" style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 17px">पाथीभरा पेन्ट्स</span>
+        <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 26px; text-transform: uppercase; letter-spacing: 0.03em">Pathibhara Paints</span>
+      </a>
+      <button type="button" aria-label="Menu" style="width: 44px; height: 44px; border: none; background: transparent; color: #FBF4E4; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </header>
+
+  <nav aria-label="Category path" style="padding: 12px 16px 8px; font-size: 14px; display: flex; flex-wrap: wrap; gap: 2px 6px">
+    <a href="CatalogMobileLight.dc.html">Products</a><span aria-hidden="true" style="color: #5E574B">/</span><a href="#">Interior paint</a><span aria-hidden="true" style="color: #5E574B">/</span><span aria-current="page" style="font-weight: 700">Luxury emulsion</span>
+  </nav>
+
+  <div style="margin: 0 16px; border-radius: 14px; overflow: hidden; aspect-ratio: 1 / 1; background: #ECE5D6">
+    <img src="/_blob/22f1192bf5c3eb5b9bc13d873999a06d" alt="Royale Luxury Finish 18 L can in a living room" style="width: 100%; height: 100%; object-fit: cover; display: block">
+  </div>
+
+  <section style="padding: 16px 16px 0; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #A3192C">Asian Paints · Interior emulsion</span>
+      <h1 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 48px; line-height: 0.86; text-transform: uppercase">Royale Luxury Finish</h1>
+      <p style="margin: 6px 0 0; font-size: 16px; line-height: 1.5; color: #3B362D">[PRODUCT DESCRIPTION — written in the admin panel]</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 96px 1fr; gap: 14px; align-items: center; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 12px; padding: 14px">
+      <div aria-hidden="true" style="position: relative; width: 96px; height: 96px; background: #ECE5D6; border-radius: 6px">
+        <div style="position: absolute; left: 16px; bottom: 10px; width: 64px; height: 64px; background: #D8B98C; border: 1px solid rgba(0,0,0,0.2); box-sizing: border-box"></div>
+        <span style="position: absolute; left: 16px; top: 4px; font-size: 11px; font-weight: 700">6 ft</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <span style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 32px; line-height: 0.95">1 L ≈ 35 sq ft</span>
+        <span style="font-size: 14px; line-height: 1.4; color: #3B362D">About one 6 × 6 ft wall per coat. 2 coats recommended.</span>
+        <span style="font-size: 12px; color: #5E574B">Sample coverage figure</span>
+      </div>
+    </div>
+
+    <fieldset style="border: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+      <legend style="font-size: 16px; font-weight: 700; padding: 0; margin-bottom: 10px">Size <span style="font-size: 13px; font-weight: 500; color: #5E574B">· sample prices</span></legend>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <sc-for list="{{sizes}}" as="z" hint-placeholder-count="4">
+          <button type="button" aria-pressed="{{z.pressed}}" onClick="{{z.pick}}" style="{{z.style}}">
+            <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 30px; line-height: 0.9">{{z.label}}</span>
+            <span style="font-size: 15px; font-weight: 700">{{z.price}}</span>
+            <span style="font-size: 13px; color: #5E574B">{{z.perL}}</span>
+          </button>
+        </sc-for>
+      </div>
+    </fieldset>
+
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; border-top: 2px solid #1E1B16; padding-top: 12px; flex-wrap: wrap">
+      <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 46px; line-height: 0.9">{{sel.price}}</span>
+      <span style="font-size: 14px; font-weight: 700; color: #1D6B3F">{{sel.saving}}</span>
+    </div>
+    <a href="CalcMobileLight.dc.html" style="min-height: 52px; border-radius: 6px; background: #1E1B16; color: #FFFDF8; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 23px; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Calculate how much I need</a>
+    <a href="#" style="min-height: 50px; border-radius: 6px; border: 2px solid #1E1B16; color: #1E1B16; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Ask about this size</a>
+
+    <dl style="margin: 6px 0 0; display: grid; grid-template-columns: 130px 1fr; gap: 8px 12px; font-size: 15px; border-top: 1px solid #D8D0BF; padding-top: 12px">
+      <dt style="color: #5E574B">Coverage</dt><dd style="margin: 0">35 sq ft per litre per coat (sample)</dd>
+      <dt style="color: #5E574B">Coats</dt><dd style="margin: 0">2 recommended</dd>
+      <dt style="color: #5E574B">Sizes</dt><dd style="margin: 0">1 L · 4 L · 10 L · 18 L</dd>
+    </dl>
+
+    <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 8px">
+      <div style="align-self: flex-start; background: #1E3A7B; border-radius: 6px; padding: 4px">
+        <div style="border: 2px solid #FBF4E4; border-radius: 3px; padding: 6px 12px 2px; color: #FBF4E4">
+          <span style="display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #F2C230">Goes with this paint</span>
+          <h2 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 30px; line-height: 0.9; text-transform: uppercase">Prime the wall first</h2>
+        </div>
+      </div>
+      <a href="#" style="display: grid; grid-template-columns: 80px 1fr; gap: 12px; align-items: center; padding: 10px; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 12px; text-decoration: none; color: #1E1B16">
+        <span style="width: 80px; height: 80px; border-radius: 10px; background: #ECE5D6; display: flex; align-items: center; justify-content: center"><img src="/_blob/cbeb017aa0ccef5b490b3be4ee33fcb7" alt="" style="height: 70px; width: auto; display: block"></span>
+        <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; font-weight: 700; color: #5E574B">Primer · Basecoat</span><span style="font-weight: 700; font-size: 16px">Ultima Basecoat</span><span style="font-family: 'Teko', sans-serif; font-size: 22px; line-height: 1">From Rs. 850</span></span>
+      </a>
+    </div>
+  </section>
+
+  <nav aria-label="Contact the store" style="position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 12px 14px; background: #FFFDF8; border-top: 1px solid #D8D0BF; display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 8px">
+    <a href="#" style="min-height: 48px; border-radius: 6px; border: 1px solid #D8D0BF; color: #1E1B16; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 21px; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Call</a>
+    <a href="#" style="min-height: 48px; border-radius: 6px; background: #1D6B3F; color: #FFFFFE; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 21px; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">WhatsApp</a>
+    <a href="#" style="min-height: 48px; border-radius: 6px; border: 1px solid #D8D0BF; color: #1E1B16; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 21px; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Map</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { size: 3 };
+  }
+  renderVals() {
+    const npr = (n) => {
+      const s = String(Math.round(n));
+      if (s.length <= 3) return 'Rs. ' + s;
+      return 'Rs. ' + s.slice(0, -3).replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + s.slice(-3);
+    };
+    const sizes = [
+      { l: 1, label: '1 L', price: 1450 },
+      { l: 4, label: '4 L', price: 5480 },
+      { l: 10, label: '10 L', price: 13200 },
+      { l: 18, label: '18 L', price: 22950 }
+    ];
+    const z = sizes[this.state.size];
+    const saving = sizes[0].price * z.l - z.price;
+    return {
+      sizes: sizes.map((s, i) => ({
+        label: s.label, price: npr(s.price), perL: npr(s.price / s.l) + ' / L',
+        pressed: i === this.state.size ? 'true' : 'false',
+        pick: () => this.setState({ size: i }),
+        style: 'min-height: 92px; padding: 12px; border-radius: 10px; background: #FFFDF8; color: #1E1B16; font: inherit; text-align: left; display: flex; flex-direction: column; gap: 4px; ' + (i === this.state.size ? 'border: 2px solid #1E1B16; outline: 2px solid #1E1B16; outline-offset: 2px;' : 'border: 1px solid #D8D0BF;')
+      })),
+      sel: { price: npr(z.price), saving: saving > 0 ? 'Saves ' + npr(saving) + ' vs ' + z.l + ' × 1 L cans' : 'Smallest can' }
+    };
+  }
+}
+</script>
+</body>
+</html>

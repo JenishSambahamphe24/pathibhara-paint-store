@@ -1,0 +1,143 @@
+/*
+ * "Bazaar Signboard" tokens. Spec: design/DESIGN.md.
+ * Light values live in @theme so Tailwind generates the utilities (bg-bg,
+ * text-ink, border-line, bg-sign-red …); the dark blocks only reassign the
+ * same variables. Sign colours are left out of the dark blocks on purpose:
+ * a signboard looks the same in both themes.
+ */
+
+/* ThemeHelper.initScript always sets data-theme, so dark: follows the
+   visitor's choice as well as the system setting. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Tablet and up, or a phone turned sideways: tools put their controls in a
+   side panel instead of a bottom sheet. Keep in step with WIDE_QUERY in
+   features/visualizer/hooks/useIsWide.ts. */
+@custom-variant wide (@media (min-width: 48rem), (orientation: landscape) and (min-width: 40rem));
+
+/* Hides a scroll row's scrollbar in every browser (same utility as
+   bitsky's user-fe). The row still scrolls by touch, wheel and drag. */
+@utility scrollbar-width-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@theme {
+  --color-sign-red: #a3192b;
+  --color-sign-blue: #1e3a7b;
+  --color-pinstripe: #f2c230;
+  --color-sign-cream: #fbf4e4;
+  --color-sign-ink: #1e1b16;
+
+  --color-bg: #f5f1e8;
+  --color-surface: #fffdf8;
+  --color-surface-2: #ece5d6;
+  --color-line: #d8d0bf;
+  --color-ink: #1e1b16;
+  --color-ink-soft: #3b362d;
+  --color-muted: #5e574b;
+  --color-accent: #1e3a7b;
+  --color-accent-hover: #132656;
+  --color-brand: #a3192b;
+  --color-success: #1d6b3f;
+  --color-on-success: #fffffe;
+  --color-warning: #8a5300;
+  --color-danger: #b3261e;
+  --color-on-ink: #fbf4e4;
+  --color-swatch-frame: #fffdf8;
+  --color-swatch-frame-line: #d8d0bf;
+  /* Behind the house: a solid tone where the banner photo will go. */
+  --color-stage: #cbbfa9;
+  --color-stage-ground: #b8ac95;
+
+  --font-display: "Teko", "Arial Narrow", sans-serif;
+  --font-body: "Mukta", system-ui, sans-serif;
+
+  --radius-sign: 6px;
+  --radius-sign-inner: 3px;
+  --radius-control: 6px;
+  --radius-field: 10px;
+  --radius-card: 12px;
+
+  --spacing-tap: 44px;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --color-bg: #15130f;
+      --color-surface: #1f1c17;
+      --color-surface-2: #2a2620;
+      --color-line: #3d382f;
+      --color-ink: #f5eedc;
+      --color-ink-soft: #cfc7b4;
+      --color-muted: #ada593;
+      --color-accent: #9eb4f2;
+      --color-accent-hover: #c6d2f7;
+      --color-brand: #e8606f;
+      --color-success: #6fd39a;
+      --color-on-success: #0f2a1a;
+      --color-warning: #f0b65a;
+      --color-danger: #f59088;
+      --color-on-ink: #15130f;
+      --color-swatch-frame: #1f1c17;
+      --color-swatch-frame-line: #4d473c;
+      --color-stage: #3a3328;
+      --color-stage-ground: #2b261f;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --color-bg: #15130f;
+    --color-surface: #1f1c17;
+    --color-surface-2: #2a2620;
+    --color-line: #3d382f;
+    --color-ink: #f5eedc;
+    --color-ink-soft: #cfc7b4;
+    --color-muted: #ada593;
+    --color-accent: #9eb4f2;
+    --color-accent-hover: #c6d2f7;
+    --color-brand: #e8606f;
+    --color-success: #6fd39a;
+    --color-on-success: #0f2a1a;
+    --color-warning: #f0b65a;
+    --color-danger: #f59088;
+    --color-on-ink: #15130f;
+    --color-swatch-frame: #1f1c17;
+    --color-swatch-frame-line: #4d473c;
+    --color-stage: #3a3328;
+    --color-stage-ground: #2b261f;
+    color-scheme: dark;
+  }
+
+  /* Anchor links ("See estimate", "Skip to content") land below the sticky
+     header instead of under it. */
+  html {
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-bg font-body text-ink;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

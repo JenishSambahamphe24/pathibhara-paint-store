@@ -13,20 +13,21 @@ const EXCERPT_MAX = 300;
 // storing megabytes of markup.
 const CONTENT_MAX_BYTES = 500_000;
 
-const contentNodeSchema: z.ZodType<{ type: string }> = z.lazy(() =>
+// Exported only so the API can name it for OpenAPI (see post.dto.ts).
+export const postContentNodeSchema: z.ZodType<{ type: string }> = z.lazy(() =>
   z
     .object({
       type: z.string().min(1),
       text: z.string().optional(),
       attrs: z.record(z.string(), z.unknown()).optional(),
       marks: z.array(z.object({ type: z.string(), attrs: z.record(z.string(), z.unknown()).optional() })).optional(),
-      content: z.array(contentNodeSchema).optional(),
+      content: z.array(postContentNodeSchema).optional(),
     })
     .strict(),
 );
 
 export const postContentSchema = z
-  .object({ type: z.literal("doc"), content: z.array(contentNodeSchema).optional() })
+  .object({ type: z.literal("doc"), content: z.array(postContentNodeSchema).optional() })
   .refine((doc) => JSON.stringify(doc).length <= CONTENT_MAX_BYTES, { message: "The post is too long" });
 
 export const postInputSchema = z
@@ -62,3 +63,10 @@ export const postListQuerySchema = z.object({
   status: ListQuerySchema.optionalEnum(POST_STATUSES),
 });
 export type PostListQuery = z.output<typeof postListQuerySchema>;
+
+// The public blog is always newest first, so it takes no sort parameters.
+export const publicPostListQuerySchema = z.object({
+  ...paginationQueryShape,
+  ...searchQueryShape,
+});
+export type PublicPostListQuery = z.output<typeof publicPostListQuerySchema>;

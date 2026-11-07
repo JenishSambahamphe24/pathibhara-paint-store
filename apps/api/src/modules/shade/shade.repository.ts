@@ -9,6 +9,7 @@ import { colourSets, products, shades, TransactionManager } from "@repo/database
 import { PaginationHelper } from "@repo/http-kit";
 
 import { LikeHelper } from "#helpers/like.helper";
+import { PublicVisibilityHelper } from "#helpers/public-visibility.helper";
 
 export type ShadeRow = typeof shades.$inferSelect;
 
@@ -140,12 +141,32 @@ export class ShadeRepository {
   }
 
   async activeSetNamesUsing(shadeId: string): Promise<Array<string>> {
-    const rows = await this.db
-      .select({ name: colourSets.name })
+    return (await this.activeSetsUsing(shadeId)).map((r) => r.name);
+  }
+
+  async activeSetsUsing(shadeId: string) {
+    return this.db
+      .select({ slug: colourSets.slug, name: colourSets.name })
       .from(colourSets)
-      .where(and(eq(colourSets.isActive, true), this.usedBy(shadeId)))
+      .where(and(PublicVisibilityHelper.colourSet(), this.usedBy(shadeId)))
       .orderBy(asc(colourSets.name));
-    return rows.map((r) => r.name);
+  }
+
+  async findActiveByCode(code: string): Promise<ShadeRow | undefined> {
+    const [row] = await this.db
+      .select()
+      .from(shades)
+      .where(and(eq(shades.code, code), eq(shades.isActive, true)))
+      .limit(1);
+    return row;
+  }
+
+  async findActiveByProduct(productId: string) {
+    return this.db
+      .select({ code: shades.code, name: shades.name, hex: shades.hex })
+      .from(shades)
+      .where(and(eq(shades.productId, productId), eq(shades.isActive, true)))
+      .orderBy(asc(shades.sortOrder), asc(shades.code));
   }
 
   async create(values: typeof shades.$inferInsert): Promise<ShadeRow> {

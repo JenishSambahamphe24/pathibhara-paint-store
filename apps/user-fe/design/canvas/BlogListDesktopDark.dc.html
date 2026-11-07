@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guides list, desktop, dark theme</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@400..700&amp;family=Mukta:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#9EB4F2}a:hover{color:#C6D2F7}
+</style>
+</helmet>
+<div style="background: #15130F; color: #F5EEDC; font-family: 'Mukta', system-ui, sans-serif; min-height: 100vh">
+  <header style="border-bottom: 1px solid #3D382F">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 10px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+      <a href="HomeDesktopDark.dc.html" style="display: block; text-decoration: none; background: #A3192B; border-radius: 6px; padding: 4px">
+        <span style="border: 2px solid #F2C230; border-radius: 3px; padding: 4px 16px 2px; display: flex; flex-direction: column; align-items: center; line-height: 0.88; color: #FBF4E4"><span lang="ne" style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 18px">पाथीभरा पेन्ट्स</span><span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 28px; text-transform: uppercase; letter-spacing: 0.03em">Pathibhara Paints</span></span>
+      </a>
+      <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 4px">
+        <a href="VizDesktopDark.dc.html" style="color: #F5EEDC; text-decoration: none; padding: 3px 12px 0; min-height: 44px; display: flex; align-items: center; font-family: 'Teko', sans-serif; font-weight: 500; font-size: 23px; text-transform: uppercase">Visualizer</a>
+        <a href="CalcDesktopDark.dc.html" style="color: #F5EEDC; text-decoration: none; padding: 3px 12px 0; min-height: 44px; display: flex; align-items: center; font-family: 'Teko', sans-serif; font-weight: 500; font-size: 23px; text-transform: uppercase">Calculator</a>
+        <a href="CatalogDesktopDark.dc.html" style="color: #F5EEDC; text-decoration: none; padding: 3px 12px 0; min-height: 44px; display: flex; align-items: center; font-family: 'Teko', sans-serif; font-weight: 500; font-size: 23px; text-transform: uppercase">Products</a>
+        <a href="BlogListDesktopDark.dc.html" aria-current="page" style="color: #F5EEDC; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; padding: 3px 12px 0; min-height: 44px; display: flex; align-items: center; font-family: 'Teko', sans-serif; font-weight: 500; font-size: 23px; text-transform: uppercase">Guides</a>
+        <a href="VisitDesktopDark.dc.html" style="color: #F5EEDC; text-decoration: none; padding: 3px 12px 0; min-height: 44px; display: flex; align-items: center; font-family: 'Teko', sans-serif; font-weight: 500; font-size: 23px; text-transform: uppercase">Visit</a>
+      </nav>
+      <a href="#" style="min-height: 44px; padding: 3px 16px 0; border-radius: 6px; background: #6FD39A; color: #0F2A1A; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; text-transform: uppercase; display: flex; align-items: center; text-decoration: none">WhatsApp</a>
+    </div>
+  </header>
+  <main style="max-width: 1280px; margin: 0 auto; padding: 28px 24px 72px; display: flex; flex-direction: column; gap: 28px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+      <div style="background: #1E3A7B; border-radius: 6px; padding: 5px">
+        <div style="border: 2px solid #FBF4E4; border-radius: 3px; padding: 8px 18px 3px; color: #FBF4E4">
+          <span style="display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #F2C230">From the shop counter</span>
+          <h1 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 56px; line-height: 0.88; text-transform: uppercase">Painting guides</h1>
+        </div>
+      </div>
+      <div role="group" aria-label="Filter guides" style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+          <button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <sc-if value="{{hasFeatured}}" hint-placeholder-val="{{ true }}">
+      <a href="{{featured.href}}" style="display: flex; flex-wrap: wrap; gap: 28px; align-items: center; text-decoration: none; color: #F5EEDC; border-top: 2px solid #F5EEDC; padding-top: 24px">
+        <span style="flex: 1.3 1 480px; min-width: 0; position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; display: block">
+          <sc-if value="{{featured.hasCover}}" hint-placeholder-val="{{ true }}"><span style="{{featured.coverStyle}}"><span style="font-size: 12px; font-weight: 600; color: #1E1B17; background: rgba(251,244,228,0.85); padding: 2px 8px; border-radius: 4px">{{featured.coverLabel}}</span></span></sc-if>
+          <sc-if value="{{featured.noCover}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; inset: 0; background: #F2C230; padding: 8px; box-sizing: border-box; display: block"><span style="height: 100%; border: 3px solid #1E1B17; border-radius: 6px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 96px; text-transform: uppercase; color: #1E1B17">{{featured.coverWord}}</span></span></sc-if>
+        </span>
+        <span style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+          <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #E8606F">{{featured.cat}} · {{featured.date}}</span>
+          <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 56px; line-height: 0.88; text-transform: uppercase">{{featured.title}}</span>
+          <span style="font-size: 18px; line-height: 1.5; color: #CFC7B4">{{featured.excerpt}}</span>
+          <span style="font-weight: 700; color: #9EB4F2">Read the guide →</span>
+        </span>
+      </a>
+    </sc-if>
+
+    <ul style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 28px 24px">
+      <sc-for list="{{rest}}" as="p" hint-placeholder-count="5">
+        <li>
+          <a href="{{p.href}}" style="display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: #F5EEDC">
+            <span style="position: relative; aspect-ratio: 16 / 10; border-radius: 10px; overflow: hidden; display: block">
+              <sc-if value="{{p.hasCover}}" hint-placeholder-val="{{ true }}"><span style="{{p.coverStyle}}"><span style="font-size: 12px; font-weight: 600; color: #1E1B17; background: rgba(251,244,228,0.85); padding: 2px 8px; border-radius: 4px">{{p.coverLabel}}</span></span></sc-if>
+              <sc-if value="{{p.noCover}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; inset: 0; background: #F2C230; padding: 6px; box-sizing: border-box; display: block"><span style="height: 100%; border: 2px solid #1E1B17; border-radius: 5px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 54px; text-transform: uppercase; color: #1E1B17">{{p.coverWord}}</span></span></sc-if>
+            </span>
+            <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #E8606F">{{p.cat}} · {{p.date}}</span>
+            <span style="font-size: 21px; font-weight: 700; line-height: 1.25">{{p.title}}</span>
+            <span style="font-size: 15px; line-height: 1.5; color: #CFC7B4">{{p.excerpt}}</span>
+          </a>
+        </li>
+      </sc-for>
+    </ul>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { cat: 'All' };
+  }
+  renderVals() {
+    const posts = [
+      { title: 'Damp-proof your walls before the monsoon', cat: 'Waterproofing', excerpt: 'Find where the water gets in, fix that first, then seal the wall. A step-by-step order of work for a dry house in Asar.', cover: '#8F9A9C', coverLabel: 'Cover photo · monsoon', href: 'ArticleMobileLight.dc.html' },
+      { title: 'Choosing exterior colours for a Nepali house', cat: 'Colour', excerpt: 'Light walls stay cooler, dark trims hide dust from the road. How to pick a set that still looks good in five years.', cover: '#C9BBA5', coverLabel: 'Cover photo · exterior' },
+      { title: 'Primer basics: why the first coat matters', cat: 'Basics', excerpt: 'Primer is what makes the paint stick and the colour even. When you can skip it, and when you never should.', cover: null, coverWord: 'Primer' },
+      { title: 'How much paint for a 2-storey house?', cat: 'Basics', excerpt: 'A worked example with real wall sizes, so you can check a contractor’s quote in two minutes.', cover: '#D3C08E', coverLabel: 'Cover photo · painting in progress' },
+      { title: 'Roof terrace leaks: patch or full coating?', cat: 'Waterproofing', excerpt: 'Hairline cracks, ponding water and old tar: what each one needs before the rains.', cover: null, coverWord: 'Roof' },
+      { title: 'Easy-clean paint for kitchens and kids’ rooms', cat: 'Interior', excerpt: 'Washable finishes, sheen levels and what actually survives turmeric and crayons.', cover: '#CFC6B6', coverLabel: 'Cover photo · interior' }
+    ];
+    const cats = ['All', 'Waterproofing', 'Colour', 'Basics', 'Interior'];
+    const list = posts.filter((p) => this.state.cat === 'All' || p.cat === this.state.cat);
+    const mk = (p) => ({
+      title: p.title, cat: p.cat, excerpt: p.excerpt, date: '[DATE]', href: p.href || '#',
+      hasCover: !!p.cover, noCover: !p.cover, coverLabel: p.coverLabel || '', coverWord: p.coverWord || p.cat,
+      coverStyle: 'position: absolute; inset: 0; background: ' + (p.cover || '#F2C230') + '; display: flex; align-items: flex-end; padding: 8px; box-sizing: border-box'
+    });
+    return {
+      cats: cats.map((c) => ({
+        label: c, pressed: this.state.cat === c ? 'true' : 'false', pick: () => this.setState({ cat: c }),
+        style: 'min-height: 44px; padding: 0 14px; border-radius: 22px; white-space: nowrap; font: 600 14px \'Mukta\', sans-serif; ' + (this.state.cat === c ? 'background: #F5EEDC; color: #1F1C17; border: 1px solid #F5EEDC;' : 'background: #1F1C17; color: #F5EEDC; border: 1px solid #3D382F;')
+      })),
+      featured: mk(list[0] || posts[0]),
+      hasFeatured: list.length > 0,
+      rest: list.slice(1).map(mk),
+      all: list.map(mk),
+      count: list.length + (list.length === 1 ? ' guide' : ' guides')
+    };
+  }
+}
+
+</script>
+</body>
+</html>

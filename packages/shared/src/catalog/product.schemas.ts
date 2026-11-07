@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { slugInputSchema } from "../helpers/slug.schema";
+import { slugInputSchema, slugParamSchema } from "../helpers/slug.schema";
 import { contentFieldsShape } from "../content/content.schemas";
 import {
   ACTIVE_FILTERS,
@@ -93,3 +93,14 @@ export const variantSearchQuerySchema = z.object({
   includeInactive: ListQuerySchema.optionalBool(),
 });
 export type VariantSearchQuery = z.output<typeof variantSearchQuerySchema>;
+
+export const PUBLIC_PRODUCT_SORT_KEYS = ["name", "price", "updatedAt"] as const;
+
+export const publicProductListQuerySchema = z.object({
+  ...paginationQueryShape,
+  ...searchQueryShape,
+  ...ListQuerySchema.sort(PUBLIC_PRODUCT_SORT_KEYS, "name", "asc"),
+  // A category slug; includes products filed under its subcategories.
+  category: slugParamSchema.optional(),
+});
+export type PublicProductListQuery = z.output<typeof publicProductListQuerySchema>;

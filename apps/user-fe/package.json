@@ -11,18 +11,25 @@
     "format": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "format:write": "prettier --write .",
-    "check": "prettier --write . && eslint --fix"
+    "check": "prettier --write . && eslint --fix",
+    "test": "vitest run"
   },
   "dependencies": {
+    "@react-three/drei": "catalog:fe",
+    "@react-three/fiber": "catalog:fe",
     "@repo/shared": "workspace:*",
+    "@t3-oss/env-core": "catalog:fe",
     "@tailwindcss/vite": "catalog:fe",
     "@tanstack/react-router": "catalog:fe",
     "@tanstack/react-start": "catalog:fe",
     "@tanstack/router-plugin": "catalog:fe",
+    "clsx": "catalog:fe",
+    "lucide-react": "catalog:fe",
     "nitro": "catalog:fe",
     "react": "catalog:fe",
     "react-dom": "catalog:fe",
     "tailwindcss": "catalog:fe",
+    "three": "catalog:fe",
     "zod": "catalog:generic"
   },
   "devDependencies": {
@@ -32,6 +39,7 @@
     "@types/node": "catalog:generic",
     "@types/react": "catalog:fe",
     "@types/react-dom": "catalog:fe",
+    "@types/three": "catalog:fe",
     "@vitejs/plugin-react": "catalog:fe",
     "babel-plugin-react-compiler": "catalog:fe",
     "eslint": "catalog:generic",
@@ -39,7 +47,8 @@
     "prettier-plugin-tailwindcss": "catalog:fe",
     "typescript": "catalog:generic",
     "vite": "catalog:fe",
-    "vite-tsconfig-paths": "catalog:fe"
+    "vite-tsconfig-paths": "catalog:fe",
+    "vitest": "catalog:generic"
   },
   "imports": {
     "#/*": "./src/*"

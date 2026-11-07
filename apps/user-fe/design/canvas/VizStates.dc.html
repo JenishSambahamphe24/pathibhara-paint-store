@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Visualizer loading and fallback states</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@400..700&amp;family=Mukta:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1400px; height: 760px; box-sizing: border-box; padding: 40px; background: #E9E3D6; color: #1E1B16; font-family: 'Mukta', system-ui, sans-serif; display: grid; grid-template-columns: 390px 390px 1fr; gap: 32px; align-items: start">
+
+  <figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
+    <figcaption style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 30px; line-height: 1; text-transform: uppercase">1 · Loading</figcaption>
+    <div style="position: relative; width: 390px; height: 600px; border-radius: 20px; overflow: hidden; background: #ECE5D6; border: 1px solid #D8D0BF">
+      <img src="/_blob/0f7a7820a3bef81fa79a49442de822d6" alt="Picture of the house shown while 3D loads" style="position: absolute; left: 0; top: 0; width: 390px; height: 470px; object-fit: cover; display: block">
+      <span style="position: absolute; left: 12px; top: 12px; font-size: 13px; font-weight: 600; background: #1E1B16; color: #FFFDF8; padding: 3px 10px; border-radius: 6px">Loading 3D house…</span>
+      <div style="position: absolute; left: 0; right: 0; top: 440px; bottom: 0; background: #FFFDF8; border-radius: 18px 18px 0 0; border-top: 1px solid #D8D0BF; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+        <span style="font-size: 14px; line-height: 1.45">Controls work straight away. Taps are remembered and appear on the house the moment 3D is ready.</span>
+        <div style="display: flex; gap: 6px"><span style="flex: 1; height: 40px; border-radius: 4px; background: #D8B98C"></span><span style="flex: 1; height: 40px; border-radius: 4px; background: #B5573A"></span><span style="flex: 1; height: 40px; border-radius: 4px; background: #2B2A28"></span><span style="flex: 1; height: 40px; border-radius: 4px; background: #F1ECDF; border: 1px solid #D8D0BF; box-sizing: border-box"></span></div>
+      </div>
+    </div>
+  </figure>
+
+  <figure style="margin: 0; display: flex; flex-direction: column; gap: 10px">
+    <figcaption style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 30px; line-height: 1; text-transform: uppercase">2 · No 3D (fallback)</figcaption>
+    <div style="position: relative; width: 390px; height: 600px; border-radius: 20px; overflow: hidden; background: #ECE5D6; border: 1px solid #D8D0BF">
+      <svg viewBox="0 0 340 250" width="370" height="272" role="img" aria-label="Drawing of the house painted Sandstone, Terracotta and Charcoal" style="position: absolute; left: 10px; top: 90px">
+        <rect x="0" y="236" width="340" height="4" fill="#BDB8AD"></rect>
+        <rect x="8" y="150" width="86" height="8" fill="#F1ECDF"></rect>
+        <rect x="12" y="158" width="6" height="78" fill="#B5573A"></rect>
+        <rect x="82" y="158" width="6" height="78" fill="#B5573A"></rect>
+        <rect x="92" y="38" width="208" height="198" fill="#D8B98C" stroke="#000000" stroke-opacity="0.2"></rect>
+        <rect x="220" y="6" width="70" height="24" fill="#D8B98C"></rect>
+        <rect x="88" y="150" width="216" height="8" fill="#B5573A"></rect>
+        <rect x="88" y="88" width="216" height="8" fill="#B5573A"></rect>
+        <rect x="92" y="38" width="10" height="198" fill="#B5573A"></rect>
+        <rect x="290" y="38" width="10" height="198" fill="#B5573A"></rect>
+        <rect x="88" y="30" width="216" height="8" fill="#F1ECDF"></rect>
+        <rect x="112" y="44" width="62" height="102" fill="#8A5A3B"></rect>
+        <rect x="216" y="48" width="64" height="32" fill="#BCD0D6" stroke="#2B2A28" stroke-width="4"></rect>
+        <rect x="212" y="102" width="72" height="44" fill="#BCD0D6" stroke="#2B2A28" stroke-width="4"></rect>
+        <rect x="222" y="178" width="28" height="58" fill="#2B2A28"></rect>
+      </svg>
+      <p style="position: absolute; left: 16px; right: 16px; top: 380px; margin: 0; font-size: 13px; line-height: 1.4; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 8px; padding: 8px 10px">3D isn’t available on this phone, so you’re seeing a drawing. Shades still change here, and the estimate works the same.</p>
+      <div style="position: absolute; left: 0; right: 0; top: 460px; bottom: 0; background: #FFFDF8; border-radius: 18px 18px 0 0; border-top: 1px solid #D8D0BF; padding: 14px 16px; font-size: 14px; line-height: 1.45">Same bottom sheet, same buttons. Nothing is labelled an error.</div>
+    </div>
+  </figure>
+
+  <div style="display: flex; flex-direction: column; gap: 14px; padding-top: 40px">
+    <div style="align-self: flex-start; background: #1E3A7B; border-radius: 6px; padding: 5px">
+      <div style="border: 2px solid #FBF4E4; border-radius: 3px; padding: 6px 14px 2px; color: #FBF4E4; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 34px; line-height: 0.95; text-transform: uppercase">How the 3D behaves</div>
+    </div>
+    <ul style="margin: 0; padding: 0 0 0 20px; display: flex; flex-direction: column; gap: 10px; font-size: 16px; line-height: 1.5">
+      <li><strong>Picture first.</strong> A static image of the house (WebP, about 30 KB) shows instantly; the 3D view swaps in once the model loads.</li>
+      <li><strong>Loads only when needed.</strong> The 3D code and the model load only on pages with the house, and only when it is near the screen.</li>
+      <li><strong>Light on phones.</strong> Render resolution capped at 2×, one sun light plus soft sky light, soft shadows.</li>
+      <li><strong>Pauses itself</strong> when the house scrolls off-screen or the tab is hidden.</li>
+      <li><strong>Gestures:</strong> one finger turns, two fingers zoom, reset returns to the front corner view. Turning stops the slow auto-spin.</li>
+      <li><strong>Reduced motion:</strong> no auto-spin, no flashes; the tapped part is named in the “Repainting” label instead.</li>
+      <li><strong>Fallback:</strong> no WebGL, or the model fails to load → the drawing above, still repainting.</li>
+      <li><strong>Colour honesty:</strong> plain, even lighting with no tone mapping, so the picked shade is shown as true as a screen allows.</li>
+    </ul>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1400,"height":760}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

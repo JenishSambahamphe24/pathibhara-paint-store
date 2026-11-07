@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Visualizer, mobile, dark theme</title>
+<script src="./support.js"></script>
+<script src="/_blob/0b86421ec307a6667c197368ffc09d30"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@400..700&amp;family=Mukta:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#9EB4F2}a:hover{color:#C6D2F7}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; background: #15130F; color: #F5EEDC; font-family: 'Mukta', system-ui, sans-serif">
+
+  <div style="position: absolute; left: 0; right: 0; top: 0; height: 470px; background: #2A2620">
+    <sc-if value="{{showPoster}}" hint-placeholder-val="{{ true }}">
+      <img src="/_blob/0f7a7820a3bef81fa79a49442de822d6" alt="Picture of the house" style="position: absolute; left: 0; top: 0; width: 390px; height: 470px; object-fit: cover; display: block">
+    </sc-if>
+    <canvas ref="{{setCanvas}}" aria-label="{{houseLabel}}" role="img" style="position: absolute; left: 0; top: 0; width: 390px; height: 470px; display: block"></canvas>
+    <sc-if value="{{failed}}" hint-placeholder-val="{{ false }}">
+      <div style="position: absolute; left: 0; top: 0; width: 390px; height: 470px; background: #2A2620">
+        <svg viewBox="0 0 340 250" width="370" height="272" role="img" aria-label="{{houseLabel}}" style="position: absolute; left: 10px; top: 110px">
+          <rect x="0" y="236" width="340" height="4" fill="#3D382F"></rect>
+          <rect x="8" y="150" width="86" height="8" fill="{{c.roof}}" stroke="#000000" stroke-opacity="0.2"></rect>
+          <rect x="12" y="158" width="6" height="78" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.2"></rect>
+          <rect x="82" y="158" width="6" height="78" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.2"></rect>
+          <rect x="92" y="38" width="208" height="198" fill="{{c.walls}}" stroke="#000000" stroke-opacity="0.2"></rect>
+          <rect x="220" y="6" width="70" height="24" fill="{{c.walls}}" stroke="#000000" stroke-opacity="0.2"></rect>
+          <rect x="88" y="150" width="216" height="8" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.2"></rect>
+          <rect x="88" y="88" width="216" height="8" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.2"></rect>
+          <rect x="92" y="38" width="10" height="198" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.2"></rect>
+          <rect x="290" y="38" width="10" height="198" fill="{{c.columns}}" stroke="#000000" stroke-opacity="0.2"></rect>
+          <rect x="88" y="30" width="216" height="8" fill="{{c.roof}}" stroke="#000000" stroke-opacity="0.2"></rect>
+          <rect x="214" y="0" width="82" height="6" fill="{{c.roof}}" stroke="#000000" stroke-opacity="0.2"></rect>
+          <rect x="112" y="44" width="62" height="102" fill="#8A5A3B"></rect>
+          <rect x="216" y="48" width="64" height="32" fill="#BCD0D6" stroke="{{c.doors}}" stroke-width="4"></rect>
+          <rect x="212" y="102" width="72" height="44" fill="#BCD0D6" stroke="{{c.doors}}" stroke-width="4"></rect>
+          <rect x="112" y="174" width="62" height="40" fill="#BCD0D6" stroke="{{c.doors}}" stroke-width="4"></rect>
+          <rect x="222" y="178" width="28" height="58" fill="{{c.doors}}" stroke="#000000" stroke-opacity="0.25"></rect>
+          <rect x="258" y="178" width="26" height="36" fill="#BCD0D6" stroke="{{c.doors}}" stroke-width="4"></rect>
+        </svg>
+        <p style="position: absolute; left: 16px; right: 16px; bottom: 96px; margin: 0; font-size: 13px; line-height: 1.4; background: #1F1C17; border: 1px solid #3D382F; border-radius: 8px; padding: 8px 10px">3D isn’t available on this phone, so you’re seeing a drawing. Shades still change here, and the estimate works the same.</p>
+      </div>
+    </sc-if>
+
+    <div style="position: absolute; left: 8px; right: 8px; top: 8px; display: flex; align-items: center; justify-content: space-between">
+      <a href="HomeMobileDark.dc.html" aria-label="Back to home" style="width: 44px; height: 44px; border-radius: 8px; background: #1F1C17; border: 1px solid #3D382F; color: #F5EEDC; display: flex; align-items: center; justify-content: center; box-sizing: border-box"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></a>
+      <span style="background: #A3192B; border-radius: 5px; padding: 3px; display: block"><span style="display: block; border: 2px solid #F2C230; border-radius: 3px; padding: 4px 14px 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 26px; line-height: 1; text-transform: uppercase; letter-spacing: 0.04em; color: #FBF4E4">Colour visualizer</span></span>
+      <button type="button" aria-label="Save or share this look" onClick="{{openShare}}" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #3D382F; background: #1F1C17; color: #F5EEDC; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></button>
+    </div>
+
+    <div style="position: absolute; left: 12px; top: 62px; display: flex; gap: 6px; flex-wrap: wrap">
+      <span style="font-size: 13px; font-weight: 600; background: #1F1C17; border: 1px solid #3D382F; padding: 3px 10px; border-radius: 6px">Repainting: {{activeLabel}}</span>
+      <sc-if value="{{loading}}" hint-placeholder-val="{{ false }}">
+        <span style="font-size: 13px; font-weight: 600; background: #F5EEDC; color: #1F1C17; padding: 3px 10px; border-radius: 6px">Loading 3D house…</span>
+      </sc-if>
+    </div>
+
+    <div style="position: absolute; left: 8px; right: 8px; bottom: 46px; display: flex; justify-content: space-between; align-items: center">
+      <div role="group" aria-label="Compare looks" style="display: flex; background: #1F1C17; border: 1px solid #3D382F; border-radius: 8px; padding: 3px; gap: 3px">
+        <button type="button" aria-pressed="{{lookA.pressed}}" onClick="{{lookA.pick}}" style="{{lookA.style}}">Look A</button>
+        <button type="button" aria-pressed="{{lookB.pressed}}" onClick="{{lookB.pick}}" style="{{lookB.style}}">Look B</button>
+      </div>
+      <button type="button" aria-label="Reset view" onClick="{{resetView}}" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #3D382F; background: #1F1C17; color: #F5EEDC; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+    </div>
+  </div>
+
+  <section aria-label="Choose colours" style="position: absolute; left: 0; right: 0; top: 432px; bottom: 0; background: #1F1C17; border-top: 1px solid #3D382F; border-radius: 18px 18px 0 0; display: flex; flex-direction: column; gap: 10px; padding: 8px 0 12px; box-shadow: 0 -6px 18px rgba(0,0,0,0.08)">
+    <div aria-hidden="true" style="align-self: center; width: 40px; height: 4px; border-radius: 2px; background: #3D382F"></div>
+
+    <div role="tablist" aria-label="Sheet" style="display: grid; grid-template-columns: 1fr 1fr; margin: 0 12px; background: #2A2620; border-radius: 8px; padding: 3px; gap: 3px">
+      <button type="button" role="tab" aria-selected="{{tabShades.sel}}" onClick="{{tabShades.pick}}" style="{{tabShades.style}}">Pick shades</button>
+      <button type="button" role="tab" aria-selected="{{tabSets.sel}}" onClick="{{tabSets.pick}}" style="{{tabSets.style}}">Colour sets</button>
+    </div>
+
+    <sc-if value="{{isShades}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 0 12px">
+          <sc-for list="{{parts}}" as="p" hint-placeholder-count="4">
+            <button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.tabStyle}}">
+              <span style="padding: 2px; border: 1px solid #3D382F; border-radius: 7px; background: #1F1C17; display: flex"><span style="{{p.swStyle}}"></span></span>
+              <span style="font-size: 12px; font-weight: 600; line-height: 1.1; text-align: center">{{p.label}}</span>
+            </button>
+          </sc-for>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 12px 0 16px">
+          <span style="font-size: 14px; color: #ADA593"><strong style="color: #F5EEDC">{{activeLabel}}</strong> · {{activeShade}}</span>
+          <button type="button" aria-label="Search shades by code or name" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #3D382F; background: transparent; color: #F5EEDC; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+        </div>
+        <div style="display: flex; gap: 8px; overflow-x: auto; padding: 8px 16px 4px">
+          <sc-for list="{{shades}}" as="s" hint-placeholder-count="10">
+            <button type="button" aria-pressed="{{s.pressed}}" aria-label="{{s.aria}}" onClick="{{s.pick}}" style="{{s.chipStyle}}">
+              <span style="{{s.colorStyle}}"></span>
+              <span style="padding: 4px 6px; font-size: 12px; font-weight: 600; color: #F5EEDC; text-align: left">{{s.short}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isSets}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 2px">
+        <span style="padding: 0 16px; font-size: 14px; color: #ADA593">One tap fills all four parts. Then change any part in Pick shades.</span>
+        <div style="display: flex; gap: 10px; overflow-x: auto; padding: 4px 16px 6px">
+          <sc-for list="{{sets}}" as="t" hint-placeholder-count="4">
+            <button type="button" aria-pressed="{{t.pressed}}" onClick="{{t.pick}}" style="{{t.cardStyle}}">
+              <span style="display: flex; gap: 3px; height: 54px">
+                <span style="{{t.wallsStyle}}"></span>
+                <span style="{{t.columnsStyle}}"></span>
+                <span style="{{t.doorsStyle}}"></span>
+                <span style="{{t.roofStyle}}"></span>
+              </span>
+              <span style="font-size: 14px; font-weight: 600; line-height: 1.2">{{t.name}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 2px 12px 0; margin-top: auto">
+      <a href="#" style="min-height: 50px; border-radius: 6px; background: #F5EEDC; color: #1F1C17; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 21px; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Estimate this look</a>
+      <a href="#" style="min-height: 50px; border-radius: 6px; background: #6FD39A; color: #0F2A1A; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 21px; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: -3px"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg>Send to store</a>
+    </div>
+    <p style="margin: 0; padding: 0 16px; font-size: 12px; line-height: 1.35; color: #ADA593">Screen colours are close, not exact. Check the shade card at the store before you buy.</p>
+  </section>
+
+  <sc-if value="{{share}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.45); display: flex; flex-direction: column; justify-content: flex-end">
+      <div role="dialog" aria-label="Share this look" style="background: #1F1C17; border-radius: 18px 18px 0 0; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 32px; line-height: 1; text-transform: uppercase; padding-top: 4px">Share this look</span>
+          <button type="button" aria-label="Close" onClick="{{closeShare}}" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #3D382F; background: transparent; color: #F5EEDC; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div style="display: grid; grid-template-columns: 132px 1fr; gap: 12px; align-items: stretch">
+          <div style="border-radius: 8px; overflow: hidden; background: #2A2620; display: flex; flex-direction: column">
+            <img src="{{snap}}" alt="Picture of this look" style="width: 132px; height: 132px; object-fit: cover; display: block">
+            <span style="background: #A3192B; color: #FBF4E4; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 17px; text-transform: uppercase; text-align: center; padding: 3px 0 1px; border-top: 2px solid #F2C230">Pathibhara Paints</span>
+          </div>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13px">
+            <sc-for list="{{parts}}" as="p" hint-placeholder-count="4">
+              <li style="display: flex; align-items: center; gap: 8px"><span style="{{p.swSmall}}"></span><span><strong>{{p.full}}</strong><br>{{p.codeName}}</span></li>
+            </sc-for>
+          </ul>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+          <button type="button" style="min-height: 48px; border-radius: 6px; border: 2px solid #F5EEDC; background: transparent; color: #F5EEDC; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 20px; text-transform: uppercase; padding-top: 3px">Save image</button>
+          <button type="button" onClick="{{copyLink}}" style="min-height: 48px; border-radius: 6px; border: 2px solid #F5EEDC; background: transparent; color: #F5EEDC; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 20px; text-transform: uppercase; padding-top: 3px">{{copyLabel}}</button>
+        </div>
+        <a href="#" style="min-height: 50px; border-radius: 6px; background: #6FD39A; color: #0F2A1A; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 21px; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none">Share on WhatsApp</a>
+        <span style="font-size: 12px; color: #ADA593">The link reopens this exact look: [SITE]/visualizer?w=S-0207&amp;c=S-0318…</span>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      look: 0, active: 'walls', tab: 'shades', share: false, copied: false,
+      ready: false, failed: false, snap: null,
+      looks: [
+        { walls: 'S-0207', columns: 'S-0318', doors: 'S-0702', roof: 'S-0101' },
+        { walls: 'S-0114', columns: 'S-0530', doors: 'S-0611', roof: null }
+      ]
+    };
+    this.viewer = null;
+    this.tries = 0;
+    this.setCanvas = (el) => {
+      if (el && !this.canvas) { this.canvas = el; this.boot(); }
+    };
+  }
+  boot() {
+    if (!this.canvas) return;
+    if (!window.THREE || !window.THREE.GLTFLoader) {
+      if (this.tries++ < 40) { this.bootTimer = setTimeout(() => this.boot(), 150); return; }
+      this.setState({ failed: true });
+      return;
+    }
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.viewer = this.makeViewer(this.canvas, {
+      glbUrl: '/_blob/1437ff76d322ba4d73b0df06f8dabec6',
+      autoRotate: !reduce,
+      onReady: (v) => { v.setColours(this.colourMap()); this.setState({ ready: true }); },
+      onError: () => this.setState({ failed: true })
+    });
+    if (!this.viewer) return;
+    if (window.IntersectionObserver) {
+      this.io = new IntersectionObserver((es) => { if (this.viewer) this.viewer.pause(!es[0].isIntersecting); });
+      this.io.observe(this.canvas);
+    }
+  }
+  componentDidUpdate() {
+    if (this.viewer && this.viewer.ready) this.viewer.setColours(this.colourMap());
+  }
+  componentWillUnmount() {
+    clearTimeout(this.bootTimer);
+    if (this.io) this.io.disconnect();
+    if (this.viewer) this.viewer.dispose();
+  }
+  shades() {
+    return [
+      ['S-0101', 'Rice White', '#F1ECDF'], ['S-0124', 'Lime Wash', '#E8E2C8'], ['S-0114', 'Himalayan Mist', '#D9DDD8'],
+      ['S-0207', 'Sandstone', '#D8B98C'], ['S-0233', 'Marigold', '#E3A23B'], ['S-0256', 'Ochre', '#C8873A'],
+      ['S-0318', 'Terracotta', '#B5573A'], ['S-0342', 'Brick Kiln', '#8C3B2C'], ['S-0427', 'Rhododendron', '#B8324A'],
+      ['S-0405', 'Sage Field', '#9DAE8C'], ['S-0512', 'Monsoon Slate', '#4F5D63'], ['S-0530', 'Slate Night', '#2E3A3F'],
+      ['S-0611', 'Teak', '#6B4630'], ['S-0702', 'Charcoal', '#2B2A28']
+    ];
+  }
+  byCode() {
+    const m = {};
+    this.shades().forEach((s) => { m[s[0]] = s; });
+    return m;
+  }
+  colourMap() {
+    const b = this.byCode();
+    const l = this.state.looks[this.state.look];
+    const out = {};
+    ['walls', 'columns', 'doors', 'roof'].forEach((k) => { out[k] = l[k] ? b[l[k]][2] : null; });
+    return out;
+  }
+  makeViewer(canvas, opts) {
+    var THREE = window.THREE;
+    var renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+    } catch (e) { opts.onError && opts.onError('no-webgl'); return null; }
+    THREE.ColorManagement.legacyMode = false;
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.NoToneMapping;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(35, 1, 0.1, 500);
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xb9b2a3, 0.95));
+    var sun = new THREE.DirectionalLight(0xffffff, 0.85);
+    sun.castShadow = true;
+    sun.shadow.mapSize.set(1024, 1024);
+    sun.shadow.radius = 4;
+    scene.add(sun);
+    var controls = new THREE.OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.enablePan = false;
+    controls.autoRotate = !!opts.autoRotate;
+    controls.autoRotateSpeed = 0.6;
+    controls.maxPolarAngle = Math.PI * 0.49;
+    controls.addEventListener('start', function () { controls.autoRotate = false; });
+    var parts = { walls: null, columns: null, doors: null, roof: null };
+    var names = { main_surface: 'walls', columns: 'columns', doors_windows: 'doors', roof_edge: 'roof' };
+    var originals = {};
+    var home = null, running = true, raf = 0, dead = false;
+    function size() {
+      var w = canvas.clientWidth || 300, h = canvas.clientHeight || 200;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    function loop() {
+      if (dead) return;
+      raf = requestAnimationFrame(loop);
+      if (!running || document.hidden) return;
+      var pr = renderer.getPixelRatio(), w = canvas.clientWidth, h = canvas.clientHeight;
+      if (w && h && (canvas.width !== Math.round(w * pr) || canvas.height !== Math.round(h * pr))) size();
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    var api = {
+      setColours: function (map) {
+        Object.keys(parts).forEach(function (k) { if (parts[k]) parts[k].color.set(map && map[k] ? map[k] : originals[k]); });
+      },
+      flash: function (k) {
+        var m = parts[k];
+        if (!m) return;
+        m.emissive.set(0x1e3a7b);
+        m.emissiveIntensity = 0.55;
+        setTimeout(function () { m.emissive.set(0x000000); m.emissiveIntensity = 1; }, 650);
+      },
+      reset: function () {
+        if (!home) return;
+        camera.position.copy(home.pos);
+        controls.target.copy(home.target);
+        controls.update();
+      },
+      pause: function (p) { running = !p; },
+      snapshot: function () { renderer.render(scene, camera); return canvas.toDataURL('image/png'); },
+      dispose: function () { dead = true; cancelAnimationFrame(raf); controls.dispose(); renderer.dispose(); }
+    };
+    size();
+    new THREE.GLTFLoader().load(opts.glbUrl, function (gltf) {
+      if (dead) return;
+      var root = gltf.scene;
+      root.traverse(function (o) {
+        if (!o.isMesh) return;
+        o.castShadow = true;
+        o.receiveShadow = true;
+        var key = names[o.name] || (o.material && names[o.material.name]);
+        if (key) { o.material = o.material.clone(); parts[key] = o.material; originals[key] = '#' + o.material.color.getHexString(); }
+      });
+      var box = new THREE.Box3();
+      root.updateMatrixWorld(true);
+      root.traverse(function (o) { if (o.isMesh && !/grass|paving|kerb/.test(o.name)) box.expandByObject(o); });
+      var c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
+      root.position.sub(new THREE.Vector3(c.x, box.min.y, c.z));
+      scene.add(root);
+      var r = Math.max(s.x, s.y, s.z);
+      var target = new THREE.Vector3(0, s.y * 0.45, 0);
+      var aspect = (canvas.clientWidth || 4) / (canvas.clientHeight || 3);
+      var dist = r * 2.35 * (opts.distance || 1) / Math.pow(Math.min(aspect, 1), 0.9) * (aspect > 1 ? 1.12 : 1);
+      var pos = new THREE.Vector3(0.62, 0.36, 1).normalize().multiplyScalar(dist).add(target);
+      camera.position.copy(pos);
+      controls.target.copy(target);
+      controls.minDistance = r * 1.2;
+      controls.maxDistance = dist * 1.6;
+      sun.shadow.camera.left = -r; sun.shadow.camera.right = r; sun.shadow.camera.top = r; sun.shadow.camera.bottom = -r;
+      sun.shadow.camera.far = r * 6;
+      sun.position.set(r * 0.8, r * 1.6, r * 1.1);
+      home = { pos: pos.clone(), target: target.clone() };
+      controls.update();
+      api.ready = true;
+      opts.onReady && opts.onReady(api);
+    }, undefined, function () { opts.onError && opts.onError('load-failed'); });
+    loop();
+    return api;
+  }
+  renderVals() {
+    const shades = this.shades();
+    const b = this.byCode();
+    const st = this.state;
+    const look = st.looks[st.look];
+    const original = { walls: '#D2B79A', columns: '#F0EDE6', doors: '#232A31', roof: '#F4F1EA' };
+    const hex = (k) => (look[k] ? b[look[k]][2] : original[k]);
+    const labels = { walls: 'Walls', columns: 'Columns', doors: 'Doors & windows', roof: 'Roof edge' };
+    const shortLabels = { walls: 'Walls', columns: 'Columns', doors: 'Doors & win.', roof: 'Roof edge' };
+    const keys = ['walls', 'columns', 'doors', 'roof'];
+    const active = st.active;
+    const cur = look[active];
+    const setShade = (code) => {
+      const looks = st.looks.map((l, i) => (i === st.look ? Object.assign({}, l, { [active]: code }) : l));
+      this.setState({ looks });
+    };
+    const seg = 'min-height: 38px; padding: 3px 14px 0; border-radius: 6px; border: none; font-family: \'Teko\', sans-serif; font-weight: 600; font-size: 19px; text-transform: uppercase; ';
+    const mkLook = (i) => ({
+      pressed: st.look === i ? 'true' : 'false',
+      pick: () => this.setState({ look: i }),
+      style: seg + (st.look === i ? 'background: #F5EEDC; color: #1F1C17;' : 'background: transparent; color: #F5EEDC;')
+    });
+    const tab = (id) => ({
+      sel: st.tab === id ? 'true' : 'false',
+      pick: () => this.setState({ tab: id }),
+      style: 'min-height: 40px; border-radius: 6px; border: none; font: 600 15px \'Mukta\', sans-serif; ' + (st.tab === id ? 'background: #1F1C17; color: #F5EEDC; box-shadow: 0 1px 2px rgba(0,0,0,0.12);' : 'background: transparent; color: #ADA593;')
+    });
+    const sets = [
+      { name: 'Terracotta Courtyard', v: { walls: 'S-0207', columns: 'S-0318', doors: 'S-0702', roof: 'S-0101' } },
+      { name: 'Himalayan Mist', v: { walls: 'S-0114', columns: 'S-0530', doors: 'S-0611', roof: 'S-0101' } },
+      { name: 'Monsoon Slate', v: { walls: 'S-0512', columns: 'S-0101', doors: 'S-0702', roof: 'S-0256' } },
+      { name: 'Marigold Facade', v: { walls: 'S-0124', columns: 'S-0233', doors: 'S-0342', roof: 'S-0530' } }
+    ];
+    const bar = 'flex: 1; border-radius: 3px; border: 1px solid rgba(0,0,0,0.15); background: ';
+    return {
+      setCanvas: this.setCanvas,
+      c: { walls: hex('walls'), columns: hex('columns'), doors: hex('doors'), roof: hex('roof') },
+      houseLabel: 'House: ' + keys.map((k) => labels[k] + ' ' + (look[k] ? look[k] + ' ' + b[look[k]][1] : 'original')).join(', '),
+      showPoster: !st.ready && !st.failed,
+      loading: !st.ready && !st.failed,
+      failed: st.failed,
+      activeLabel: labels[active],
+      activeShade: cur ? cur + ' ' + b[cur][1] : 'Original colour',
+      lookA: mkLook(0),
+      lookB: mkLook(1),
+      tabShades: tab('shades'),
+      tabSets: tab('sets'),
+      isShades: st.tab === 'shades',
+      isSets: st.tab === 'sets',
+      resetView: () => { if (this.viewer) this.viewer.reset(); },
+      parts: keys.map((k) => ({
+        label: shortLabels[k],
+        full: labels[k],
+        codeName: look[k] ? look[k] + ' ' + b[look[k]][1] : 'Original colour',
+        pressed: k === active ? 'true' : 'false',
+        pick: () => { this.setState({ active: k, tab: 'shades' }); if (this.viewer) this.viewer.flash(k); },
+        tabStyle: 'min-height: 70px; padding: 7px 4px; border-radius: 10px; background: ' + (k === active ? '#2A2620' : 'transparent') + '; border: ' + (k === active ? '2px solid #9EB4F2' : '1px solid #3D382F') + '; color: #F5EEDC; font: inherit; display: flex; flex-direction: column; align-items: center; gap: 5px',
+        swStyle: 'display: block; width: 26px; height: 26px; border-radius: 5px; ' + (look[k] ? 'background: ' + b[look[k]][2] : 'background: repeating-linear-gradient(45deg, #3D382F 0 4px, #1F1C17 4px 8px)'),
+        swSmall: 'flex: 0 0 22px; height: 22px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.15); background: ' + hex(k)
+      })),
+      shades: shades.map((s) => {
+        const on = s[0] === cur;
+        return {
+          short: (on ? '✓ ' : '') + s[0].slice(2),
+          aria: s[0] + ' ' + s[1],
+          pressed: on ? 'true' : 'false',
+          pick: () => setShade(s[0]),
+          chipStyle: 'flex: 0 0 56px; padding: 0; border-radius: 8px; overflow: hidden; background: #1F1C17; font: inherit; display: flex; flex-direction: column; ' + (on ? 'border: 2px solid #F5EEDC; outline: 2px solid #F5EEDC; outline-offset: 2px; transform: translateY(-6px);' : 'border: 1px solid #3D382F;'),
+          colorStyle: 'display: block; height: 56px; background: ' + s[2]
+        };
+      }),
+      sets: sets.map((t) => {
+        const on = keys.every((k) => look[k] === t.v[k]);
+        return {
+          name: t.name,
+          pressed: on ? 'true' : 'false',
+          pick: () => this.setState({ looks: st.looks.map((l, i) => (i === st.look ? Object.assign({}, t.v) : l)) }),
+          cardStyle: 'flex: 0 0 140px; padding: 10px; border-radius: 10px; background: #1F1C17; font: inherit; color: #F5EEDC; text-align: left; display: flex; flex-direction: column; gap: 8px; ' + (on ? 'border: 2px solid #F5EEDC; outline: 2px solid #F5EEDC; outline-offset: 2px;' : 'border: 1px solid #3D382F;'),
+          wallsStyle: bar + b[t.v.walls][2], columnsStyle: bar + b[t.v.columns][2], doorsStyle: bar + b[t.v.doors][2], roofStyle: bar + b[t.v.roof][2]
+        };
+      }),
+      share: st.share,
+      snap: st.snap || '/_blob/0f7a7820a3bef81fa79a49442de822d6',
+      openShare: () => this.setState({ share: true, copied: false, snap: this.viewer && this.viewer.ready ? this.viewer.snapshot() : null }),
+      closeShare: () => this.setState({ share: false }),
+      copyLink: () => this.setState({ copied: true }),
+      copyLabel: st.copied ? 'Link copied ✓' : 'Copy link'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Visualizer, phone landscape, light theme</title>
+<script src="./support.js"></script>
+<script src="/_blob/0b86421ec307a6667c197368ffc09d30"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@400..700&amp;family=Mukta:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1E3A7C}a:hover{color:#132656}
+</style>
+</helmet>
+<div style="height: 100vh; min-height: 360px; display: flex; background: #F5F1E8; color: #1E1B16; font-family: 'Mukta', system-ui, sans-serif; overflow: hidden">
+
+  <div style="flex: 1 1 auto; min-width: 0; position: relative; display: flex; gap: 2px; background: #D8D0BF">
+    <div style="flex: 1 1 0; min-width: 0; position: relative; background: #ECE5D6">
+      <sc-if value="{{showPoster}}" hint-placeholder-val="{{ true }}">
+        <img src="/_blob/0f7a7820a3bef81fa79a49442de822d6" alt="Picture of the house" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block">
+      </sc-if>
+      <canvas ref="{{setCanvasA}}" role="img" aria-label="{{labelA}}" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block"></canvas>
+      <sc-if value="{{compare}}" hint-placeholder-val="{{ false }}">
+        <span style="position: absolute; left: 12px; bottom: 12px; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 24px; text-transform: uppercase; background: #1E1B16; color: #FFFDF8; padding: 3px 12px 0; border-radius: 6px">Look A</span>
+      </sc-if>
+      <sc-if value="{{failed}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; inset: 0; background: #ECE5D6; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px">
+          <svg viewBox="0 0 340 250" role="img" aria-label="{{labelA}}" style="width: min(560px, 90%); height: auto">
+            <rect x="0" y="236" width="340" height="4" fill="#BDB8AD"></rect>
+            <rect x="8" y="150" width="86" height="8" fill="{{cA.roof}}"></rect>
+            <rect x="12" y="158" width="6" height="78" fill="{{cA.columns}}"></rect>
+            <rect x="82" y="158" width="6" height="78" fill="{{cA.columns}}"></rect>
+            <rect x="92" y="38" width="208" height="198" fill="{{cA.walls}}" stroke="#000000" stroke-opacity="0.2"></rect>
+            <rect x="220" y="6" width="70" height="24" fill="{{cA.walls}}"></rect>
+            <rect x="88" y="150" width="216" height="8" fill="{{cA.columns}}"></rect>
+            <rect x="88" y="88" width="216" height="8" fill="{{cA.columns}}"></rect>
+            <rect x="92" y="38" width="10" height="198" fill="{{cA.columns}}"></rect>
+            <rect x="290" y="38" width="10" height="198" fill="{{cA.columns}}"></rect>
+            <rect x="88" y="30" width="216" height="8" fill="{{cA.roof}}"></rect>
+            <rect x="112" y="44" width="62" height="102" fill="#8A5A3B"></rect>
+            <rect x="216" y="48" width="64" height="32" fill="#BCD0D6" stroke="{{cA.doors}}" stroke-width="4"></rect>
+            <rect x="212" y="102" width="72" height="44" fill="#BCD0D6" stroke="{{cA.doors}}" stroke-width="4"></rect>
+            <rect x="222" y="178" width="28" height="58" fill="{{cA.doors}}"></rect>
+          </svg>
+          <p style="margin: 0; max-width: 460px; text-align: center; font-size: 15px; background: #FFFDF8; border: 1px solid #D8D0BF; border-radius: 8px; padding: 8px 12px">3D isn’t available on this device, so you’re seeing a drawing. Shades still change here, and the estimate works the same.</p>
+        </div>
+      </sc-if>
+    </div>
+    <sc-if value="{{compare}}" hint-placeholder-val="{{ false }}">
+      <div style="flex: 1 1 0; min-width: 0; position: relative; background: #ECE5D6">
+        <canvas ref="{{setCanvasB}}" role="img" aria-label="{{labelB}}" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block"></canvas>
+        <span style="position: absolute; left: 12px; bottom: 12px; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 24px; text-transform: uppercase; background: #1E1B16; color: #FFFDF8; padding: 3px 12px 0; border-radius: 6px">Look B</span>
+      </div>
+    </sc-if>
+
+    <div style="position: absolute; left: 12px; top: 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap">
+      <a href="HomeMobileLight.dc.html" style="display: block; text-decoration: none; background: #A3192B; border-radius: 6px; padding: 4px">
+        <span style="border: 2px solid #F2C230; border-radius: 3px; padding: 3px 12px 1px; display: flex; flex-direction: column; align-items: center; line-height: 0.88; color: #FBF4E4">
+          <span lang="ne" style="font-family: 'Teko', sans-serif; font-weight: 500; font-size: 15px">पाथीभरा पेन्ट्स</span>
+          <span style="font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; text-transform: uppercase">Pathibhara Paints</span>
+        </span>
+      </a>
+      <sc-if value="{{loading}}" hint-placeholder-val="{{ false }}">
+        <span style="font-size: 13px; font-weight: 600; background: #1E1B16; color: #FFFDF8; padding: 4px 10px; border-radius: 6px">Loading 3D house…</span>
+      </sc-if>
+    </div>
+    <div style="position: absolute; right: 12px; top: 12px; display: flex; gap: 8px">
+      <button type="button" aria-label="Reset view" onClick="{{resetView}}" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #D8D0BF; background: #FFFDF8; color: #1E1B16; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+      <button type="button" aria-label="Save or share this look" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #D8D0BF; background: #FFFDF8; color: #1E1B16; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></button>
+    </div>
+  </div>
+
+  <aside aria-label="Choose colours" style="flex: 0 0 clamp(300px, 30%, 400px); min-width: 0; overflow-y: auto; background: #FFFDF8; border-left: 1px solid #D8D0BF; display: flex; flex-direction: column; gap: 14px; padding: 14px 16px 16px; box-sizing: border-box">
+    <div style="align-self: flex-start; background: #1E3A7B; border-radius: 6px; padding: 4px">
+      <div style="border: 2px solid #FBF4E4; border-radius: 3px; padding: 4px 12px 1px; color: #FBF4E4">
+        <h1 style="margin: 0; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 30px; line-height: 0.95; text-transform: uppercase">Colour visualizer</h1>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <span style="font-size: 14px; font-weight: 700">Editing</span>
+      <div role="group" aria-label="Which look" style="display: grid; grid-template-columns: 1fr 1fr; background: #ECE5D6; border-radius: 8px; padding: 3px; gap: 3px">
+        <button type="button" aria-pressed="{{lookA.pressed}}" onClick="{{lookA.pick}}" style="{{lookA.style}}">Look A</button>
+        <button type="button" aria-pressed="{{lookB.pressed}}" onClick="{{lookB.pick}}" style="{{lookB.style}}">Look B</button>
+      </div>
+      <label style="display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 15px; font-weight: 600; cursor: pointer">
+        <input type="checkbox" checked="{{compare}}" onChange="{{toggleCompare}}" style="width: 20px; height: 20px; accent-color: #1E1B16">
+        Show A and B side by side (tablet and up)
+      </label>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px">
+      <sc-for list="{{parts}}" as="p" hint-placeholder-count="4">
+        <button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.tabStyle}}">
+          <span style="padding: 2px; border: 1px solid #D8D0BF; border-radius: 7px; background: #FFFDF8; display: flex"><span style="{{p.swStyle}}"></span></span>
+          <span style="display: flex; flex-direction: column; line-height: 1.2; min-width: 0"><span style="font-size: 14px; font-weight: 700">{{p.label}}</span><span style="font-size: 12px; color: #5E574B">{{p.code}}</span></span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <label for="viz-search" style="font-size: 14px; font-weight: 700">{{activeLabel}} · <span style="font-weight: 500; color: #5E574B">{{activeShade}}</span></label>
+      <div style="display: flex; align-items: center; gap: 8px; min-height: 44px; border: 1px solid #D8D0BF; border-radius: 10px; padding: 0 12px; background: #FFFDF8">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5E574B" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="viz-search" type="search" placeholder="Search code or name" value="{{query}}" onInput="{{onQuery}}" style="flex: 1; min-width: 0; border: none; outline: none; background: transparent; font: 400 15px 'Mukta', sans-serif; color: #1E1B16">
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: 8px; padding-top: 6px">
+        <sc-for list="{{shades}}" as="s" hint-placeholder-count="14">
+          <button type="button" aria-pressed="{{s.pressed}}" aria-label="{{s.aria}}" onClick="{{s.pick}}" style="{{s.chipStyle}}">
+            <span style="{{s.colorStyle}}"></span>
+            <span style="padding: 3px 5px; font-size: 12px; font-weight: 600; color: #1E1B16; text-align: left">{{s.short}}</span>
+          </button>
+        </sc-for>
+      </div>
+      <sc-if value="{{noMatch}}" hint-placeholder-val="{{ false }}">
+        <span style="font-size: 14px; color: #5E574B">No shade matches that. Try a code like 0318 or a name like “mist”.</span>
+      </sc-if>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <span style="font-size: 14px; font-weight: 700">Colour sets</span>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <sc-for list="{{sets}}" as="t" hint-placeholder-count="4">
+          <button type="button" aria-pressed="{{t.pressed}}" onClick="{{t.pick}}" style="{{t.cardStyle}}">
+            <span style="display: flex; gap: 3px; height: 30px">
+              <span style="{{t.wallsStyle}}"></span>
+              <span style="{{t.columnsStyle}}"></span>
+              <span style="{{t.doorsStyle}}"></span>
+              <span style="{{t.roofStyle}}"></span>
+            </span>
+            <span style="font-size: 13px; font-weight: 600; line-height: 1.2">{{t.name}}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 6px">
+      <a href="#" style="min-height: 50px; border-radius: 6px; background: #1E1B16; color: #FFFDF8; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; text-decoration: none">Estimate this look</a>
+      <a href="#" style="min-height: 50px; border-radius: 6px; background: #1D6B3F; color: #FFFFFE; font-family: 'Teko', sans-serif; font-weight: 600; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 3px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: -3px"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg>Send to store</a>
+      <p style="margin: 0; font-size: 12px; line-height: 1.4; color: #5E574B">Screen colours are close, not exact. Check the shade card at the store before you buy.</p>
+    </div>
+  </aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":844,"height":390}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      look: 0, active: 'walls', compare: false, query: '',
+      ready: false, failed: false,
+      looks: [
+        { walls: 'S-0207', columns: 'S-0318', doors: 'S-0702', roof: 'S-0101' },
+        { walls: 'S-0114', columns: 'S-0530', doors: 'S-0611', roof: 'S-0101' }
+      ]
+    };
+    this.tries = 0;
+    this.setCanvasA = (el) => { if (el && !this.canvasA) { this.canvasA = el; this.boot(); } };
+    this.setCanvasB = (el) => {
+      if (el && el !== this.canvasB) { this.canvasB = el; this.bootB(); }
+      if (!el && this.viewerB) { this.viewerB.dispose(); this.viewerB = null; this.canvasB = null; }
+    };
+  }
+  reduce() { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
+  boot() {
+    if (!window.THREE || !window.THREE.GLTFLoader) {
+      if (this.tries++ < 40) { this.bootTimer = setTimeout(() => this.boot(), 150); return; }
+      this.setState({ failed: true });
+      return;
+    }
+    this.viewerA = this.makeViewer(this.canvasA, {
+      glbUrl: '/_blob/1437ff76d322ba4d73b0df06f8dabec6', autoRotate: !this.reduce(),
+      onReady: (v) => { v.setColours(this.colourMap(0)); this.setState({ ready: true }); },
+      onError: () => this.setState({ failed: true })
+    });
+    if (this.canvasB) this.bootB();
+  }
+  bootB() {
+    if (!window.THREE || !window.THREE.GLTFLoader || !this.canvasB || this.viewerB) return;
+    this.viewerB = this.makeViewer(this.canvasB, {
+      glbUrl: '/_blob/1437ff76d322ba4d73b0df06f8dabec6', autoRotate: false,
+      onReady: (v) => v.setColours(this.colourMap(1)),
+      onError: () => {}
+    });
+  }
+  componentDidUpdate() {
+    if (this.viewerA && this.viewerA.ready) this.viewerA.setColours(this.colourMap(this.state.compare ? 0 : this.state.look));
+    if (this.viewerB && this.viewerB.ready) this.viewerB.setColours(this.colourMap(1));
+  }
+  componentWillUnmount() {
+    clearTimeout(this.bootTimer);
+    if (this.viewerA) this.viewerA.dispose();
+    if (this.viewerB) this.viewerB.dispose();
+  }
+  shades() {
+    return [
+      ['S-0101', 'Rice White', '#F1ECDF'], ['S-0124', 'Lime Wash', '#E8E2C8'], ['S-0114', 'Himalayan Mist', '#D9DDD8'],
+      ['S-0207', 'Sandstone', '#D8B98C'], ['S-0233', 'Marigold', '#E3A23B'], ['S-0256', 'Ochre', '#C8873A'],
+      ['S-0318', 'Terracotta', '#B5573A'], ['S-0342', 'Brick Kiln', '#8C3B2C'], ['S-0427', 'Rhododendron', '#B8324A'],
+      ['S-0405', 'Sage Field', '#9DAE8C'], ['S-0512', 'Monsoon Slate', '#4F5D63'], ['S-0530', 'Slate Night', '#2E3A3F'],
+      ['S-0611', 'Teak', '#6B4630'], ['S-0702', 'Charcoal', '#2B2A28']
+    ];
+  }
+  byCode() { const m = {}; this.shades().forEach((s) => { m[s[0]] = s; }); return m; }
+  colourMap(i) {
+    const b = this.byCode(), l = this.state.looks[i], out = {};
+    ['walls', 'columns', 'doors', 'roof'].forEach((k) => { out[k] = l[k] ? b[l[k]][2] : null; });
+    return out;
+  }
+  makeViewer(canvas, opts) {
+    var THREE = window.THREE;
+    var renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+    } catch (e) { opts.onError && opts.onError('no-webgl'); return null; }
+    THREE.ColorManagement.legacyMode = false;
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.NoToneMapping;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(35, 1, 0.1, 500);
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xb9b2a3, 0.95));
+    var sun = new THREE.DirectionalLight(0xffffff, 0.85);
+    sun.castShadow = true;
+    sun.shadow.mapSize.set(1024, 1024);
+    sun.shadow.radius = 4;
+    scene.add(sun);
+    var controls = new THREE.OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.enablePan = false;
+    controls.autoRotate = !!opts.autoRotate;
+    controls.autoRotateSpeed = 0.6;
+    controls.maxPolarAngle = Math.PI * 0.49;
+    controls.addEventListener('start', function () { controls.autoRotate = false; });
+    var parts = { walls: null, columns: null, doors: null, roof: null };
+    var names = { main_surface: 'walls', columns: 'columns', doors_windows: 'doors', roof_edge: 'roof' };
+    var originals = {};
+    var home = null, running = true, raf = 0, dead = false;
+    function size() {
+      var w = canvas.clientWidth || 300, h = canvas.clientHeight || 200;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    function loop() {
+      if (dead) return;
+      raf = requestAnimationFrame(loop);
+      if (!running || document.hidden) return;
+      var pr = renderer.getPixelRatio(), w = canvas.clientWidth, h = canvas.clientHeight;
+      if (w && h && (canvas.width !== Math.round(w * pr) || canvas.height !== Math.round(h * pr))) size();
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    var api = {
+      setColours: function (map) {
+        Object.keys(parts).forEach(function (k) { if (parts[k]) parts[k].color.set(map && map[k] ? map[k] : originals[k]); });
+      },
+      flash: function (k) {
+        var m = parts[k];
+        if (!m) return;
+        m.emissive.set(0x1e3a7b);
+        m.emissiveIntensity = 0.55;
+        setTimeout(function () { m.emissive.set(0x000000); m.emissiveIntensity = 1; }, 650);
+      },
+      reset: function () {
+        if (!home) return;
+        camera.position.copy(home.pos);
+        controls.target.copy(home.target);
+        controls.update();
+      },
+      pause: function (p) { running = !p; },
+      snapshot: function () { renderer.render(scene, camera); return canvas.toDataURL('image/png'); },
+      dispose: function () { dead = true; cancelAnimationFrame(raf); controls.dispose(); renderer.dispose(); }
+    };
+    size();
+    new THREE.GLTFLoader().load(opts.glbUrl, function (gltf) {
+      if (dead) return;
+      var root = gltf.scene;
+      root.traverse(function (o) {
+        if (!o.isMesh) return;
+        o.castShadow = true;
+        o.receiveShadow = true;
+        var key = names[o.name] || (o.material && names[o.material.name]);
+        if (key) { o.material = o.material.clone(); parts[key] = o.material; originals[key] = '#' + o.material.color.getHexString(); }
+      });
+      var box = new THREE.Box3();
+      root.updateMatrixWorld(true);
+      root.traverse(function (o) { if (o.isMesh && !/grass|paving|kerb/.test(o.name)) box.expandByObject(o); });
+      var c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
+      root.position.sub(new THREE.Vector3(c.x, box.min.y, c.z));
+      scene.add(root);
+      var r = Math.max(s.x, s.y, s.z);
+      var target = new THREE.Vector3(0, s.y * 0.45, 0);
+      var aspect = (canvas.clientWidth || 4) / (canvas.clientHeight || 3);
+      var dist = r * 2.35 * (opts.distance || 1) / Math.pow(Math.min(aspect, 1), 0.9) * (aspect > 1 ? 1.12 : 1);
+      var pos = new THREE.Vector3(0.62, 0.36, 1).normalize().multiplyScalar(dist).add(target);
+      camera.position.copy(pos);
+      controls.target.copy(target);
+      controls.minDistance = r * 1.2;
+      controls.maxDistance = dist * 1.6;
+      sun.shadow.camera.left = -r; sun.shadow.camera.right = r; sun.shadow.camera.top = r; sun.shadow.camera.bottom = -r;
+      sun.shadow.camera.far = r * 6;
+      sun.position.set(r * 0.8, r * 1.6, r * 1.1);
+      home = { pos: pos.clone(), target: target.clone() };
+      controls.update();
+      api.ready = true;
+      opts.onReady && opts.onReady(api);
+    }, undefined, function () { opts.onError && opts.onError('load-failed'); });
+    loop();
+    return api;
+  }
+  renderVals() {
+    const b = this.byCode();
+    const st = this.state;
+    const look = st.looks[st.look];
+    const original = { walls: '#D2B79A', columns: '#F0EDE6', doors: '#232A31', roof: '#F4F1EA' };
+    const hexOf = (l, k) => (l[k] ? b[l[k]][2] : original[k]);
+    const labels = { walls: 'Walls', columns: 'Columns', doors: 'Doors & windows', roof: 'Roof edge' };
+    const keys = ['walls', 'columns', 'doors', 'roof'];
+    const active = st.active;
+    const cur = look[active];
+    const describe = (l) => keys.map((k) => labels[k] + ' ' + (l[k] ? l[k] + ' ' + b[l[k]][1] : 'original')).join(', ');
+    const seg = 'min-height: 40px; padding: 3px 14px 0; border-radius: 6px; border: none; font-family: \'Teko\', sans-serif; font-weight: 600; font-size: 20px; text-transform: uppercase; ';
+    const mkLook = (i) => ({
+      pressed: st.look === i ? 'true' : 'false',
+      pick: () => this.setState({ look: i }),
+      style: seg + (st.look === i ? 'background: #1E1B16; color: #FFFDF8;' : 'background: transparent; color: #1E1B16;')
+    });
+    const q = st.query.trim().toLowerCase();
+    const list = this.shades().filter((s) => !q || s[0].toLowerCase().indexOf(q) >= 0 || s[1].toLowerCase().indexOf(q) >= 0);
+    const sets = [
+      { name: 'Terracotta Courtyard', v: { walls: 'S-0207', columns: 'S-0318', doors: 'S-0702', roof: 'S-0101' } },
+      { name: 'Himalayan Mist', v: { walls: 'S-0114', columns: 'S-0530', doors: 'S-0611', roof: 'S-0101' } },
+      { name: 'Monsoon Slate', v: { walls: 'S-0512', columns: 'S-0101', doors: 'S-0702', roof: 'S-0256' } },
+      { name: 'Marigold Facade', v: { walls: 'S-0124', columns: 'S-0233', doors: 'S-0342', roof: 'S-0530' } }
+    ];
+    const bar = 'flex: 1; border-radius: 3px; border: 1px solid rgba(0,0,0,0.15); background: ';
+    const shownA = st.compare ? st.looks[0] : look;
+    return {
+      setCanvasA: this.setCanvasA,
+      setCanvasB: this.setCanvasB,
+      cA: { walls: hexOf(shownA, 'walls'), columns: hexOf(shownA, 'columns'), doors: hexOf(shownA, 'doors'), roof: hexOf(shownA, 'roof') },
+      labelA: 'House: ' + describe(shownA),
+      labelB: 'Look B: ' + describe(st.looks[1]),
+      showPoster: !st.ready && !st.failed,
+      loading: !st.ready && !st.failed,
+      failed: st.failed,
+      compare: st.compare && !st.failed,
+      toggleCompare: () => this.setState({ compare: !st.compare }),
+      lookA: mkLook(0),
+      lookB: mkLook(1),
+      activeLabel: labels[active],
+      activeShade: cur ? cur + ' ' + b[cur][1] : 'Original colour',
+      query: st.query,
+      onQuery: (e) => this.setState({ query: e.target.value }),
+      noMatch: list.length === 0,
+      resetView: () => { if (this.viewerA) this.viewerA.reset(); if (this.viewerB) this.viewerB.reset(); },
+      parts: keys.map((k) => ({
+        label: labels[k],
+        code: look[k] ? look[k] + ' ' + b[look[k]][1] : 'Original colour',
+        pressed: k === active ? 'true' : 'false',
+        pick: () => {
+          this.setState({ active: k });
+          const v = st.compare && st.look === 1 ? this.viewerB : this.viewerA;
+          if (v) v.flash(k);
+        },
+        tabStyle: 'min-height: 56px; padding: 6px 8px; border-radius: 10px; background: ' + (k === active ? '#ECE5D6' : 'transparent') + '; border: ' + (k === active ? '2px solid #1E3A7C' : '1px solid #D8D0BF') + '; color: #1E1B16; font: inherit; text-align: left; display: flex; align-items: center; gap: 8px',
+        swStyle: 'display: block; width: 28px; height: 28px; border-radius: 5px; ' + (look[k] ? 'background: ' + b[look[k]][2] : 'background: repeating-linear-gradient(45deg, #D8D0BF 0 4px, #FFFDF8 4px 8px)')
+      })),
+      shades: list.map((s) => {
+        const on = s[0] === cur;
+        return {
+          short: (on ? '✓ ' : '') + s[0].slice(2),
+          aria: s[0] + ' ' + s[1],
+          pressed: on ? 'true' : 'false',
+          pick: () => this.setState({ looks: st.looks.map((l, i) => (i === st.look ? Object.assign({}, l, { [active]: s[0] }) : l)) }),
+          chipStyle: 'padding: 0; border-radius: 8px; overflow: hidden; background: #FFFDF8; font: inherit; display: flex; flex-direction: column; ' + (on ? 'border: 2px solid #1E1B16; outline: 2px solid #1E1B16; outline-offset: 2px;' : 'border: 1px solid #D8D0BF;'),
+          colorStyle: 'display: block; height: 48px; background: ' + s[2]
+        };
+      }),
+      sets: sets.map((t) => {
+        const on = keys.every((k) => look[k] === t.v[k]);
+        return {
+          name: t.name,
+          pressed: on ? 'true' : 'false',
+          pick: () => this.setState({ looks: st.looks.map((l, i) => (i === st.look ? Object.assign({}, t.v) : l)) }),
+          cardStyle: 'padding: 8px; border-radius: 10px; background: #FFFDF8; font: inherit; color: #1E1B16; text-align: left; display: flex; flex-direction: column; gap: 6px; ' + (on ? 'border: 2px solid #1E1B16; outline: 2px solid #1E1B16; outline-offset: 2px;' : 'border: 1px solid #D8D0BF;'),
+          wallsStyle: bar + b[t.v.walls][2], columnsStyle: bar + b[t.v.columns][2], doorsStyle: bar + b[t.v.doors][2], roofStyle: bar + b[t.v.roof][2]
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

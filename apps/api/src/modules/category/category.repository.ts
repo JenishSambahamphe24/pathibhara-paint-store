@@ -1,7 +1,9 @@
 import { and, asc, eq, ne, sql } from "drizzle-orm";
 import { injectable } from "tsyringe";
 
-import { categories, products, TransactionManager } from "@repo/database";
+import { categories, files, products, TransactionManager } from "@repo/database";
+
+import { PublicVisibilityHelper } from "#helpers/public-visibility.helper";
 
 export type CategoryRow = typeof categories.$inferSelect;
 
@@ -30,6 +32,28 @@ export class CategoryRepository {
       })
       .from(categories)
       .leftJoin(productCounts, eq(productCounts.categoryId, categories.id))
+      .orderBy(asc(categories.sortOrder), asc(categories.createdAt));
+  }
+
+  // Visible categories only. productCount covers the whole visible subtree,
+  // so a parent whose products all sit in subcategories isn't shown as empty.
+  async findVisible() {
+    const productCount = sql<number>`(
+      WITH RECURSIVE subtree AS (
+        SELECT ${categories.id} AS id
+        UNION ALL
+        SELECT c.id FROM ${categories} c JOIN subtree ON c.parent_id = subtree.id
+        WHERE c.is_active
+      )
+      SELECT count(*)::int FROM ${products} p
+      WHERE p.is_active AND p.category_id IN (SELECT id FROM subtree)
+    )`;
+
+    return this.db
+      .select({ category: categories, productCount, imageFile: files })
+      .from(categories)
+      .leftJoin(files, eq(files.id, categories.imageFileId))
+      .where(PublicVisibilityHelper.category())
       .orderBy(asc(categories.sortOrder), asc(categories.createdAt));
   }
 

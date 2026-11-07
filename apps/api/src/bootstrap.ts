@@ -10,15 +10,23 @@ import { ConfigService } from "#config";
 import translationEn from "./i18n/en/translation.json";
 import { AuthController } from "./modules/auth/auth.controller";
 import { CalculatorController } from "./modules/calculator/calculator.controller";
+import { PublicCalculatorController } from "./modules/calculator/public-calculator.controller";
 import { CategoryController } from "./modules/category/category.controller";
+import { PublicCategoryController } from "./modules/category/public-category.controller";
 import { ColourSetController } from "./modules/colour-set/colour-set.controller";
+import { PublicColourSetController } from "./modules/colour-set/public-colour-set.controller";
 import { DashboardController } from "./modules/dashboard/dashboard.controller";
 import { FileController } from "./modules/file/file.controller";
 import { HealthController } from "./modules/health/health.controller";
 import { PostController } from "./modules/post/post.controller";
+import { PublicPostController } from "./modules/post/public-post.controller";
 import { ProductController } from "./modules/product/product.controller";
+import { PublicProductController } from "./modules/product/public-product.controller";
 import { VariantController } from "./modules/product/variant.controller";
+import { PublicShadeController } from "./modules/shade/public-shade.controller";
 import { ShadeController } from "./modules/shade/shade.controller";
+import { PublicSitemapController } from "./modules/sitemap/public-sitemap.controller";
+import { PublicRedirectController } from "./modules/slug-redirect/public-redirect.controller";
 import { StockController } from "./modules/stock/stock.controller";
 import { StorageBootstrap } from "./modules/storage/storage.bootstrap";
 
@@ -65,6 +73,14 @@ export class Bootstrap {
         DashboardController,
         ShadeController,
         ColourSetController,
+        PublicCategoryController,
+        PublicProductController,
+        PublicShadeController,
+        PublicColourSetController,
+        PublicPostController,
+        PublicCalculatorController,
+        PublicRedirectController,
+        PublicSitemapController,
       ],
     });
   }

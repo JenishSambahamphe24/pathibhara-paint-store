@@ -105,7 +105,7 @@ export class IntegrationContext {
 
   async reset(): Promise<void> {
     await this.db.execute(sql`TRUNCATE
-      colour_sets, shades, slug_redirects,
+      colour_sets, shades, slug_redirects, posts, files,
       stock_movements, stock_adjustments, daily_sale_items, daily_sales,
       stock_batch_items, stock_batches, product_variants, product_images,
       products, categories,
