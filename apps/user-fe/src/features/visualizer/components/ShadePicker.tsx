@@ -62,7 +62,7 @@ export function ShadePicker({
               className={clsx(
                 "flex w-14 shrink-0 flex-col overflow-hidden rounded-lg bg-surface text-left motion-safe:transition-transform wide:w-auto",
                 isSelected
-                  ? "-translate-y-1.5 border-2 border-ink outline-2 outline-offset-2 outline-ink"
+                  ? "border-2 border-ink outline-2 outline-offset-2 outline-ink motion-safe:-translate-y-1.5"
                   : "border border-line",
               )}
             >

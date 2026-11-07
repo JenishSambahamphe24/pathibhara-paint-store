@@ -1,6 +1,8 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { z } from "zod";
 
+import { PageSkeleton } from "#/components/PageSkeleton/PageSkeleton";
+
 import { CatalogApi } from "#/features/catalog/api";
 import { CatalogPage } from "#/features/catalog/components/CatalogPage";
 import { CATALOG_PAGE_SIZE } from "#/features/catalog/constants";
@@ -45,6 +47,7 @@ export const Route = createFileRoute("/categories/$slug")({
         })
       : {},
   component: RouteComponent,
+  pendingComponent: () => <PageSkeleton kind="grid" />,
 });
 
 function RouteComponent() {

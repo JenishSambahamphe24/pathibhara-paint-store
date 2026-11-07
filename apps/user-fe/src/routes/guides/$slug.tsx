@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { PageSkeleton } from "#/components/PageSkeleton/PageSkeleton";
+
 import { GuideApi } from "#/features/guides/api";
 import { ArticlePage } from "#/features/guides/components/ArticlePage";
 import { GuideSeoHelper } from "#/features/guides/helpers/guideSeo.helper";
@@ -30,6 +32,7 @@ export const Route = createFileRoute("/guides/$slug")({
         }
       : {},
   component: RouteComponent,
+  pendingComponent: () => <PageSkeleton kind="article" />,
 });
 
 function RouteComponent() {

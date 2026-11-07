@@ -30,7 +30,7 @@ export function ShadeChip({
         selected
           ? "border-2 border-ink outline-2 outline-offset-2 outline-ink"
           : "border border-line",
-        selected && isSmall && "-translate-y-1.5",
+        selected && isSmall && "motion-safe:-translate-y-1.5",
       )}
     >
       <span

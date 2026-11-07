@@ -163,3 +163,18 @@ describe("CalculatorDraftHelper.summary", () => {
     expect(text).toContain("Total: Rs. 24,500");
   });
 });
+
+describe("CalculatorDraftHelper.wallsMessage", () => {
+  test("lists the sized walls and openings of the sections that are on", () => {
+    const [interior, exterior] = CalculatorDraftHelper.preset(
+      "room",
+      catalogue,
+    );
+
+    const text = CalculatorDraftHelper.wallsMessage([interior, exterior]);
+
+    expect(text).toContain("Interior walls:\n- Long walls: 12 × 10 ft × 2");
+    expect(text).toContain("Doors and windows:\n- Door: 3 × 7 ft × 1");
+    expect(text).not.toContain("Exterior");
+  });
+});

@@ -16,9 +16,15 @@ import { CalculatorDraftHelper } from "../helpers/calculatorDraft.helper";
 interface EstimatePanelProps {
   estimate: TEstimateState & { retry: () => void };
   hasInput: boolean;
+  // Every wall as typed, for when the estimate can't be priced.
+  wallsMessage: string;
 }
 
-export function EstimatePanel({ estimate, hasInput }: EstimatePanelProps) {
+export function EstimatePanel({
+  estimate,
+  hasInput,
+  wallsMessage,
+}: EstimatePanelProps) {
   const { result, status } = estimate;
   const shown = hasInput ? result : null;
   const totalMl = shown
@@ -44,7 +50,12 @@ export function EstimatePanel({ estimate, hasInput }: EstimatePanelProps) {
         className="self-start"
       />
 
-      {!shown && status !== "failed" && (
+      {!shown && status === "loading" && (
+        <p role="status" className="m-0 text-[15px] text-muted">
+          Working out litres and cans…
+        </p>
+      )}
+      {!shown && status === "idle" && (
         <p className="m-0 text-[15px] text-muted">
           Your litres, cans and total appear here as soon as one wall has a size
           and a product.
@@ -56,18 +67,31 @@ export function EstimatePanel({ estimate, hasInput }: EstimatePanelProps) {
           role="alert"
           className="flex flex-col items-start gap-2 rounded-field border border-danger bg-surface p-3 text-[15px]"
         >
-          <span className="font-semibold text-danger">
-            We couldn’t work out the estimate. Check your connection and try
-            again.
+          <span className="font-display text-[26px] leading-none font-semibold text-danger uppercase">
+            Couldn’t work out the estimate
           </span>
+          <span>Check your connection and try again.</span>
           <button
             type="button"
             onClick={estimate.retry}
-            className="flex min-h-tap items-center gap-1.5 font-bold text-accent"
+            className={`${BUTTON_CLASSES.primary} min-h-12 self-stretch text-[22px]`}
           >
-            <RotateCcw size={16} aria-hidden="true" />
+            <RotateCcw size={18} aria-hidden="true" className="mr-1.5" />
             Try again
           </button>
+          <a
+            href={ContactHelper.whatsappHref(wallsMessage)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${BUTTON_CLASSES.whatsapp} min-h-12 self-stretch text-[22px]`}
+          >
+            <MessageCircle size={18} aria-hidden="true" />
+            Send walls to store
+          </a>
+          <span className="text-[13px] text-muted">
+            The WhatsApp message lists every wall size, so the store can work it
+            out by hand.
+          </span>
         </div>
       )}
 

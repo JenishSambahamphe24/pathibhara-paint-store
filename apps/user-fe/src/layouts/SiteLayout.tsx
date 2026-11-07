@@ -1,6 +1,7 @@
 import { Outlet, useMatches } from "@tanstack/react-router";
 
 import { ContactBar } from "#/features/siteShell/components/ContactBar";
+import { OfflineNotice } from "#/features/siteShell/components/OfflineNotice";
 import { SiteFooter } from "#/features/siteShell/components/SiteFooter";
 import { SiteHeader } from "#/features/siteShell/components/SiteHeader";
 
@@ -16,6 +17,7 @@ export function SiteLayout() {
   if (isFullScreen) {
     return (
       <main id="main">
+        <OfflineNotice overlay />
         <Outlet />
       </main>
     );
@@ -31,6 +33,7 @@ export function SiteLayout() {
       >
         Skip to content
       </a>
+      <OfflineNotice />
       <SiteHeader />
       <main id="main" className="flex-1">
         <Outlet />

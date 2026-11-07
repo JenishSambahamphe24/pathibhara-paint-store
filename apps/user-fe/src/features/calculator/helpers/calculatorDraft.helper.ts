@@ -237,6 +237,25 @@ export class CalculatorDraftHelper {
     return lines.join("\n");
   }
 
+  // For when the estimate can't be priced: every wall and opening as typed,
+  // so the store can work it out by hand.
+  static wallsMessage(sections: ReadonlyArray<ISectionDraft>): string {
+    const lines = ["Hello, please work out the paint for these walls:"];
+    const describe = (row: IAreaRow) =>
+      `- ${row.label.trim() || "Unnamed"}: ${row.width} × ${row.height} ft × ${row.quantity}`;
+    for (const section of sections) {
+      if (!section.isOn) continue;
+      const sized = section.surfaces.filter(CalculatorDraftHelper.isSized);
+      if (sized.length === 0) continue;
+      lines.push("", `${section.name} walls:`, ...sized.map(describe));
+      const openings = section.deductions.filter(CalculatorDraftHelper.isSized);
+      if (openings.length > 0) {
+        lines.push("Doors and windows:", ...openings.map(describe));
+      }
+    }
+    return lines.join("\n");
+  }
+
   // "1,180 sq ft", whole feet with lakh grouping.
   static sqft(value: number): string {
     return `${NumberHelper.grouped(Math.round(value))} sq ft`;

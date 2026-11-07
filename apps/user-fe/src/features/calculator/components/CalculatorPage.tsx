@@ -150,7 +150,11 @@ export function CalculatorPage({
       </div>
 
       <div className="min-w-0 lg:sticky lg:top-4 lg:flex-[1_1_380px] lg:pt-6">
-        <EstimatePanel estimate={estimate} hasInput={input !== null} />
+        <EstimatePanel
+          estimate={estimate}
+          hasInput={input !== null}
+          wallsMessage={CalculatorDraftHelper.wallsMessage(sections)}
+        />
       </div>
 
       <TotalBar

@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { PageSkeleton } from "#/components/PageSkeleton/PageSkeleton";
+
 import { CatalogApi } from "#/features/catalog/api";
+import { ProductNotFound } from "#/features/catalog/components/ProductNotFound";
 import { ProductPage } from "#/features/catalog/components/ProductPage";
 import { ProductSeoHelper } from "#/features/catalog/helpers/productSeo.helper";
 import { SlugRedirectHelper } from "#/features/seo/helpers/slugRedirect.helper";
@@ -31,6 +34,8 @@ export const Route = createFileRoute("/products/$slug")({
         }
       : {},
   component: RouteComponent,
+  pendingComponent: () => <PageSkeleton kind="product" />,
+  notFoundComponent: ProductNotFound,
 });
 
 function RouteComponent() {

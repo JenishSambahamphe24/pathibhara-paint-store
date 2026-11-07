@@ -2,7 +2,11 @@ import type { IPublicCategory, IPublicProductListItem } from "../types";
 import type { IPage } from "#/types/api.types";
 
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ChevronRight, MessageCircle } from "lucide-react";
+
+import { BUTTON_CLASSES } from "#/components/Button/buttonClasses";
+
+import { ContactHelper } from "#/lib/helpers/contact.helper";
 
 import { CategoryTreeHelper } from "../helpers/categoryTree.helper";
 import { CatalogPager } from "./CatalogPager";
@@ -178,6 +182,37 @@ export function CatalogPage({
               Ask the store on WhatsApp; most products can be ordered in a day
               or two.
             </span>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <a
+                href={ContactHelper.whatsappHref(
+                  `Hello, do you have anything in ${current?.name ?? "stock"}?`,
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${BUTTON_CLASSES.whatsapp} min-h-12 text-[22px]`}
+              >
+                <MessageCircle size={18} aria-hidden="true" />
+                Ask on WhatsApp
+              </a>
+              {parent ? (
+                <Link
+                  to="/categories/$slug"
+                  params={{ slug: parent.slug }}
+                  className={`${BUTTON_CLASSES.secondary} min-h-12 text-[22px]`}
+                >
+                  See all {parent.name}
+                </Link>
+              ) : (
+                current && (
+                  <Link
+                    to="/products"
+                    className={`${BUTTON_CLASSES.secondary} min-h-12 text-[22px]`}
+                  >
+                    See all products
+                  </Link>
+                )
+              )}
+            </div>
           </div>
         ) : (
           <ul className="m-0 grid list-none grid-cols-2 gap-3 p-0 lg:grid-cols-[repeat(auto-fill,minmax(210px,1fr))] lg:gap-5">

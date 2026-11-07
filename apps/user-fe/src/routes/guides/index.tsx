@@ -1,6 +1,8 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { z } from "zod";
 
+import { PageSkeleton } from "#/components/PageSkeleton/PageSkeleton";
+
 import { GuideApi } from "#/features/guides/api";
 import { GuidesPage } from "#/features/guides/components/GuidesPage";
 import { SeoHelper } from "#/lib/helpers/seo.helper";
@@ -30,6 +32,7 @@ export const Route = createFileRoute("/guides/")({
       noIndex: (loaderData?.pagination.page ?? 1) > 1,
     }),
   component: RouteComponent,
+  pendingComponent: () => <PageSkeleton kind="grid" />,
 });
 
 function RouteComponent() {
