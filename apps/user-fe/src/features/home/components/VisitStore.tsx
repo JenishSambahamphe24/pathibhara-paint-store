@@ -1,5 +1,6 @@
 import { BUTTON_CLASSES } from "#/components/Button/buttonClasses";
 import { SignBoard } from "#/components/SignBoard/SignBoard";
+import { StoreMap } from "#/components/StoreMap/StoreMap";
 
 import { Config } from "#/lib/config";
 import { ContactHelper } from "#/lib/helpers/contact.helper";
@@ -18,15 +19,7 @@ export function VisitStore() {
         size="lg"
         className="[grid-area:sign] lg:self-start lg:justify-self-start"
       />
-      {/* A link until the store's real location can be embedded. */}
-      <a
-        href={ContactHelper.mapHref()}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex h-[140px] items-center justify-center rounded-field border border-line bg-surface-2 text-[13px] font-semibold text-accent [grid-area:map] hover:text-accent-hover lg:h-auto lg:min-h-[340px] lg:rounded-card lg:text-sm"
-      >
-        Open the map
-      </a>
+      <StoreMap className="h-[140px] [grid-area:map] lg:h-auto lg:min-h-[340px]" />
       <div className="flex flex-col gap-3 [grid-area:details] lg:gap-[18px]">
         <dl className="m-0 grid grid-cols-[84px_1fr] gap-x-3 gap-y-2 text-[15px] lg:grid-cols-[96px_1fr] lg:gap-x-4 lg:gap-y-2.5 lg:text-[17px]">
           <dt className="text-muted">Address</dt>

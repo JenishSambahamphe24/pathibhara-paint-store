@@ -23,14 +23,48 @@ export class Config {
   // Placeholders until the client confirms the store's details.
   static get store(): IStoreConfig {
     return {
+      isConfirmed: false,
       city: "[CITY]",
       address: "[ADDRESS]",
       openingHours: "[DAYS] · [HOURS]",
+      hours: [
+        {
+          days: "Sunday – Friday",
+          hours: "[OPEN] – [CLOSE]",
+          schemaDays: [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+          ],
+          opens: null,
+          closes: null,
+        },
+        {
+          days: "Saturday",
+          hours: "[SATURDAY HOURS]",
+          schemaDays: ["Saturday"],
+          opens: null,
+          closes: null,
+        },
+        {
+          days: "Public holidays",
+          hours: "[HOLIDAY HOURS]",
+          schemaDays: [],
+          opens: null,
+          closes: null,
+        },
+      ],
+      landmark: "[NEAREST LANDMARK]",
+      parking: "[PARKING NOTE]",
       phoneDisplay: "[PHONE]",
       phone: "[PHONE]",
       whatsappDisplay: "[WHATSAPP NUMBER]",
       whatsappNumber: "[WHATSAPP]",
       mapUrl: "https://maps.google.com/?q=Pathibhara+Paints",
+      mapEmbedUrl: null,
     };
   }
 }
