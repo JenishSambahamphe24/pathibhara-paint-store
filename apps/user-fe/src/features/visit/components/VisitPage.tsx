@@ -109,7 +109,7 @@ export function VisitPage() {
         </div>
       </div>
 
-      <StoreMap className="h-[220px] lg:sticky lg:top-4 lg:h-[420px] lg:min-w-0 lg:flex-[1.3_1_520px]" />
+      <StoreMap className="h-[220px] lg:sticky lg:top-24 lg:h-[420px] lg:min-w-0 lg:flex-[1.3_1_520px]" />
     </div>
   );
 }

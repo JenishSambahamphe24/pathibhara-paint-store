@@ -6,6 +6,8 @@ import { useMemo, useState } from "react";
 
 import { SignBoard } from "#/components/SignBoard/SignBoard";
 
+import { useHorizontalScroll } from "#/hooks/useHorizontalScroll";
+
 import { CalculatorDraftHelper } from "../helpers/calculatorDraft.helper";
 import { useEstimate } from "../hooks/useEstimate";
 import { EstimatePanel } from "./EstimatePanel";
@@ -32,6 +34,7 @@ export function CalculatorPage({
   wastagePercent,
   startWith,
 }: CalculatorPageProps) {
+  const presetRow = useHorizontalScroll<HTMLDivElement>();
   const initialPreset: TPresetId = startWith.length > 0 ? "exterior" : "room";
   const [preset, setPreset] = useState<TPresetId | null>(initialPreset);
   const [sections, setSections] = useState<Array<ISectionDraft>>(() =>
@@ -86,7 +89,13 @@ export function CalculatorPage({
           Add each wall in feet. We work out the paint, the cans to buy and the
           total.
         </p>
-        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pt-0.5 pb-1 lg:mx-0 lg:flex-wrap lg:px-0">
+        <div
+          ref={presetRow.ref}
+          className={clsx(
+            "-mx-4 flex scroll-px-4 gap-2 overflow-x-auto px-4 pt-0.5 pb-1 lg:mx-0 lg:px-0",
+            presetRow.className,
+          )}
+        >
           {PRESETS.map(([id, label]) => (
             <button
               key={id}
@@ -149,7 +158,7 @@ export function CalculatorPage({
         ))}
       </div>
 
-      <div className="min-w-0 lg:sticky lg:top-4 lg:flex-[1_1_380px] lg:pt-6">
+      <div className="min-w-0 lg:sticky lg:top-24 lg:flex-[1_1_380px] lg:pt-6">
         <EstimatePanel
           estimate={estimate}
           hasInput={input !== null}

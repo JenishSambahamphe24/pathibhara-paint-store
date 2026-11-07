@@ -4,6 +4,8 @@ import { clsx } from "clsx";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
+import { useHorizontalScroll } from "#/hooks/useHorizontalScroll";
+
 interface ShadePickerProps {
   shades: ReadonlyArray<IShade>;
   selectedCode: string | null;
@@ -19,6 +21,7 @@ export function ShadePicker({
   heading,
   onPick,
 }: ShadePickerProps) {
+  const shadeRow = useHorizontalScroll<HTMLDivElement>();
   const [query, setQuery] = useState("");
   const needle = query.trim().toLowerCase();
   const visible = needle
@@ -48,7 +51,13 @@ export function ShadePicker({
           className="min-w-0 flex-1 bg-transparent text-[15px] outline-none"
         />
       </div>
-      <div className="flex gap-2 overflow-x-auto px-4 pt-2 wide:grid wide:grid-cols-[repeat(auto-fill,minmax(56px,1fr))] wide:overflow-visible wide:px-0">
+      <div
+        ref={shadeRow.ref}
+        className={clsx(
+          "flex scroll-px-4 gap-2 overflow-x-auto px-4 pt-2 wide:grid wide:grid-cols-[repeat(auto-fill,minmax(56px,1fr))] wide:overflow-visible wide:px-0",
+          shadeRow.className,
+        )}
+      >
         {visible.map((shade) => {
           const isSelected = shade.code === selectedCode;
           return (

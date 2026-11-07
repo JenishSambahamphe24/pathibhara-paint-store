@@ -1,6 +1,7 @@
 import type { IPublicColourSet } from "#/features/colourSets/types";
 
 import { Link } from "@tanstack/react-router";
+import { clsx } from "clsx";
 
 import { BUTTON_CLASSES } from "#/components/Button/buttonClasses";
 import { HouseIllustration } from "#/components/HouseIllustration/HouseIllustration";
@@ -9,6 +10,8 @@ import { ColourSetCard } from "#/features/colourSets/components/ColourSetCard";
 import { UNPAINTED_HOUSE } from "#/features/colourSets/paintParts";
 import { LookHelper } from "#/features/visualizer/helpers/look.helper";
 import { Config } from "#/lib/config";
+
+import { useHorizontalScroll } from "#/hooks/useHorizontalScroll";
 
 import { PaintedParts } from "./PaintedParts";
 
@@ -21,6 +24,7 @@ interface HomeHeroProps {
 // Phones stack intro → house → sets → parts → actions. On desktop the copy,
 // sets and actions run down the left with the house and its parts on the right.
 export function HomeHero({ colourSets, selected, onSelect }: HomeHeroProps) {
+  const setRow = useHorizontalScroll<HTMLDivElement>();
   const colours = selected
     ? {
         main_surface: selected.shades.main_surface.hex,
@@ -70,7 +74,13 @@ export function HomeHero({ colourSets, selected, onSelect }: HomeHeroProps) {
       {colourSets.length > 0 && (
         <div className="flex flex-col gap-2.5 [grid-area:sets]">
           <h2 className="m-0 px-4 text-base font-bold lg:px-0">Colour sets</h2>
-          <div className="flex gap-2.5 overflow-x-auto px-4 pt-1 pb-1.5 lg:grid lg:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] lg:overflow-visible lg:p-0">
+          <div
+            ref={setRow.ref}
+            className={clsx(
+              "flex scroll-px-4 gap-2.5 overflow-x-auto px-4 pt-1 pb-1.5 lg:grid lg:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] lg:overflow-visible lg:p-0",
+              setRow.className,
+            )}
+          >
             {colourSets.map((colourSet, index) => (
               <ColourSetCard
                 key={colourSet.slug}

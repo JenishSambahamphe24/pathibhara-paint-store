@@ -15,6 +15,15 @@
    features/visualizer/hooks/useIsWide.ts. */
 @custom-variant wide (@media (min-width: 48rem), (orientation: landscape) and (min-width: 40rem));
 
+/* Hides a scroll row's scrollbar in every browser (same utility as
+   bitsky's user-fe). The row still scrolls by touch, wheel and drag. */
+@utility scrollbar-width-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @theme {
   --color-sign-red: #a3192b;
   --color-sign-blue: #1e3a7b;
@@ -106,6 +115,12 @@
     --color-stage: #3a3328;
     --color-stage-ground: #2b261f;
     color-scheme: dark;
+  }
+
+  /* Anchor links ("See estimate", "Skip to content") land below the sticky
+     header instead of under it. */
+  html {
+    scroll-padding-top: 6rem;
   }
 
   body {

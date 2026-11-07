@@ -4,7 +4,8 @@ import { WifiOff } from "lucide-react";
 import { useIsOnline } from "#/hooks/useIsOnline";
 
 interface OfflineNoticeProps {
-  // Floats over a full-screen page instead of pushing it down.
+  // Floats over a full-screen page; otherwise it sits above the header,
+  // inside SiteLayout's sticky block.
   overlay?: boolean;
 }
 
@@ -19,7 +20,7 @@ export function OfflineNotice({ overlay = false }: OfflineNoticeProps) {
       role="status"
       className={clsx(
         "z-40 flex items-center justify-center gap-2 bg-ink px-4 py-2 text-sm font-semibold text-on-ink print:hidden",
-        overlay ? "fixed inset-x-0 top-0" : "sticky top-0",
+        overlay && "fixed inset-x-0 top-0",
       )}
     >
       <WifiOff size={16} aria-hidden="true" />

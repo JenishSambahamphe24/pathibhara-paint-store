@@ -33,8 +33,12 @@ export function SiteLayout() {
       >
         Skip to content
       </a>
-      <OfflineNotice />
-      <SiteHeader />
+      {/* Stays on screen while scrolling. Sticky things further down the page
+          sit at lg:top-24 so they clear it. */}
+      <div className="sticky top-0 z-30 print:static">
+        <OfflineNotice />
+        <SiteHeader />
+      </div>
       <main id="main" className="flex-1">
         <Outlet />
       </main>

@@ -21,6 +21,7 @@ import { PAINT_PART_LABELS } from "#/features/colourSets/paintParts";
 import { ContactHelper } from "#/lib/helpers/contact.helper";
 import { SeoHelper } from "#/lib/helpers/seo.helper";
 
+import { useHorizontalScroll } from "#/hooks/useHorizontalScroll";
 import { useMediaQuery } from "#/hooks/useMediaQuery";
 
 import { LookHelper } from "../helpers/look.helper";
@@ -50,6 +51,7 @@ export function VisualizerPage({
   colourSets,
   initialLook,
 }: VisualizerPageProps) {
+  const setRow = useHorizontalScroll<HTMLDivElement>();
   const index = useMemo(() => LookHelper.index(shades), [shades]);
   const [looks, setLooks] = useState<[TLook, TLook]>(() => [
     initialLook,
@@ -327,7 +329,13 @@ export function VisualizerPage({
             <h2 className="m-0 hidden text-xs font-bold tracking-[0.12em] text-muted uppercase wide:block">
               Colour sets
             </h2>
-            <div className="flex gap-2.5 overflow-x-auto px-4 pt-1 pb-1.5 wide:grid wide:grid-cols-2 wide:overflow-visible wide:p-0">
+            <div
+              ref={setRow.ref}
+              className={clsx(
+                "flex scroll-px-4 gap-2.5 overflow-x-auto px-4 pt-1 pb-1.5 wide:grid wide:grid-cols-2 wide:overflow-visible wide:p-0",
+                setRow.className,
+              )}
+            >
               {colourSets.map((colourSet) => {
                 const setLook = LookHelper.fromColourSet(colourSet);
                 return (

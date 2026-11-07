@@ -41,7 +41,7 @@ export function EstimatePanel({
       id="estimate"
       aria-labelledby="estimate-title"
       aria-busy={status === "loading"}
-      className="flex scroll-mt-4 flex-col gap-3"
+      className="flex flex-col gap-3"
     >
       <SignBoard
         variant="notice"

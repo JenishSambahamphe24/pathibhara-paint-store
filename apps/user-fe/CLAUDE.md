@@ -11,6 +11,7 @@ Server-rendered customer site built with **TanStack Start**, **React 19**, **Tai
 - Env: copy `.env.example` to `.env` (`VITE_SITE_URL`, `VITE_API_BASE_URL`).
 - A route with `staticData: { fullScreen: true }` gets no header, footer or contact bar; it draws its own (the visualizer). `hideContactBar: true` drops only the contact bar, for a page with its own bottom bar (the calculator's running total).
 - Fixed bottom bars hide while a field is focused (`useIsTyping`), so they never sit over the phone keyboard.
+- Any sideways-scrolling row (pills, chips, swatch strips) uses `useHorizontalScroll`: put its `ref` on the `overflow-x-auto` element and add its `className`. It hides the scrollbar (`scrollbar-width-none`), adds mouse wheel and drag scrolling and edge fades, and keeps the selected item in view.
 - `wide:` (tablet and up, or a phone in landscape) switches tools from a bottom sheet to a side panel. JS that must know the same thing uses `useIsWide`.
 
 ## 3D house
