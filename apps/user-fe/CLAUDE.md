@@ -5,7 +5,7 @@ Server-rendered customer site built with **TanStack Start**, **React 19**, **Tai
 ## Site layout
 
 - `src/layouts/SiteLayout.tsx` wraps every page: header, footer and the mobile contact bar (`src/features/siteShell/`). Pages render only their own content.
-- Every route sets its `<head>` with `SeoHelper.page({ title, description, path })`. Pages not built yet use `PagePlaceholder` and `noIndex: true`; drop the flag when the real page lands.
+- Every route sets its `<head>` with `SeoHelper.page({ title, description, path })`. A page that isn't ready for search results passes `noIndex: true` and stays out of `features/seo/indexing.ts`.
 - Store contact details live in `Config.store` (placeholders until the client confirms). Build tel/WhatsApp/map links with `ContactHelper`, never by hand.
 - Theme: `ThemeHelper.initScript` sets `<html data-theme>` before paint; use the `dark:` variant for theme-dependent markup, never React state, so SSR can't mismatch.
 - Env: copy `.env.example` to `.env` (`VITE_SITE_URL`, `VITE_API_BASE_URL`).

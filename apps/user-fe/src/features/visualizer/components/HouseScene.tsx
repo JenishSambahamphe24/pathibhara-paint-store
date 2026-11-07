@@ -47,6 +47,9 @@ interface HouseSceneProps {
   autoRotate: boolean;
   apiRef: RefObject<IHouseSceneApi | null>;
   onReady: () => void;
+  // Inside a scrolling page (Home): no zoom, and vertical swipes scroll the
+  // page, so the house never traps scrolling.
+  isEmbedded?: boolean;
 }
 
 export function HouseScene({
@@ -56,6 +59,7 @@ export function HouseScene({
   autoRotate,
   apiRef,
   onReady,
+  isEmbedded = false,
 }: HouseSceneProps) {
   return (
     <Canvas
@@ -72,7 +76,10 @@ export function HouseScene({
         position: TARGET.clone().add(HOME_OFFSET),
       }}
       aria-hidden="true"
-      className="touch-none"
+      // OrbitControls writes touch-action onto the canvas itself (none, or
+      // auto when it reconnects), so embedded needs !important to keep
+      // vertical swipes for the page; sideways ones still turn the house.
+      className={isEmbedded ? "[&_canvas]:touch-pan-y!" : "touch-none"}
     >
       <hemisphereLight args={["#ffffff", "#b9b2a3", 2.7]} />
       <directionalLight
@@ -91,7 +98,11 @@ export function HouseScene({
       <Suspense fallback={null}>
         <House colours={colours} flash={flash} onReady={onReady} />
       </Suspense>
-      <Controls autoRotate={autoRotate} apiRef={apiRef} />
+      <Controls
+        autoRotate={autoRotate}
+        apiRef={apiRef}
+        isEmbedded={isEmbedded}
+      />
     </Canvas>
   );
 }
@@ -99,9 +110,10 @@ export function HouseScene({
 interface ControlsProps {
   autoRotate: boolean;
   apiRef: RefObject<IHouseSceneApi | null>;
+  isEmbedded: boolean;
 }
 
-function Controls({ autoRotate, apiRef }: ControlsProps) {
+function Controls({ autoRotate, apiRef, isEmbedded }: ControlsProps) {
   const controls = useRef<ComponentRef<typeof OrbitControls>>(null);
   const { camera, gl, scene, size } = useThree();
   // Turning the house stops the slow spin for good, as on the design.
@@ -139,6 +151,7 @@ function Controls({ autoRotate, apiRef }: ControlsProps) {
       ref={controls}
       target={TARGET}
       enablePan={false}
+      enableZoom={!isEmbedded}
       enableDamping
       autoRotate={autoRotate && isSpinning}
       autoRotateSpeed={0.6}

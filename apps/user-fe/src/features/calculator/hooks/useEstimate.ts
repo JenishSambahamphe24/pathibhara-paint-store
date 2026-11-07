@@ -3,15 +3,24 @@ import type { CostEstimateInput } from "@repo/shared";
 
 import { useEffect, useState } from "react";
 
+import { ApiError } from "#/lib/apiError";
+
 import { CalculatorApi } from "../api";
 
 const DEBOUNCE_MS = 350;
+const RATE_LIMITED = 429;
 
 export type TEstimateState =
   | { status: "idle"; result: null }
   | { status: "loading"; result: IEstimateResult | null }
   | { status: "ready"; result: IEstimateResult }
-  | { status: "failed"; result: IEstimateResult | null };
+  | {
+      status: "failed";
+      result: IEstimateResult | null;
+      // The API refused because too many estimates came in a short time;
+      // the message should say wait, not check the connection.
+      isRateLimited: boolean;
+    };
 
 // Re-prices the estimate a moment after typing stops. A newer input aborts
 // the request in flight, so a slow reply can never overwrite a newer total.
@@ -36,9 +45,15 @@ export function useEstimate(input: CostEstimateInput | null) {
         controller.signal,
       )
         .then((result) => setState({ status: "ready", result }))
-        .catch(() => {
+        .catch((error: unknown) => {
           if (controller.signal.aborted) return;
-          setState((current) => ({ status: "failed", result: current.result }));
+          const isRateLimited =
+            error instanceof ApiError && error.status === RATE_LIMITED;
+          setState((current) => ({
+            status: "failed",
+            result: current.result,
+            isRateLimited,
+          }));
         });
     }, DEBOUNCE_MS);
     return () => {

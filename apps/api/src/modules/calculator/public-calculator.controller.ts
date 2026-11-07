@@ -1,6 +1,15 @@
 import type { DtoType } from "@repo/http-kit";
 
-import { ApiResponse, Body, Controller, Get, OkResponse, Post, Validate } from "@repo/http-kit";
+import {
+  ApiResponse,
+  Body,
+  Controller,
+  Get,
+  OkResponse,
+  Post,
+  UseMiddleware,
+  Validate,
+} from "@repo/http-kit";
 
 import {
   CalculatorDefaultsDto,
@@ -8,6 +17,7 @@ import {
   PublicCostEstimateResultDto,
 } from "./calculator.dto";
 import { CalculatorService } from "./calculator.service";
+import { EstimateRateLimit } from "./estimate-rate-limit.middleware";
 
 @Controller("/public/calculator", ["Public"])
 export class PublicCalculatorController {
@@ -22,6 +32,7 @@ export class PublicCalculatorController {
   // POST (not GET) because an estimate is a nested document; nothing is saved.
   @Post("/estimate", { summary: "Paint quantities, cans and price for products on sale" })
   @OkResponse(PublicCostEstimateResultDto, "Estimate")
+  @UseMiddleware(EstimateRateLimit.middleware())
   @Validate({ body: CostEstimateInputDto })
   async estimate(@Body() body: DtoType<typeof CostEstimateInputDto>) {
     return ApiResponse.ok(await this.calculatorService.estimatePublic(body));

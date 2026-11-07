@@ -70,7 +70,11 @@ export function EstimatePanel({
           <span className="font-display text-[26px] leading-none font-semibold text-danger uppercase">
             Couldn’t work out the estimate
           </span>
-          <span>Check your connection and try again.</span>
+          <span>
+            {estimate.isRateLimited
+              ? "Too many estimates in a short time. Wait a minute, then try again."
+              : "Check your connection and try again."}
+          </span>
           <button
             type="button"
             onClick={estimate.retry}

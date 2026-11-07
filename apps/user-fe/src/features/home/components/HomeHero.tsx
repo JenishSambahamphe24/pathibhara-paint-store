@@ -1,17 +1,22 @@
 import type { IPublicColourSet } from "#/features/colourSets/types";
+import type { IHouseSceneApi } from "#/features/visualizer/components/HouseScene";
+import type { TStageStatus } from "#/features/visualizer/components/HouseStage";
 
 import { Link } from "@tanstack/react-router";
 import { clsx } from "clsx";
+import { RotateCcw } from "lucide-react";
+import { useRef, useState } from "react";
 
 import { BUTTON_CLASSES } from "#/components/Button/buttonClasses";
-import { HouseIllustration } from "#/components/HouseIllustration/HouseIllustration";
 
 import { ColourSetCard } from "#/features/colourSets/components/ColourSetCard";
 import { UNPAINTED_HOUSE } from "#/features/colourSets/paintParts";
+import { HouseStage } from "#/features/visualizer/components/HouseStage";
 import { LookHelper } from "#/features/visualizer/helpers/look.helper";
 import { Config } from "#/lib/config";
 
 import { useHorizontalScroll } from "#/hooks/useHorizontalScroll";
+import { useMediaQuery } from "#/hooks/useMediaQuery";
 
 import { PaintedParts } from "./PaintedParts";
 
@@ -25,6 +30,11 @@ interface HomeHeroProps {
 // sets and actions run down the left with the house and its parts on the right.
 export function HomeHero({ colourSets, selected, onSelect }: HomeHeroProps) {
   const setRow = useHorizontalScroll<HTMLDivElement>();
+  const houseApi = useRef<IHouseSceneApi>(null);
+  const [houseStatus, setHouseStatus] = useState<TStageStatus>("loading");
+  const prefersReducedMotion = useMediaQuery(
+    "(prefers-reduced-motion: reduce)",
+  );
   const colours = selected
     ? {
         main_surface: selected.shades.main_surface.hex,
@@ -56,15 +66,39 @@ export function HomeHero({ colourSets, selected, onSelect }: HomeHeroProps) {
       <div className="flex flex-col gap-1.5 px-4 [grid-area:house] lg:gap-2.5 lg:px-0">
         <div className="relative h-[300px] overflow-hidden rounded-[14px] bg-stage lg:h-auto lg:min-h-[520px] lg:flex-1 lg:rounded-2xl">
           <div className="absolute inset-x-0 bottom-0 h-16 bg-stage-ground lg:h-[110px]" />
-          <HouseIllustration
-            colours={colours}
-            label={
-              selected
-                ? `House painted with the ${selected.name} colour set`
-                : "The house, not yet painted"
-            }
-            className="absolute inset-x-0 top-[26px] w-full lg:inset-x-[6%] lg:top-auto lg:bottom-[60px] lg:w-[88%]"
-          />
+          {/* The stage needs a sized box: it renders nothing at zero height. */}
+          <div className="absolute inset-0">
+            <HouseStage
+              variant="page"
+              colours={colours}
+              label={
+                selected
+                  ? `House painted with the ${selected.name} colour set`
+                  : "The house, not yet painted"
+              }
+              flash={null}
+              autoRotate={!prefersReducedMotion}
+              apiRef={houseApi}
+              onStatusChange={setHouseStatus}
+              className="size-full"
+              drawingClassName="absolute inset-x-0 top-[26px] w-full lg:inset-x-[6%] lg:top-auto lg:bottom-[60px] lg:w-[88%]"
+            />
+          </div>
+          {houseStatus === "ready" && (
+            <div className="absolute inset-x-2 bottom-2 flex items-center justify-between gap-3 lg:inset-x-3 lg:bottom-3">
+              <span className="rounded-[4px] bg-surface/90 px-2 py-1 text-xs font-semibold text-ink lg:px-2.5 lg:text-[13px]">
+                Drag sideways to turn
+              </span>
+              <button
+                type="button"
+                aria-label="Reset view"
+                onClick={() => houseApi.current?.resetView()}
+                className="flex size-tap items-center justify-center rounded-lg border border-line bg-surface text-ink"
+              >
+                <RotateCcw size={18} aria-hidden="true" />
+              </button>
+            </div>
+          )}
         </div>
         <p className="m-0 px-0.5 text-xs text-muted lg:px-0 lg:text-[13px]">
           Screen colours are close, not exact.

@@ -1,37 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-import { PagePlaceholder } from "#/components/PagePlaceholder/PagePlaceholder";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 import { ColourSetApi } from "#/features/colourSets/api";
 import { SlugRedirectHelper } from "#/features/seo/helpers/slugRedirect.helper";
-import { SeoHelper } from "#/lib/helpers/seo.helper";
-import { SiteUrlHelper } from "#/lib/helpers/siteUrl.helper";
+import { LookHelper } from "#/features/visualizer/helpers/look.helper";
 
+// A colour set has no page of its own: its link opens the visualizer painted
+// with it. 302 rather than 301, since the set's shades can change. An old
+// slug still gets its 301 first, and an unknown one a 404.
 export const Route = createFileRoute("/colour-sets/$slug")({
-  loader: ({ params }) =>
-    SlugRedirectHelper.loadBySlug("colourSet", params.slug, () =>
-      ColourSetApi.colourSet(params.slug),
-    ),
-  head: ({ loaderData: colourSet }) =>
-    colourSet
-      ? SeoHelper.page({
-          title: colourSet.name,
-          description:
-            colourSet.description ??
-            `${colourSet.name}: an exterior colour set for walls, columns, doors and windows, and the roof edge.`,
-          path: SiteUrlHelper.entityPath("colourSet", colourSet.slug),
-          noIndex: true,
-        })
-      : {},
-  component: RouteComponent,
+  loader: async ({ params }) => {
+    const colourSet = await SlugRedirectHelper.loadBySlug(
+      "colourSet",
+      params.slug,
+      () => ColourSetApi.colourSet(params.slug),
+    );
+    throw redirect({
+      to: "/visualizer",
+      search: LookHelper.toSearch(LookHelper.fromColourSet(colourSet)),
+      statusCode: 302,
+    });
+  },
 });
-
-function RouteComponent() {
-  const colourSet = Route.useLoaderData();
-  return (
-    <PagePlaceholder
-      title={colourSet.name}
-      description={colourSet.description ?? ""}
-    />
-  );
-}
